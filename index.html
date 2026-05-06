@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shawn M. Klimek — Author</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d12;
+    --deep: #10101a;
+    --surface: #16161f;
+    --panel: #1c1c28;
+    --border: #2a2a3a;
+    --muted: #4a4a6a;
+    --silver: #9898b8;
+    --pale: #c8c8e0;
+    --cream: #e8e4d8;
+    --gold: #c8a84b;
+    --gold-dim: #8a7030;
+    --star: #f0eaff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── STARFIELD ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 8%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 34% 22%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 56% 5%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 78% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 91% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 23% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 67% 38%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 88% 52%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 7% 68%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 31% 72%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 54% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 76% 65%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 78%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 18% 88%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 42% 92%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 63% 95%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 83% 90%, rgba(255,255,255,0.6) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(13,13,18,0.95) 0%, rgba(16,16,26,0.8) 100%);
+  }
+
+  .header-logo {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    animation: fadeDown 1s ease both;
+  }
+
+  .header-logo img {
+    height: 90px;
+    width: auto;
+    filter: drop-shadow(0 0 18px rgba(200,168,75,0.35));
+  }
+
+  .site-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    animation: fadeDown 1s 0.15s ease both;
+  }
+
+  .site-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    margin-top: 0.4rem;
+    animation: fadeDown 1s 0.3s ease both;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--deep);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+
+  nav ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    list-style: none;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 0.85rem 1.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: var(--silver);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul li a:hover { color: var(--gold); }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 2rem 0 0.8rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  p { margin-bottom: 1rem; color: var(--pale); }
+
+  a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--cream); }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .author-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 2px solid var(--gold-dim);
+    box-shadow: 0 0 30px rgba(200,168,75,0.15), 0 0 60px rgba(0,0,0,0.5);
+    filter: sepia(15%) contrast(1.05);
+  }
+
+  @media (max-width: 600px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .author-photo { margin: 0 auto; display: block; }
+  }
+
+  /* ── SERIALS ── */
+  .serials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 600px) { .serials-grid { grid-template-columns: 1fr; } }
+
+  .serial-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold-dim);
+    padding: 1.8rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .serial-card:hover {
+    border-top-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .serial-card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  .serial-card p {
+    font-size: 0.95rem;
+    color: var(--silver);
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    padding: 0.5rem 1.2rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn:hover {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  /* ── PUBLICATIONS ── */
+  .pub-list {
+    list-style: none;
+    margin: 0 0 1rem;
+  }
+
+  .pub-list li {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    font-size: 0.95rem;
+    color: var(--pale);
+    line-height: 1.5;
+  }
+
+  .pub-list li a { color: var(--pale); }
+  .pub-list li a:hover { color: var(--gold); }
+
+  .pub-type {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-right: 0.4rem;
+  }
+
+  /* ── BLOG ── */
+  .blog-posts { list-style: none; }
+
+  .blog-posts li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .blog-posts li a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--cream);
+  }
+
+  .blog-posts li a:hover { color: var(--gold); }
+
+  .post-date {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  /* ── AUTHOR LINKS ── */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--pale);
+    font-size: 0.9rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .link-item:hover {
+    border-color: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  .link-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    flex-shrink: 0;
+  }
+
+  /* ── VIDEOS ── */
+  .video-list { list-style: none; }
+
+  .video-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    font-size: 0.95rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em;
+  }
+
+  footer img {
+    height: 50px;
+    width: auto;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    filter: sepia(30%);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    color: var(--gold-dim);
+    font-size: 1.2rem;
+    letter-spacing: 0.5em;
+    margin: 1.5rem 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <img src="JotintheDarkPublishingLogotrim.png" alt="Jot in the Dark Publishing">
+  </div>
+  <div class="site-title">Shawn M. Klimek</div>
+  <div class="site-subtitle">Author &nbsp;·&nbsp; Poet &nbsp;·&nbsp; Storyteller</div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#serials">Serials</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#author-pages">Author Pages</a></li>
+    <li><a href="#videos">Videos</a></li>
+  </ul>
+</nav>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">About the Author</div>
+    <h2>Shawn M. Klimek</h2>
+    <div class="about-grid">
+      <img src="Shawn_May2017.jpg" alt="Shawn M. Klimek" class="author-photo">
+      <div>
+        <p>Shawn M. Klimek is a speculative fiction author and poet whose work spans science fiction, fantasy, horror, and humorous verse. With dozens of published short stories and poems appearing in anthologies and magazines across multiple continents, he writes with equal comfort in the darkly macabre and the delightfully absurd.</p>
+        <p>His debut collection, <em>Hungry Thing</em>, is available via Lulu. He is currently at work on two short story collections: a science fiction anthology and a fantasy anthology, both forthcoming under Jot in the Dark Publishing.</p>
+        <p>Klimek's work has appeared in publications by Black Hare Press, Clarendon House, Zombie Pirate Publishing, Spillwords Press, NewMyths, and many others. He has also won recognition in the <em>Winning Writers</em> Wergle Flomp Humorous Poetry Contest.</p>
+        <div class="divider">· · ·</div>
+        <p><a href="https://www.facebook.com/shawnmklimekauthor/" target="_blank">Facebook Author Page</a> &nbsp;·&nbsp; <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank">Amazon</a> &nbsp;·&nbsp; <a href="https://www.goodreads.com/author/show/18163090.Shawn_Klimek" target="_blank">Goodreads</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERIALS -->
+<section id="serials">
+  <div class="container">
+    <div class="section-label">Serial Fiction</div>
+    <h2>Ongoing Stories</h2>
+    <p style="color:var(--silver); margin-bottom:2rem;">Two serialized works-in-progress, updated weekly. Follow along as each story unfolds.</p>
+    <div class="serials-grid">
+      <div class="serial-card">
+        <h4>Science Fiction Serial</h4>
+        <p>A new work of serialized science fiction, updated weekly. Details coming soon.</p>
+        <a href="#" class="btn">Coming Soon</a>
+      </div>
+      <div class="serial-card">
+        <h4>Fantasy Serial</h4>
+        <p>A new work of serialized fantasy, updated weekly. Details coming soon.</p>
+        <a href="#" class="btn">Coming Soon</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="container">
+    <div class="section-label">Author Blog</div>
+    <h2>From the Desk</h2>
+    <p style="color:var(--silver); margin-bottom:1.5rem;">Publishing news, writing reflections, and dispatches from the creative life.</p>
+    <ul class="blog-posts">
+      <li>
+        <span class="post-date">April 15, 2026</span>
+        <a href="https://jotinthedark.blogspot.com/2026/04/ship-of-dead.html" target="_blank">Ship of the Dead</a>
+      </li>
+      <li>
+        <span class="post-date">March 10, 2026</span>
+        <a href="https://jotinthedark.blogspot.com/2026/03/better-without-ai.html" target="_blank">Better Without AI</a>
+      </li>
+      <li>
+        <span class="post-date">December 7, 2025</span>
+        <a href="https://jotinthedark.blogspot.com/2025/12/where-angels-dance-published.html" target="_blank">Where Angels Dance Published</a>
+      </li>
+    </ul>
+    <p style="margin-top:1.5rem;"><a href="https://jotinthedark.blogspot.com/" target="_blank">View all posts →</a></p>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="container">
+    <div class="section-label">Bibliography</div>
+    <h2>Publications</h2>
+
+    <h3>Books</h3>
+    <ul class="pub-list">
+      <li><span class="pub-type">book</span> <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank"><em>Hungry Thing</em></a> — Poetry collection by Shawn M. Klimek (Lulu)</li>
+    </ul>
+
+    <h3>Free Reads Online — Fiction</h3>
+    <ul class="pub-list">
+      <li><a href="http://cafelitcreativecafe.blogspot.com/search?q=Golden+Memory+" target="_blank">"A Golden Memory"</a> — CafeLit, 2018</li>
+      <li><a href="https://www.fridayflashfiction.com/100-word-stories/the-warlocks-curse-shawn-m-klimek" target="_blank">"A Warlock's Curse"</a> — Friday Flash Fiction, 2019</li>
+      <li><a href="http://jayzohub.com/darkmythproductions/theworldofmyth/76/retro/scifi/an_exchanged_man/an_exchanged_man.html" target="_blank">"An Exchanged Man"</a> — World of Myth Magazine</li>
+      <li><a href="https://horrortree.com/unholy-trinity-call-the-exterminator/" target="_blank">"Call the Exterminator"</a> — The Horror Tree, 2019</li>
+      <li><a href="https://horrortree.com/unholy-trinity-circle-of-unlife-by-shawn-klimek/" target="_blank">"Circle of Unlife"</a> — The Horror Tree, 2019</li>
+      <li><a href="http://jayzohub.com/darkmythproductions/theworldofmyth/83/horror/dark_trek/dark_trek.html" target="_blank">"Dark Trek"</a> — World of Myth Magazine</li>
+      <li><a href="http://potatosoupjournal.com/dissatisfied-voters-by-shawn-m-klimek/" target="_blank">"Dissatisfied Voters"</a> — Potato Soup Journal</li>
+      <li><a href="http://paperdjinnpress.com/halloween-tricks-10-feeding-time-shawn-m-klimek/" target="_blank">"Feeding Time"</a> — Paper Djinn World</li>
+      <li><a href="https://cafelitcreativecafe.blogspot.com/2018/05/goodbye-my-lush.html" target="_blank">"Goodbye My Lush"</a> — CafeLit, 2018</li>
+      <li><a href="http://paperdjinnpress.com/christmas-tiding-09-joseph-and-me-shawn-m-klimek/" target="_blank">"Joseph and Me"</a> — Paper Djinn World</li>
+      <li><a href="https://cafelitcreativecafe.blogspot.com/2019/02/magic-number.html" target="_blank">"Magic Number"</a> — CafeLit, 2019</li>
+      <li><a href="http://www.blackharepress.com/dark-moments/" target="_blank">"Nevermore"</a> — Black Hare Press Dark Moments</li>
+      <li><a href="http://paperdjinnpress.com/nothing-up-my-sleeve-shawn-m-klimek" target="_blank">"Nothing Up My Sleeve"</a> — Paper Djinn Press, 2020</li>
+      <li><a href="https://spillwords.com/nothing-up-my-sleeve/" target="_blank">"Nothing Up My Sleeve"</a> — Spillwords, 2019</li>
+      <li><a href="http://spillwords.com/one-more-beatdown/" target="_blank">"One More Beatdown"</a> — Spillwords, 2019</li>
+      <li><a href="http://www.fridayflashfiction.com/100-word-stories/priceless-jewels-by-shawn-klimek" target="_blank">"Priceless Jewels"</a> — Friday Flash Fiction, 2018</li>
+      <li><a href="http://www.blackharepress.com/a-psi-of-relief/" target="_blank">"Psi of Relief"</a> — Black Hare Press Dark Moments</li>
+      <li><a href="http://www.blackharepress.com/riddle-of-the-sphinx/" target="_blank">"Riddle of the Sphinx"</a> — Black Hare Press Dark Moments</li>
+      <li><a href="https://www.blackharepress.com/satans-butterfly/" target="_blank">"Satan's Butterfly"</a> — Black Hare Press Dark Moments</li>
+      <li><a href="https://www.blackharepress.com/lockdown-horror-2/" target="_blank">"Sissy Fuss"</a> — Black Hare Press Lockdown Horror #2</li>
+      <li><a href="http://potatosoupjournal.com/tearful-triangle-by-shawn-m-klimek/" target="_blank">"Tearful Triangle"</a> — Potato Soup Journal</li>
+      <li><a href="https://www.blackharepress.com/hot-bunk/" target="_blank">"The Hot Bunk"</a> — Black Hare Press Dark Moments</li>
+      <li><a href="https://cafelitcreativecafe.blogspot.com/search/label/Waiters%20Are%20People%20Too" target="_blank">"Waiters are People, Too"</a> — CafeLit, 2019</li>
+      <li><a href="https://cafelitcreativecafe.blogspot.com/search?q=wave+goodbye" target="_blank">"Wave Goodbye"</a> — CafeLit, 2018</li>
+      <li><a href="http://www.blackharepress.com/well-always-have-venus/" target="_blank">"We'll Always Have Venus"</a> — Black Hare Press Dark Moments</li>
+      <li><a href="http://spillwords.com/the-winner-of-our-discotheque/" target="_blank">"Winner of our Discotheque"</a> — Spillwords, 2019 (with Stephan Klimek)</li>
+      <li><a href="https://spillwords.com/world-falls/" target="_blank">"World Falls"</a> — Spillwords, 2019</li>
+      <li><a href="https://books2read.com/lockdown-fantasy-8" target="_blank">"From Heaven" &amp; "Faerie Display"</a> — Lockdown Fantasy #8, Black Hare Press</li>
+      <li><a href="https://books2read.com/lockdown-sci-fi-7" target="_blank">"On the Tip" &amp; "The Last Loophole"</a> — Lockdown Sci-Fi #7, Black Hare Press</li>
+    </ul>
+
+    <h3>Free Reads Online — Poetry</h3>
+    <ul class="pub-list">
+      <li><a href="http://spillwords.com/all-hands-on-deck/" target="_blank">"All Hands on Deck"</a> — Spillwords, 2019</li>
+      <li><a href="https://www.blackharepress.com/lockdown-fantasy-1/" target="_blank">"Banepyre and Bitewind"</a> — Lockdown Fantasy #1, Black Hare Press</li>
+      <li><a href="https://books2read.com/lockdown-sci-fi-1" target="_blank">"Hivemind of the Universal Donor"</a> — Lockdown Sci-Fi #1, Black Hare Press</li>
+      <li><a href="https://onthepremises.com/minis/mini_45/" target="_blank">"Huffed the Wolf"</a> — On The Premises Mini-Contest #45</li>
+      <li><a href="https://sites.google.com/newmyths.com/newmythscomarchive/poems/the-right-stuff" target="_blank">"The Right Stuff"</a> — NewMyths, Issue 38, 2017</li>
+      <li><a href="https://sites.google.com/newmyths.com/newmythscomarchive/poems/vampire-valentinessues/2017/issue-40" target="_blank">"Vampire Valentine"</a> — NewMyths, Issue 40, 2017</li>
+      <li><a href="http://jayzohub.com/darkmythproductions/theworldofmyth/77/poems/vampire_valentine.html" target="_blank">"Vampire Valentine"</a> — World of Myth Magazine, 2019</li>
+      <li><a href="https://www.lightenup-online.co.uk/" target="_blank">"Where Angels Dance"</a> — Lighten Up Online, December 2025</li>
+      <li><a href="https://winningwriters.com/past-winning-entries/where-pixies-relax" target="_blank">"Where Pixies Relax"</a> — Winning Writers Wergle Flomp Humorous Poetry Contest, 2019</li>
+    </ul>
+
+    <h3>Available to Purchase — Featured</h3>
+    <ul class="pub-list">
+      <li><a href="https://www.amazon.com/dp/1914320069" target="_blank">"Funny and Sad"</a> in <em>Death House: Mortem Cycle, Vol. 1</em> — Breaking Rules Europe</li>
+      <li><a href="http://www.amazon.com/gp/product/B07VTPJSTZ" target="_blank">"A Bitter Aftertaste"</a> (&amp; nine other stories) — <em>Curses &amp; Cauldrons</em>, Blood Song Books</li>
+      <li><a href="http://www.amazon.com/gp/product/B07WZBWT9K" target="_blank">"Bite of the Flamingo Boa"</a> — <em>Deep Space</em>, Black Hare Press</li>
+      <li><a href="https://www.amazon.com/dp/B093C82WBN" target="_blank">"Hunger of the Nian," "Manticore Hide," &amp; "Corpse Flies"</a> — <em>Mythical Creatures of Asia</em>, Insignia Drabbles Vol. 3</li>
+      <li><a href="https://www.amazon.com/dp/B07VJZVM5C" target="_blank">"The Fateful Voyage of the Fortunate Seven"</a> — <em>Grumpy Old Gods, Vol. 2</em>, Stormdance Publications</li>
+      <li><a href="https://www.amazon.com/gp/product/B07PQ2HYZ9/" target="_blank">"Zeus Really Has to Go"</a> — <em>Grumpy Old Gods, Vol. 1</em>, Storm Dance Publishing</li>
+      <li><a href="https://www.amazon.com/gp/product/B07Q5VRCWL" target="_blank">"Good Morning and Farewell"</a> (&amp; 4 other stories) — <em>Worlds</em>, Dark Drabble Book 1, Black Hare Press</li>
+      <li><a href="https://www.amazon.com/gp/product/B07RGXYMFR" target="_blank">"First Revenge"</a> (&amp; 4 other stories) — <em>Angels</em>, Dark Drabble Book 2, Black Hare Press</li>
+      <li><a href="https://www.amazon.com/gp/product/B08WGK1L69" target="_blank">"Eye of the Storm Giant"</a> — <em>Dark Moments: Year Three</em>, Black Hare Press</li>
+      <li><a href="https://www.amazon.com/gp/product/1925985075" target="_blank">"The Captain's Dinner"</a> — <em>Treasure Chest: Selected Short Stories</em>, Zombie Pirate Publishing</li>
+      <li><a href="https://www.amazon.com/gp/product/B08TB45QSG/" target="_blank">"The Penguin Leaped"</a> — <em>Poetica 2</em>, Inner Circle Writers' Group, Clarendon House</li>
+      <li><a href="https://www.amazon.com/gp/product/B08RDS76JT" target="_blank">"Dark Enough to See"</a> (&amp; 2 other stories) — <em>Rowan &amp; Oak</em>, Iron Faerie Publishing</li>
+      <li><a href="https://www.amazon.com/gp/product/B0DPSFDHVY" target="_blank">"Survivalist" &amp; "Cabin Made of Bones"</a> — <em>Cabin</em>, Flash Frights Book 3, Black Hare Press</li>
+      <li><a href="https://www.amazon.com/gp/product/B0D9F9JG5N" target="_blank">"The Poppet Tree"</a> — <em>Hex</em>, Flash Frights Book 2, Black Hare Press</li>
+      <li><a href="https://www.amazon.com/gp/product/B0D4JFFSNV" target="_blank">"The Meatless Unlife Aftertaste Diet" &amp; "The Mimicry Mutation"</a> — <em>Reap</em>, Flash Frights Book 1, Black Hare Press</li>
+      <li><a href="https://www.amazon.com/42-Stories-Anthology-Presents-Book-ebook/dp/B0DJMGJXGZ" target="_blank">"Old Vat-Grown Caretakers Already Know New Tricks"</a> — <em>42 Stories Anthology</em></li>
+      <li><a href="https://www.amazon.com/dp/B0FNB9VJSH" target="_blank">"Surface Tension"</a> (&amp; more) — <em>Drabbles: Second Wave</em>, Starry-Eyed Press</li>
+      <li><a href="http://www.clarendonhousebooks.com/anthologies" target="_blank">Multiple stories &amp; poems</a> — Clarendon House Publishing (ICWG Anthologies)</li>
+    </ul>
+
+    <h3>Coming Soon</h3>
+    <ul class="pub-list">
+      <li><a href="https://www.amazon.com/dp/B0DPSGWFJ4" target="_blank">"Dust to Dust"</a> — <em>Thorns</em>, Black Hare Press (accepted, forthcoming)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- AUTHOR PAGES -->
+<section id="author-pages">
+  <div class="container">
+    <div class="section-label">Find the Author</div>
+    <h2>Author Pages &amp; Profiles</h2>
+    <div class="links-grid">
+      <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank" class="link-item"><span class="link-dot"></span>Amazon Author Page</a>
+      <a href="https://www.goodreads.com/author/show/18163090.Shawn_Klimek" target="_blank" class="link-item"><span class="link-dot"></span>Goodreads</a>
+      <a href="https://www.bookbub.com/profile/shawn-m-klimek" target="_blank" class="link-item"><span class="link-dot"></span>BookBub</a>
+      <a href="https://www.facebook.com/shawnmklimekauthor/" target="_blank" class="link-item"><span class="link-dot"></span>Facebook Author Page</a>
+      <a href="https://www.blackharepress.com/shawn-m-klimek" target="_blank" class="link-item"><span class="link-dot"></span>Black Hare Press</a>
+      <a href="http://spillwords.com/author/shawnmklimek/" target="_blank" class="link-item"><span class="link-dot"></span>Spillwords Press</a>
+      <a href="https://www.fridayflashfiction.com/g-l.html" target="_blank" class="link-item"><span class="link-dot"></span>Friday Flash Fiction</a>
+      <a href="https://sites.google.com/newmyths.com/newmyths-com-home/contributors/k" target="_blank" class="link-item"><span class="link-dot"></span>NewMyths</a>
+      <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank" class="link-item"><span class="link-dot"></span>Lulu (Hungry Thing)</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="container">
+    <div class="section-label">Media</div>
+    <h2>Video</h2>
+    <ul class="video-list">
+      <li><a href="https://www.youtube.com/watch?v=XTn13kGXfrY" target="_blank">"Heavy is the Head that Wears the Crown" — read by Wendy Vogel, The Poetics by Sweetycat Press</a></li>
+      <li><a href="https://www.youtube.com/watch?v=niR76PKVvqQ" target="_blank">"Remembering Gladys" — from <em>Hungry Thing</em></a></li>
+      <li><a href="https://www.youtube.com/watch?v=BmBcC0-AFAM" target="_blank"><em>Hungry Thing</em> — Book preview by Dr. Jesu Maria Estrada</a></li>
+      <li><a href="https://www.youtube.com/watch?v=OkZof0_RqTc" target="_blank"><em>Hungry Thing</em> — Book review by Daniel Roche</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="odysseysbypenandkeytrim.JPG" alt="Odysseys by Pen and Key">
+  <p>© Shawn M. Klimek — All rights reserved</p>
+  <p style="margin-top:0.4rem; font-size:0.75rem; letter-spacing:0.05em; font-family:'Crimson Text',serif; font-style:italic;">All works by Shawn M. Klimek except where otherwise attributed.</p>
+</footer>
+
+</body>
+</html>
