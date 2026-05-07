@@ -10,7 +10,6 @@
   :root {
     --ink: #0d0d12;
     --deep: #10101a;
-    --surface: #16161f;
     --panel: #1c1c28;
     --border: #2a2a3a;
     --muted: #4a4a6a;
@@ -44,66 +43,61 @@
   /* ── HERO ── */
   header {
     position: relative;
-    min-height: 440px;
+    min-height: 380px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     border-bottom: 1px solid var(--border);
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('odysseysbypenandkeytrim.JPG');
-    background-size: cover;
-    background-position: center 30%;
-    opacity: 0.25;
-  }
-
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at center, transparent 10%, rgba(13,13,18,0.65) 75%),
-      linear-gradient(to bottom, rgba(13,13,18,0.1) 0%, rgba(13,13,18,0.9) 100%);
+    z-index: 1;
   }
 
   .hero-content {
-    position: relative;
-    z-index: 2;
     text-align: center;
-    padding: 2.5rem 2rem 3rem;
-    width: 100%;
+    padding: 4rem 2rem;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.45em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    animation: fadeDown 1s ease both;
   }
 
   .site-title {
     font-family: 'Cinzel', serif;
-    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-size: clamp(2.8rem, 8vw, 5rem);
     font-weight: 600;
     color: var(--cream);
-    letter-spacing: 0.08em;
-    line-height: 1.1;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.9);
-    animation: fadeDown 1s ease both;
+    letter-spacing: 0.06em;
+    line-height: 1.05;
+    text-shadow: 0 0 60px rgba(200,168,75,0.12), 0 2px 30px rgba(0,0,0,0.9);
+    animation: fadeDown 1s 0.1s ease both;
+  }
+
+  .hero-rule {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+    margin: 1.4rem auto;
+    animation: fadeDown 1s 0.2s ease both;
   }
 
   .site-subtitle {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 1.2rem;
-    color: var(--gold);
+    font-size: 1.25rem;
+    color: var(--silver);
     letter-spacing: 0.2em;
-    margin-top: 0.5rem;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
-    animation: fadeDown 1s 0.2s ease both;
+    animation: fadeDown 1s 0.3s ease both;
   }
 
   /* ── NAV ── */
   nav {
-    background: rgba(13,13,18,0.96);
+    background: rgba(13,13,18,0.97);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
@@ -116,15 +110,15 @@
     justify-content: center;
     flex-wrap: wrap;
     list-style: none;
-    max-width: 860px;
+    max-width: 900px;
     margin: 0 auto;
   }
 
   nav ul li a {
     display: block;
-    padding: 0.85rem 1.1rem;
+    padding: 0.85rem 1.05rem;
     font-family: 'Cinzel', serif;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.16em;
     color: var(--silver);
     text-decoration: none;
@@ -150,11 +144,11 @@
 
   .section-label {
     font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
     color: var(--gold);
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   h2 {
@@ -168,7 +162,7 @@
 
   h3 {
     font-family: 'Cinzel', serif;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     letter-spacing: 0.2em;
     color: var(--gold);
     text-transform: uppercase;
@@ -184,7 +178,7 @@
   /* ── ABOUT ── */
   .about-grid {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 185px 1fr;
     gap: 2.5rem;
     align-items: start;
   }
@@ -198,36 +192,121 @@
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid var(--gold-dim);
-    box-shadow: 0 0 28px rgba(200,168,75,0.15), 0 0 50px rgba(0,0,0,0.5);
+    box-shadow: 0 0 28px rgba(200,168,75,0.12), 0 0 50px rgba(0,0,0,0.6);
     transition: border-color 0.3s, box-shadow 0.3s;
     margin: 0 auto;
   }
 
   .avatar-link:hover {
     border-color: var(--gold);
-    box-shadow: 0 0 40px rgba(200,168,75,0.3), 0 0 80px rgba(0,0,0,0.6);
+    box-shadow: 0 0 40px rgba(200,168,75,0.25), 0 0 80px rgba(0,0,0,0.7);
   }
 
   .avatar-link img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 15%;
     display: block;
+    filter: sepia(10%) contrast(1.05);
   }
 
   .avatar-hint {
     font-family: 'Cinzel', serif;
-    font-size: 0.58rem;
+    font-size: 0.56rem;
     letter-spacing: 0.1em;
     color: var(--muted);
     text-transform: uppercase;
-    margin-top: 0.6rem;
+    margin-top: 0.7rem;
+  }
+
+  .divider {
+    text-align: center;
+    color: var(--gold-dim);
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    margin: 1.5rem 0;
   }
 
   @media (max-width: 600px) {
     .about-grid { grid-template-columns: 1fr; }
     .avatar-hint { display: none; }
+  }
+
+  /* ── BOOKS ── */
+  .book-showcase {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .book-cover {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    transition: box-shadow 0.3s;
+  }
+
+  .book-cover:hover {
+    box-shadow: 0 12px 60px rgba(200,168,75,0.15), 0 8px 40px rgba(0,0,0,0.7);
+  }
+
+  .book-info h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    border: none;
+    padding: 0;
+    margin: 0 0 0.3rem;
+    text-transform: none;
+  }
+
+  .book-byline {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+
+  .book-buy-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .buy-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.55rem 1.3rem;
+    transition: background 0.2s, color 0.2s;
+    display: inline-block;
+  }
+
+  .buy-btn:hover { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+
+  .buy-btn.secondary {
+    background: transparent;
+    color: var(--gold);
+    border-color: var(--gold-dim);
+  }
+
+  .buy-btn.secondary:hover { background: var(--gold); color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .book-showcase { grid-template-columns: 1fr; }
   }
 
   /* ── SERIALS ── */
@@ -289,7 +368,7 @@
 
   .pub-type {
     font-family: 'Cinzel', serif;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     letter-spacing: 0.15em;
     color: var(--muted);
     text-transform: uppercase;
@@ -299,11 +378,15 @@
   /* ── BLOG ── */
   .blog-posts { list-style: none; }
   .blog-posts li { padding: 1rem 0; border-bottom: 1px solid var(--border); }
-  .blog-posts li a { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--cream); }
+  .blog-posts li a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--cream);
+  }
   .blog-posts li a:hover { color: var(--gold); }
 
   .post-date {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     color: var(--muted);
     font-family: 'Cinzel', serif;
     letter-spacing: 0.1em;
@@ -350,7 +433,7 @@
   }
 
   .footer-logo {
-    height: 85px;
+    height: 80px;
     width: auto;
     opacity: 0.55;
     margin: 0 auto 1.2rem;
@@ -360,10 +443,8 @@
 
   .footer-logo:hover { opacity: 0.85; }
 
-  .divider { text-align: center; color: var(--gold-dim); font-size: 1rem; letter-spacing: 0.5em; margin: 1.5rem 0; }
-
   @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
+    from { opacity: 0; transform: translateY(-14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 </style>
@@ -372,17 +453,21 @@
 
 <canvas id="stars"></canvas>
 
+<!-- HERO -->
 <header>
-  <div class="hero-bg"></div>
   <div class="hero-content">
+    <div class="hero-eyebrow">Speculative Fiction &nbsp;·&nbsp; Poetry &nbsp;·&nbsp; Dark Humor</div>
     <div class="site-title">Shawn M. Klimek</div>
+    <div class="hero-rule"></div>
     <div class="site-subtitle">Author &nbsp;·&nbsp; Poet &nbsp;·&nbsp; Storyteller</div>
   </div>
 </header>
 
+<!-- NAV -->
 <nav>
   <ul>
     <li><a href="#about">About</a></li>
+    <li><a href="#books">Books</a></li>
     <li><a href="#serials">Serials</a></li>
     <li><a href="#blog">Blog</a></li>
     <li><a href="#publications">Publications</a></li>
@@ -391,21 +476,21 @@
   </ul>
 </nav>
 
+<!-- ABOUT -->
 <section id="about">
   <div class="container">
     <div class="section-label">About the Author</div>
-    <h2>Shawn M. Klimek</h2>
     <div class="about-grid">
       <div class="avatar-wrap">
-        <a href="Shawn_May2017.jpg" target="_blank" class="avatar-link" title="Click to view author photo">
-          <img src="avatar_crop.png" alt="Jot in the Dark mascot — click to see author photo">
+        <a href="Noneko_Sleeping_on_My_Hand.jpg" target="_blank" class="avatar-link" title="Click for another view">
+          <img src="Shawn_May2017.jpg" alt="Shawn M. Klimek">
         </a>
-        <p class="avatar-hint">Click to see author photo</p>
+        <p class="avatar-hint">Click for another view</p>
       </div>
       <div>
         <p>Shawn M. Klimek is a speculative fiction author and poet whose work spans science fiction, fantasy, horror, and humorous verse. With dozens of published short stories and poems appearing in anthologies and magazines across multiple continents, he writes with equal comfort in the darkly macabre and the delightfully absurd.</p>
-        <p>His debut collection, <em>Hungry Thing</em>, is available via Lulu. He is currently at work on two short story collections: a science fiction anthology and a fantasy anthology, both forthcoming under Jot in the Dark Publishing.</p>
-        <p>Klimek's work has appeared in publications by Black Hare Press, Clarendon House, Zombie Pirate Publishing, Spillwords Press, NewMyths, and many others. He has also won recognition in the <em>Winning Writers</em> Wergle Flomp Humorous Poetry Contest.</p>
+        <p>He is currently at work on two short story collections — a science fiction anthology and a fantasy anthology — both forthcoming under Jot in the Dark Publishing.</p>
+        <p>His work has appeared in publications by Black Hare Press, Clarendon House, Zombie Pirate Publishing, Spillwords Press, NewMyths, and many others. He has also won recognition in the <em>Winning Writers</em> Wergle Flomp Humorous Poetry Contest.</p>
         <div class="divider">· · ·</div>
         <p><a href="https://www.facebook.com/shawnmklimekauthor/" target="_blank">Facebook Author Page</a> &nbsp;·&nbsp; <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank">Amazon</a> &nbsp;·&nbsp; <a href="https://www.goodreads.com/author/show/18163090.Shawn_Klimek" target="_blank">Goodreads</a></p>
       </div>
@@ -413,6 +498,30 @@
   </div>
 </section>
 
+<!-- BOOKS -->
+<section id="books">
+  <div class="container">
+    <div class="section-label">Published Books</div>
+    <div class="book-showcase">
+      <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank">
+        <img src="Hungry_Thing_Ad_2024_Tiphany_V3.jpg" alt="Hungry Thing by Shawn M. Klimek" class="book-cover">
+      </a>
+      <div class="book-info">
+        <h3>Hungry Thing</h3>
+        <p class="book-byline">Written by Shawn M. Klimek &nbsp;·&nbsp; Illustrated by Norbert Somosi</p>
+        <p>A dark fantasy story told in five poems — <em>Hungry Thing</em> follows the fate of a young girl named Gladys in a tale that is by turns lyrical, eerie, and unforgettable. Praised by reviewers as "something Lovecraft might do if Lovecraft wrote poetry," this debut collection is a collaboration between word and image unlike any other.</p>
+        <p style="font-style:italic; color:var(--silver); font-size:0.95rem;">"It's extremely rare to read a book of any kind in which the sentences, the phrases, sing — but <em>Hungry Thing</em> does just that."</p>
+        <div class="book-buy-links">
+          <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank" class="buy-btn">Buy on Lulu</a>
+          <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank" class="buy-btn secondary">Amazon</a>
+          <a href="https://www.barnesandnoble.com/s/shawn+klimek" target="_blank" class="buy-btn secondary">Barnes &amp; Noble</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERIALS -->
 <section id="serials">
   <div class="container">
     <div class="section-label">Serial Fiction</div>
@@ -433,6 +542,7 @@
   </div>
 </section>
 
+<!-- BLOG -->
 <section id="blog">
   <div class="container">
     <div class="section-label">Author Blog</div>
@@ -456,15 +566,11 @@
   </div>
 </section>
 
+<!-- PUBLICATIONS -->
 <section id="publications">
   <div class="container">
     <div class="section-label">Bibliography</div>
     <h2>Publications</h2>
-
-    <h3>Books</h3>
-    <ul class="pub-list">
-      <li><span class="pub-type">book</span> <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank"><em>Hungry Thing</em></a> — Poetry collection (Lulu)</li>
-    </ul>
 
     <h3>Free Reads Online — Fiction</h3>
     <ul class="pub-list">
@@ -538,6 +644,7 @@
   </div>
 </section>
 
+<!-- AUTHOR PAGES -->
 <section id="author-pages">
   <div class="container">
     <div class="section-label">Find the Author</div>
@@ -556,6 +663,7 @@
   </div>
 </section>
 
+<!-- VIDEOS -->
 <section id="videos">
   <div class="container">
     <div class="section-label">Media</div>
@@ -569,6 +677,7 @@
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <img src="JotintheDarkPublishingLogotrim.png" alt="Jot in the Dark Publishing" class="footer-logo">
   <p>© Shawn M. Klimek — All rights reserved</p>
@@ -586,7 +695,7 @@ function resize() {
 
 function drawStars() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const count = Math.floor((canvas.width * canvas.height) / 3500);
+  const count = Math.floor((canvas.width * canvas.height) / 3200);
   for (let i = 0; i < count; i++) {
     const x = Math.random() * canvas.width;
     const y = Math.random() * canvas.height;
@@ -597,16 +706,16 @@ function drawStars() {
     ctx.fillStyle = `rgba(210, 200, 255, ${alpha})`;
     ctx.fill();
   }
-  for (let i = 0; i < 22; i++) {
+  for (let i = 0; i < 24; i++) {
     const x = Math.random() * canvas.width;
     const y = Math.random() * canvas.height;
-    const r = Math.random() * 1.2 + 1.0;
+    const r = Math.random() * 1.1 + 1.0;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(255, 248, 230, 0.92)';
     ctx.fill();
     const glow = ctx.createRadialGradient(x, y, 0, x, y, r * 6);
-    glow.addColorStop(0, 'rgba(255,248,220,0.25)');
+    glow.addColorStop(0, 'rgba(255,248,220,0.22)');
     glow.addColorStop(1, 'rgba(255,248,220,0)');
     ctx.beginPath();
     ctx.arc(x, y, r * 6, 0, Math.PI * 2);
