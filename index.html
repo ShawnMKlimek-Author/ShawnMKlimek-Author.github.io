@@ -11,6 +11,7 @@
     --ink: #0d0d12;
     --deep: #10101a;
     --panel: #1c1c28;
+    --panel-hover: #22223a;
     --border: #2a2a3a;
     --muted: #4a4a6a;
     --silver: #9898b8;
@@ -43,38 +44,30 @@
   /* ── HERO ── */
   header {
     position: relative;
-    min-height: 380px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--border);
     z-index: 1;
-  }
-
-  .hero-content {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 3.5rem 2rem 0;
+    border-bottom: none;
   }
 
   .hero-eyebrow {
     font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     letter-spacing: 0.45em;
     color: var(--gold-dim);
     text-transform: uppercase;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
     animation: fadeDown 1s ease both;
   }
 
   .site-title {
     font-family: 'Cinzel', serif;
-    font-size: clamp(2.8rem, 8vw, 5rem);
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
     font-weight: 600;
     color: var(--cream);
     letter-spacing: 0.06em;
     line-height: 1.05;
-    text-shadow: 0 0 60px rgba(200,168,75,0.12), 0 2px 30px rgba(0,0,0,0.9);
+    text-shadow: 0 0 80px rgba(200,168,75,0.1), 0 2px 30px rgba(0,0,0,0.9);
     animation: fadeDown 1s 0.1s ease both;
   }
 
@@ -82,17 +75,99 @@
     width: 80px;
     height: 1px;
     background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
-    margin: 1.4rem auto;
+    margin: 1.2rem auto;
     animation: fadeDown 1s 0.2s ease both;
   }
 
   .site-subtitle {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: var(--silver);
     letter-spacing: 0.2em;
+    margin-bottom: 3rem;
     animation: fadeDown 1s 0.3s ease both;
+  }
+
+  /* ── SECTION GRID (hero cards) ── */
+  .section-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+
+  .grid-card {
+    display: block;
+    background: var(--ink);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    transition: background 0.3s;
+  }
+
+  .grid-card:hover { background: var(--panel-hover); }
+
+  .grid-card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.18;
+    transition: opacity 0.4s, transform 0.5s;
+  }
+
+  .grid-card:hover .grid-card-bg {
+    opacity: 0.28;
+    transform: scale(1.04);
+  }
+
+  .grid-card-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    background: linear-gradient(to bottom, rgba(13,13,18,0.1) 0%, rgba(13,13,18,0.65) 100%);
+  }
+
+  .grid-card-icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.7rem;
+    opacity: 0.85;
+    filter: drop-shadow(0 0 8px rgba(200,168,75,0.4));
+  }
+
+  .grid-card-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .grid-card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    color: var(--pale);
+    line-height: 1.4;
+    max-width: 260px;
+  }
+
+  @media (max-width: 580px) {
+    .section-grid { grid-template-columns: 1fr; }
+    .grid-card { aspect-ratio: 3/1; }
   }
 
   /* ── NAV ── */
@@ -175,68 +250,10 @@
   a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
   a:hover { color: var(--cream); }
 
-  /* ── ABOUT ── */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 185px 1fr;
-    gap: 2.5rem;
-    align-items: start;
-  }
-
-  .avatar-wrap { text-align: center; }
-
-  .avatar-link {
-    display: block;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid var(--gold-dim);
-    box-shadow: 0 0 28px rgba(200,168,75,0.12), 0 0 50px rgba(0,0,0,0.6);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    margin: 0 auto;
-  }
-
-  .avatar-link:hover {
-    border-color: var(--gold);
-    box-shadow: 0 0 40px rgba(200,168,75,0.25), 0 0 80px rgba(0,0,0,0.7);
-  }
-
-  .avatar-link img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 15%;
-    display: block;
-    filter: sepia(10%) contrast(1.05);
-  }
-
-  .avatar-hint {
-    font-family: 'Cinzel', serif;
-    font-size: 0.56rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-top: 0.7rem;
-  }
-
-  .divider {
-    text-align: center;
-    color: var(--gold-dim);
-    font-size: 1rem;
-    letter-spacing: 0.5em;
-    margin: 1.5rem 0;
-  }
-
-  @media (max-width: 600px) {
-    .about-grid { grid-template-columns: 1fr; }
-    .avatar-hint { display: none; }
-  }
-
   /* ── BOOKS ── */
   .book-showcase {
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 300px 1fr;
     gap: 3rem;
     align-items: start;
   }
@@ -250,26 +267,24 @@
     transition: box-shadow 0.3s;
   }
 
-  .book-cover:hover {
-    box-shadow: 0 12px 60px rgba(200,168,75,0.15), 0 8px 40px rgba(0,0,0,0.7);
-  }
+  .book-cover:hover { box-shadow: 0 12px 60px rgba(200,168,75,0.15), 0 8px 40px rgba(0,0,0,0.7); }
 
   .book-info h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     font-weight: 400;
     font-style: italic;
     color: var(--cream);
-    letter-spacing: 0.02em;
     border: none;
     padding: 0;
     margin: 0 0 0.3rem;
     text-transform: none;
+    letter-spacing: 0.02em;
   }
 
   .book-byline {
     font-family: 'Cinzel', serif;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     letter-spacing: 0.15em;
     color: var(--muted);
     margin-bottom: 1.2rem;
@@ -305,16 +320,62 @@
 
   .buy-btn.secondary:hover { background: var(--gold); color: var(--ink); }
 
-  @media (max-width: 640px) {
-    .book-showcase { grid-template-columns: 1fr; }
+  @media (max-width: 640px) { .book-showcase { grid-template-columns: 1fr; } }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 185px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .avatar-wrap { text-align: center; }
+
+  .avatar-link {
+    display: block;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--gold-dim);
+    box-shadow: 0 0 28px rgba(200,168,75,0.12), 0 0 50px rgba(0,0,0,0.6);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin: 0 auto;
+  }
+
+  .avatar-link:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 40px rgba(200,168,75,0.25);
+  }
+
+  .avatar-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+    filter: sepia(10%) contrast(1.05);
+  }
+
+  .avatar-hint {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.7rem;
+  }
+
+  .divider { text-align: center; color: var(--gold-dim); font-size: 1rem; letter-spacing: 0.5em; margin: 1.5rem 0; }
+
+  @media (max-width: 600px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .avatar-hint { display: none; }
   }
 
   /* ── SERIALS ── */
-  .serials-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
+  .serials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 
   @media (max-width: 600px) { .serials-grid { grid-template-columns: 1fr; } }
 
@@ -366,23 +427,10 @@
   .pub-list li a { color: var(--pale); }
   .pub-list li a:hover { color: var(--gold); }
 
-  .pub-type {
-    font-family: 'Cinzel', serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-right: 0.4rem;
-  }
-
   /* ── BLOG ── */
   .blog-posts { list-style: none; }
   .blog-posts li { padding: 1rem 0; border-bottom: 1px solid var(--border); }
-  .blog-posts li a {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
-    color: var(--cream);
-  }
+  .blog-posts li a { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--cream); }
   .blog-posts li a:hover { color: var(--gold); }
 
   .post-date {
@@ -395,11 +443,7 @@
   }
 
   /* ── AUTHOR LINKS ── */
-  .links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 0.75rem;
-  }
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; }
 
   .link-item {
     display: flex;
@@ -432,19 +476,16 @@
     z-index: 1;
   }
 
-  .footer-logo {
-    height: 80px;
-    width: auto;
-    opacity: 0.55;
-    margin: 0 auto 1.2rem;
-    display: block;
-    transition: opacity 0.3s;
-  }
-
+  .footer-logo { height: 80px; width: auto; opacity: 0.55; margin: 0 auto 1.2rem; display: block; transition: opacity 0.3s; }
   .footer-logo:hover { opacity: 0.85; }
 
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 </style>
@@ -455,48 +496,64 @@
 
 <!-- HERO -->
 <header>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Speculative Fiction &nbsp;·&nbsp; Poetry &nbsp;·&nbsp; Dark Humor</div>
-    <div class="site-title">Shawn M. Klimek</div>
-    <div class="hero-rule"></div>
-    <div class="site-subtitle">Author &nbsp;·&nbsp; Poet &nbsp;·&nbsp; Storyteller</div>
-  </div>
+  <div class="hero-eyebrow">Speculative Fiction &nbsp;·&nbsp; Poetry &nbsp;·&nbsp; Dark Humor</div>
+  <div class="site-title">Shawn M. Klimek</div>
+  <div class="hero-rule"></div>
+  <div class="site-subtitle">Author &nbsp;·&nbsp; Poet &nbsp;·&nbsp; Storyteller</div>
 </header>
+
+<!-- SECTION GRID -->
+<div class="section-grid">
+
+  <a href="#books" class="grid-card">
+    <div class="grid-card-bg" style="background-image: url('Hungry_Thing_Ad_2024_Tiphany_V3.jpg');"></div>
+    <div class="grid-card-inner">
+      <div class="grid-card-icon">📖</div>
+      <div class="grid-card-title">Books</div>
+      <div class="grid-card-desc">Hungry Thing &amp; forthcoming collections</div>
+    </div>
+  </a>
+
+  <a href="#publications" class="grid-card">
+    <div class="grid-card-bg" style="background-image: url('JotintheDarkPublishingLogotrim.png'); background-size: contain; background-repeat: no-repeat;"></div>
+    <div class="grid-card-inner">
+      <div class="grid-card-icon">✒️</div>
+      <div class="grid-card-title">Publications</div>
+      <div class="grid-card-desc">Dozens of stories &amp; poems in print and online</div>
+    </div>
+  </a>
+
+  <a href="#blog" class="grid-card">
+    <div class="grid-card-bg" style="background-image: url('odysseysbypenandkeytrim.JPG');"></div>
+    <div class="grid-card-inner">
+      <div class="grid-card-icon">🖊️</div>
+      <div class="grid-card-title">Blog</div>
+      <div class="grid-card-desc">Publishing news &amp; dispatches from the creative life</div>
+    </div>
+  </a>
+
+  <a href="#videos" class="grid-card">
+    <div class="grid-card-bg" style="background-image: url('Hungry_Thing_Ad_2024_Tiphany_V3.jpg'); background-position: center 80%;"></div>
+    <div class="grid-card-inner">
+      <div class="grid-card-icon">🎬</div>
+      <div class="grid-card-title">Videos</div>
+      <div class="grid-card-desc">Readings, reviews &amp; previews on YouTube</div>
+    </div>
+  </a>
+
+</div>
 
 <!-- NAV -->
 <nav>
   <ul>
-    <li><a href="#about">About</a></li>
     <li><a href="#books">Books</a></li>
-    <li><a href="#serials">Serials</a></li>
-    <li><a href="#blog">Blog</a></li>
     <li><a href="#publications">Publications</a></li>
-    <li><a href="#author-pages">Author Pages</a></li>
+    <li><a href="#blog">Blog</a></li>
     <li><a href="#videos">Videos</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#author-pages">Author Pages</a></li>
   </ul>
 </nav>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="section-label">About the Author</div>
-    <div class="about-grid">
-      <div class="avatar-wrap">
-        <a href="Noneko_Sleeping_on_My_Hand.jpg" target="_blank" class="avatar-link" title="Click for another view">
-          <img src="Shawn_May2017.jpg" alt="Shawn M. Klimek">
-        </a>
-        <p class="avatar-hint">Click for another view</p>
-      </div>
-      <div>
-        <p>Shawn M. Klimek is a speculative fiction author and poet whose work spans science fiction, fantasy, horror, and humorous verse. With dozens of published short stories and poems appearing in anthologies and magazines across multiple continents, he writes with equal comfort in the darkly macabre and the delightfully absurd.</p>
-        <p>He is currently at work on two short story collections — a science fiction anthology and a fantasy anthology — both forthcoming under Jot in the Dark Publishing.</p>
-        <p>His work has appeared in publications by Black Hare Press, Clarendon House, Zombie Pirate Publishing, Spillwords Press, NewMyths, and many others. He has also won recognition in the <em>Winning Writers</em> Wergle Flomp Humorous Poetry Contest.</p>
-        <div class="divider">· · ·</div>
-        <p><a href="https://www.facebook.com/shawnmklimekauthor/" target="_blank">Facebook Author Page</a> &nbsp;·&nbsp; <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank">Amazon</a> &nbsp;·&nbsp; <a href="https://www.goodreads.com/author/show/18163090.Shawn_Klimek" target="_blank">Goodreads</a></p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- BOOKS -->
 <section id="books">
@@ -518,51 +575,6 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- SERIALS -->
-<section id="serials">
-  <div class="container">
-    <div class="section-label">Serial Fiction</div>
-    <h2>Ongoing Stories</h2>
-    <p style="color:var(--silver); margin-bottom:2rem;">Serialized works-in-progress. Follow along as each story unfolds.</p>
-    <div class="serials-grid">
-      <div class="serial-card">
-        <h4>Ship of the Dead</h4>
-        <p>A horror-light serial — Part One now live in <em>World of Myth Magazine</em>. New installments to follow.</p>
-        <a href="https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/148/horror/ship-of-the-dead/index.html" target="_blank" class="btn">Read Part One →</a>
-      </div>
-      <div class="serial-card">
-        <h4>Science Fiction / Fantasy Serial</h4>
-        <p>A new serialized work coming soon. Details to be announced.</p>
-        <a href="#" class="btn">Coming Soon</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BLOG -->
-<section id="blog">
-  <div class="container">
-    <div class="section-label">Author Blog</div>
-    <h2>From the Desk</h2>
-    <p style="color:var(--silver); margin-bottom:1.5rem;">Publishing news, writing reflections, and dispatches from the creative life.</p>
-    <ul class="blog-posts">
-      <li>
-        <span class="post-date">April 15, 2026</span>
-        <a href="https://jotinthedark.blogspot.com/2026/04/ship-of-dead.html" target="_blank">Ship of the Dead</a>
-      </li>
-      <li>
-        <span class="post-date">March 10, 2026</span>
-        <a href="https://jotinthedark.blogspot.com/2026/03/better-without-ai.html" target="_blank">Better Without AI</a>
-      </li>
-      <li>
-        <span class="post-date">December 7, 2025</span>
-        <a href="https://jotinthedark.blogspot.com/2025/12/where-angels-dance-published.html" target="_blank">Where Angels Dance Published</a>
-      </li>
-    </ul>
-    <p style="margin-top:1.5rem;"><a href="https://jotinthedark.blogspot.com/" target="_blank">View all posts →</a></p>
   </div>
 </section>
 
@@ -644,6 +656,66 @@
   </div>
 </section>
 
+<!-- BLOG -->
+<section id="blog">
+  <div class="container">
+    <div class="section-label">Author Blog</div>
+    <h2>From the Desk</h2>
+    <p style="color:var(--silver); margin-bottom:1.5rem;">Publishing news, writing reflections, and dispatches from the creative life.</p>
+    <ul class="blog-posts">
+      <li>
+        <span class="post-date">April 15, 2026</span>
+        <a href="https://jotinthedark.blogspot.com/2026/04/ship-of-dead.html" target="_blank">Ship of the Dead</a>
+      </li>
+      <li>
+        <span class="post-date">March 10, 2026</span>
+        <a href="https://jotinthedark.blogspot.com/2026/03/better-without-ai.html" target="_blank">Better Without AI</a>
+      </li>
+      <li>
+        <span class="post-date">December 7, 2025</span>
+        <a href="https://jotinthedark.blogspot.com/2025/12/where-angels-dance-published.html" target="_blank">Where Angels Dance Published</a>
+      </li>
+    </ul>
+    <p style="margin-top:1.5rem;"><a href="https://jotinthedark.blogspot.com/" target="_blank">View all posts →</a></p>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="container">
+    <div class="section-label">Media</div>
+    <h2>Video</h2>
+    <ul class="video-list">
+      <li><a href="https://www.youtube.com/watch?v=XTn13kGXfrY" target="_blank">"Heavy is the Head that Wears the Crown" — read by Wendy Vogel, The Poetics by Sweetycat Press</a></li>
+      <li><a href="https://www.youtube.com/watch?v=niR76PKVvqQ" target="_blank">"Remembering Gladys" — from <em>Hungry Thing</em></a></li>
+      <li><a href="https://www.youtube.com/watch?v=BmBcC0-AFAM" target="_blank"><em>Hungry Thing</em> — Book preview by Dr. Jesu Maria Estrada</a></li>
+      <li><a href="https://www.youtube.com/watch?v=OkZof0_RqTc" target="_blank"><em>Hungry Thing</em> — Book review by Daniel Roche</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">About the Author</div>
+    <div class="about-grid">
+      <div class="avatar-wrap">
+        <a href="Noneko_Sleeping_on_My_Hand.jpg" target="_blank" class="avatar-link" title="Click for another view">
+          <img src="Shawn_May2017.jpg" alt="Shawn M. Klimek">
+        </a>
+        <p class="avatar-hint">Click for another view</p>
+      </div>
+      <div>
+        <p>Shawn M. Klimek is a speculative fiction author and poet whose work spans science fiction, fantasy, horror, and humorous verse. With dozens of published short stories and poems appearing in anthologies and magazines across multiple continents, he writes with equal comfort in the darkly macabre and the delightfully absurd.</p>
+        <p>He is currently at work on two short story collections — a science fiction anthology and a fantasy anthology — both forthcoming under Jot in the Dark Publishing.</p>
+        <p>His work has appeared in publications by Black Hare Press, Clarendon House, Zombie Pirate Publishing, Spillwords Press, NewMyths, and many others. He has also won recognition in the <em>Winning Writers</em> Wergle Flomp Humorous Poetry Contest.</p>
+        <div class="divider">· · ·</div>
+        <p><a href="https://www.facebook.com/shawnmklimekauthor/" target="_blank">Facebook Author Page</a> &nbsp;·&nbsp; <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank">Amazon</a> &nbsp;·&nbsp; <a href="https://www.goodreads.com/author/show/18163090.Shawn_Klimek" target="_blank">Goodreads</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- AUTHOR PAGES -->
 <section id="author-pages">
   <div class="container">
@@ -660,20 +732,6 @@
       <a href="https://sites.google.com/newmyths.com/newmyths-com-home/contributors/k" target="_blank" class="link-item"><span class="link-dot"></span>NewMyths</a>
       <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank" class="link-item"><span class="link-dot"></span>Lulu (Hungry Thing)</a>
     </div>
-  </div>
-</section>
-
-<!-- VIDEOS -->
-<section id="videos">
-  <div class="container">
-    <div class="section-label">Media</div>
-    <h2>Video</h2>
-    <ul class="video-list">
-      <li><a href="https://www.youtube.com/watch?v=XTn13kGXfrY" target="_blank">"Heavy is the Head that Wears the Crown" — read by Wendy Vogel, The Poetics by Sweetycat Press</a></li>
-      <li><a href="https://www.youtube.com/watch?v=niR76PKVvqQ" target="_blank">"Remembering Gladys" — from <em>Hungry Thing</em></a></li>
-      <li><a href="https://www.youtube.com/watch?v=BmBcC0-AFAM" target="_blank"><em>Hungry Thing</em> — Book preview by Dr. Jesu Maria Estrada</a></li>
-      <li><a href="https://www.youtube.com/watch?v=OkZof0_RqTc" target="_blank"><em>Hungry Thing</em> — Book review by Daniel Roche</a></li>
-    </ul>
   </div>
 </section>
 
