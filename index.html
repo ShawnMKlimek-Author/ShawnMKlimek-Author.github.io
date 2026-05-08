@@ -778,19 +778,8 @@
     <div class="section-label">Author Blog</div>
     <h2>From the Desk</h2>
     <p style="color:var(--silver); margin-bottom:1.5rem;">Publishing news, writing reflections, and dispatches from the creative life.</p>
-    <ul class="blog-posts">
-      <li>
-        <span class="post-date">April 15, 2026</span>
-        <a href="https://jotinthedark.blogspot.com/2026/04/ship-of-dead.html" target="_blank">Ship of the Dead</a>
-      </li>
-      <li>
-        <span class="post-date">March 10, 2026</span>
-        <a href="https://jotinthedark.blogspot.com/2026/03/better-without-ai.html" target="_blank">Better Without AI</a>
-      </li>
-      <li>
-        <span class="post-date">December 7, 2025</span>
-        <a href="https://jotinthedark.blogspot.com/2025/12/where-angels-dance-published.html" target="_blank">Where Angels Dance Published</a>
-      </li>
+    <ul class="blog-posts" id="blog-feed">
+      <li style="color:var(--muted); font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.1em;">Loading posts…</li>
     </ul>
     <p style="margin-top:1.5rem;"><a href="https://jotinthedark.blogspot.com/" target="_blank">View all posts →</a></p>
   </div>
@@ -922,6 +911,34 @@ window.addEventListener('resize', () => { resize(); drawStars(); });
 </script>
 
 <script>
+// ── BLOG RSS FEED ──
+(function() {
+  const FEED_URL = 'https://api.rss2json.com/v1/api.json?rss_url=' +
+    encodeURIComponent('https://jotinthedark.blogspot.com/feeds/posts/default?alt=rss') +
+    '&api_key=public&count=5';
+
+  const feedEl = document.getElementById('blog-feed');
+
+  fetch(FEED_URL)
+    .then(r => r.json())
+    .then(data => {
+      if (!data.items || data.items.length === 0) throw new Error('No posts');
+      feedEl.innerHTML = data.items.map(item => {
+        const date = new Date(item.pubDate);
+        const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        return `<li>
+          <span class="post-date">${dateStr}</span>
+          <a href="${item.link}" target="_blank">${item.title}</a>
+        </li>`;
+      }).join('');
+    })
+    .catch(() => {
+      feedEl.innerHTML = '<li style="color:var(--muted);">Visit <a href="https://jotinthedark.blogspot.com/" target="_blank">jotinthedark.blogspot.com</a> for the latest posts.</li>';
+    });
+})();
+</script>
+
+<script>
 // ── PUBLICATIONS DATA ──
 // access: 'free' = free online link, 'buy' = purchase link, 'none' = no link (defunct)
 const pubs = [
@@ -935,7 +952,7 @@ const pubs = [
   { title: '"Dark Trek"', publisher: 'World of Myth Magazine', year: 2020, genre: 'Horror', access: 'free', url: 'https://www.jayzomondarkmyth.com/darkmythproductions/theworldofmyth/83/horror/dark_trek/dark_trek.html' },
   { title: '"Dissatisfied Voters"', publisher: 'Potato Soup Journal (defunct)', year: 2019, genre: 'Humor', access: 'none', url: '' },
   { title: '"Feeding Time"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Horror', access: 'none', url: '' },
-  { title: '"From Heaven" & "Faerie Display"', publisher: 'Lockdown Fantasy #8, Black Hare Press', year: 2020, genre: 'Horror', access: 'free', url: 'https://books2read.com/lockdown-fantasy-8' },
+  { title: '"From Heaven" and "Faerie Display"', publisher: 'Lockdown Fantasy #8, Black Hare Press', year: 2020, genre: 'Horror', access: 'free', url: 'https://books2read.com/lockdown-fantasy-8' },
   { title: '"Goodbye, My Lush"', publisher: 'CafeLit Magazine', year: 2018, genre: 'Horror', access: 'free', url: 'https://www.cafelitmagazine.uk/2018/05/goodbye-my-lush.html' },
   { title: '"I Confess I Still Love You"', publisher: 'Pendora Magazine (defunct)', year: 2019, genre: 'Humor', access: 'none', url: '' },
   { title: '"Joseph and Me"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Sci-Fi', access: 'none', url: '' },
@@ -946,7 +963,7 @@ const pubs = [
   { title: '"Nothing Up My Sleeve"', publisher: 'Spillwords Press', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://spillwords.com/nothing-up-my-sleeve/' },
   { title: '"Nothing Up My Sleeve"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Fantasy', access: 'none', url: '' },
   { title: '"One More Beatdown"', publisher: 'Spillwords Press', year: 2019, genre: 'Fiction', access: 'free', url: 'http://spillwords.com/one-more-beatdown/' },
-  { title: '"On the Tip" & "The Last Loophole"', publisher: 'Lockdown Sci-Fi #7, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'free', url: 'https://books2read.com/lockdown-sci-fi-7' },
+  { title: '"On the Tip" and "The Last Loophole"', publisher: 'Lockdown Sci-Fi #7, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'free', url: 'https://books2read.com/lockdown-sci-fi-7' },
   { title: '"Priceless Jewels"', publisher: 'Friday Flash Fiction', year: 2018, genre: 'Fantasy', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/priceless-jewels-by-shawn-klimek' },
   { title: '"Psi of Relief"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'http://www.blackharepress.com/a-psi-of-relief/' },
   { title: '"Riddle of the Sphinx"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Horror', access: 'free', url: 'http://www.blackharepress.com/riddle-of-the-sphinx/' },
@@ -975,25 +992,25 @@ const pubs = [
   { title: '"Where Angels Dance"', publisher: 'Lighten Up Online', year: 2025, genre: 'Fantasy', access: 'free', url: 'https://www.lightenup-online.co.uk/' },
   { title: '"Where Pixies Relax"', publisher: 'Winning Writers Wergle Flomp Contest', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://winningwriters.com/past-winning-entries/where-pixies-relax' },
   // AVAILABLE TO PURCHASE
-  { title: '"A Bitter Aftertaste" (& 9 others)', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'http://www.amazon.com/gp/product/B07VTPJSTZ' },
+  { title: '"A Bitter Aftertaste" (& 9 others)', publisher: 'Curses and Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'http://www.amazon.com/gp/product/B07VTPJSTZ' },
   { title: '"A Murder of Crows"', publisher: 'A Tree Full of Crows, ed. Mandy Chandler', year: 2024, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Tree-Full-Crows-Anthology-ebook/dp/B0CZHJSJP3' },
   { title: '"Bite of the Flamingo Boa"', publisher: 'Deep Space, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'http://www.amazon.com/gp/product/B07WZBWT9K' },
-  { title: '"Dark Enough to See" (& 2 others)', publisher: 'Rowan & Oak, Iron Faerie Publishing', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/gp/product/B08RDS76JT' },
+  { title: '"Dark Enough to See" (& 2 others)', publisher: 'Rowan and Oak, Iron Faerie Publishing', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/gp/product/B08RDS76JT' },
   { title: '"Dust to Dust"', publisher: 'Thorns, Black Hare Press', year: 2025, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B0DPSGWFJ4' },
   { title: '"Eye of the Storm Giant"', publisher: 'Dark Moments: Year Three, Black Hare Press', year: 2022, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B08WGK1L69' },
   { title: '"First Revenge" (& 4 others)', publisher: 'Angels, Dark Drabble Book 2, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B07RGXYMFR' },
   { title: '"Funny and Sad"', publisher: 'Death House: Mortem Cycle Vol. 1, Breaking Rules Europe', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/1914320069' },
   { title: '"Good Morning and Farewell" (& 4 others)', publisher: 'Worlds, Dark Drabble Book 1, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/B07Q5VRCWL' },
-  { title: '"Hunger of the Nian," "Manticore Hide," & "Corpse Flies"', publisher: 'Mythical Creatures of Asia, Insignia Drabbles Vol. 3', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B093C82WBN' },
-  { title: '"It\'s About How You Look" & "What Came Before"', publisher: 'Run Rabbit Run, Dark Drabbles, Black Hare Press', year: 2023, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Run-Rabbit-Black-Hare-Press-ebook/dp/B0C1679Q59' },
+  { title: '"Hunger of the Nian," "Manticore Hide," and "Corpse Flies"', publisher: 'Mythical Creatures of Asia, Insignia Drabbles Vol. 3', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B093C82WBN' },
+  { title: '"It\'s About How You Look" and "What Came Before"', publisher: 'Run Rabbit Run, Dark Drabbles, Black Hare Press', year: 2023, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Run-Rabbit-Black-Hare-Press-ebook/dp/B0C1679Q59' },
   { title: '"Old Vat-Grown Caretakers Already Know New Tricks"', publisher: '42 Stories Anthology', year: 2024, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/42-Stories-Anthology-Presents-Book-ebook/dp/B0DJMGJXGZ' },
   { title: '"Surface Tension" (& more)', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
   { title: '"Who Summoned the Ambassador" (& 9 others)', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
   { title: '"Alien Memories"', publisher: 'Pocket SciFi: Drabble Contest One, Starry-Eyed Press', year: 2023, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0CMJV5WGC' },
-  { title: '"Survivalist" & "Cabin Made of Bones"', publisher: 'Cabin, Flash Frights Book 3, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0DPSFDHVY' },
+  { title: '"Survivalist" and "Cabin Made of Bones"', publisher: 'Cabin, Flash Frights Book 3, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0DPSFDHVY' },
   { title: '"The Captain\'s Dinner"', publisher: 'Treasure Chest, Zombie Pirate Publishing', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/1925985075' },
   { title: '"The Fateful Voyage of the Fortunate Seven"', publisher: 'Grumpy Old Gods Vol. 2, Stormdance Publications', year: 2019, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B07VJZVM5C' },
-  { title: '"The Meatless Unlife Aftertaste Diet" & "The Mimicry Mutation"', publisher: 'Reap, Flash Frights Book 1, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0D4JFFSNV' },
+  { title: '"The Meatless Unlife Aftertaste Diet" and "The Mimicry Mutation"', publisher: 'Reap, Flash Frights Book 1, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0D4JFFSNV' },
   { title: '"The Poppet Tree"', publisher: 'Hex, Flash Frights Book 2, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0D9F9JG5N' },
   { title: '"Zeus Really Has to Go"', publisher: 'Grumpy Old Gods Vol. 1, Storm Dance Publishing', year: 2019, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/gp/product/B07PQ2HYZ9/' },
   // CLARENDON HOUSE / ICWG
@@ -1005,10 +1022,10 @@ const pubs = [
   { title: '"Pregenesis"', publisher: 'Gold: Best from Clarendon House Anthologies Vol. 1, 2017/2018', year: 2018, genre: 'Humor', access: 'buy', url: 'https://www.amazon.com/Gold-Best-Clarendon-House-Anthologies-ebook/dp/B07MXHTRT5' },
   { title: '"World Falls"', publisher: 'Maelstrom: ICWG Literary Anthology 2019, Clarendon House', year: 2019, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Maelstrom-Circle-Writers-Literary-Anthology-ebook/dp/B0821T64Z3' },
   { title: '"Rebel Breakfast"', publisher: 'Portal: ICWG Children\'s Anthology 2019, Clarendon House', year: 2019, genre: 'Humor', access: 'buy', url: 'https://www.amazon.com/Portal-Circle-Writers-Childrens-Anthology-ebook/dp/B083WNYMSK' },
-  { title: '"Rocket Skin"', publisher: 'Tempest: ICWG Sci-Fi & Fantasy Anthology 2019, Clarendon House', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Tempest-Writers-Science-Fiction-Anthology-ebook/dp/B07W65833D' },
+  { title: '"Rocket Skin"', publisher: 'Tempest: ICWG Sci-Fi and Fantasy Anthology 2019, Clarendon House', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Tempest-Writers-Science-Fiction-Anthology-ebook/dp/B07W65833D' },
   { title: '"On the Tip"', publisher: 'Blaze: ICWG Flash Fiction Anthology 2019, Clarendon House', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Blaze-Circle-Writers-Fiction-Anthology-ebook/dp/B07T9F5GF1' },
   { title: '"Final Words Count"', publisher: 'Gleam: ICWG Flash Fiction Anthology 2019, Clarendon House', year: 2019, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Gleam-Circle-Writers-Fiction-Anthology-ebook/dp/B07YGS39TW' },
-  { title: '"Jack and Jim" (w/ Stephan Klimek & Jesse Doyle)', publisher: 'Poetica: ICWG Poetry Anthology 2019, Clarendon House', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B07X15DD82' },
+  { title: '"Jack and Jim" (w/ Stephan Klimek and Jesse Doyle)', publisher: 'Poetica: ICWG Poetry Anthology 2019, Clarendon House', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B07X15DD82' },
   { title: '"The Penguin Leaped"', publisher: 'Poetica 2: ICWG Poetry Anthology 2020, Clarendon House', year: 2020, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B08TB45QSG' },
   { title: '"A Spaceman"', publisher: 'Poetica 3: ICWG Poetry Anthology 2021, Clarendon House', year: 2021, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Second-Anthology-ebook/dp/B09528ZPS5' },
   { title: '"The Final Log of Captain Courage"', publisher: 'Poetica #7: ICWG Poetry Anthology 2022, Clarendon House', year: 2022, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B0B8XNSK4M' },
@@ -1016,7 +1033,7 @@ const pubs = [
   // REPRINTS
   { title: '"Pregenesis"', publisher: 'Personal Bests Journal Issue 1, ed. David Gardiner', year: 2020, genre: 'Humor', access: 'buy', url: 'https://www.amazon.com/dp/B08F6CGF9X' },
   { title: '"A Taste of Friendship"', publisher: 'Personal Bests Journal Issue 3, ed. David Gardiner', year: 2021, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/dp/B09M7HXNZ7' },
-  { title: '"The Right Stuff" & "Dark Trek"', publisher: 'Journeys: Writers Journal Blog, ed. Carnegie-Padgett & Jesmer', year: 2021, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B09JZ8JGQB' },
+  { title: '"The Right Stuff" and "Dark Trek"', publisher: 'Journeys: Writers Journal Blog, ed. Carnegie-Padgett and Jesmer', year: 2021, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B09JZ8JGQB' },
 ];
 
 // ── TABLE LOGIC ──
