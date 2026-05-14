@@ -458,6 +458,85 @@
   .link-item:hover { border-color: var(--gold-dim); color: var(--gold); }
   .link-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-dim); flex-shrink: 0; }
 
+  /* ── ANTHOLOGY GALLERY ── */
+  .gallery-row-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .gallery-item {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+
+  .gallery-item:hover { transform: translateY(-3px); }
+
+  .gallery-item img {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    transition: box-shadow 0.2s, border-color 0.2s;
+    background: var(--panel);
+  }
+
+  .gallery-item:hover img {
+    box-shadow: 0 8px 30px rgba(200,168,75,0.2), 0 4px 16px rgba(0,0,0,0.6);
+    border-color: var(--gold-dim);
+  }
+
+  .gallery-item-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .gallery-item.out-of-print img {
+    filter: saturate(0.4) brightness(0.8);
+  }
+
+  .gallery-item.out-of-print:hover img {
+    filter: saturate(0.6) brightness(0.9);
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: var(--panel);
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
   /* ── VIDEOS ── */
   .video-list { list-style: none; }
   .video-list li { padding: 0.6rem 0; border-bottom: 1px solid rgba(42,42,58,0.5); font-size: 0.95rem; }
@@ -682,6 +761,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#books">Books</a></li>
     <li><a href="#publications">Publications</a></li>
+    <li><a href="#gallery">Covers</a></li>
     <li><a href="#blog">Blog</a></li>
     <li><a href="#videos">Videos</a></li>
     <li><a href="#author-pages">Author Pages</a></li>
@@ -749,7 +829,7 @@
         <button class="filter-btn" data-filter="Sci-Fi">Sci-Fi</button>
         <button class="filter-btn" data-filter="Fantasy">Fantasy</button>
         <button class="filter-btn" data-filter="Humor">Humor</button>
-        <button class="filter-btn" data-filter="Drama">Drama</button>
+        <button class="filter-btn" data-filter="Crime">Crime</button>
       </div>
       <div class="pub-sort">
         <span class="sort-label">Sort by:</span>
@@ -778,7 +858,530 @@
   </div>
 </section>
 
-<!-- BLOG -->
+<!-- ANTHOLOGY GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-label">Anthology Covers</div>
+    <h2>In These Pages</h2>
+    <p style="color:var(--silver); margin-bottom:1rem;">Click any cover to purchase.</p>
+
+    <div class="gallery-row-label">Available to Purchase</div>
+    <div class="gallery-grid" id="gallery-available">
+
+      <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank" class="gallery-item">
+        <img src="covers/cover_hungry_thing.jpg" alt="Hungry Thing">
+        <div class="gallery-item-title">Hungry Thing</div>
+      </a>
+
+      <a href="https://www.amazon.com/Alone-Where-solitude-festers-devours/dp/B0FR3PFWWN" target="_blank" class="gallery-item">
+        <img src="covers/cover_alone_bhp.jpg" alt="Alone">
+        <div class="gallery-item-title">Alone</div>
+      </a>
+
+      <a href="https://www.amazon.com/Watership-Sideways-Alternate-Alice-Klimek/dp/B0FCXRKGHM" target="_blank" class="gallery-item">
+        <img src="covers/cover_watership_sideways_bhp.jpg" alt="Watership Sideways">
+        <div class="gallery-item-title">Watership Sideways</div>
+      </a>
+
+      <a href="https://www.amazon.com/Eldritch-Ether-Black-Hare-Press/dp/B09YQBRCV8" target="_blank" class="gallery-item">
+        <img src="covers/cover_eldritch_ether_bhp.jpg" alt="Eldritch &amp; Ether">
+        <div class="gallery-item-title">Eldritch &amp; Ether</div>
+      </a>
+
+      <a href="https://www.amazon.com/PASSENGER-13-D-Kershaw/dp/1925809668" target="_blank" class="gallery-item">
+        <img src="covers/cover_passenger_13_bhp.jpg" alt="Passenger 13">
+        <div class="gallery-item-title">Passenger 13</div>
+      </a>
+
+      <a href="https://www.amazon.com/Bad-Romance-Writers-Group-Special/dp/1925809463" target="_blank" class="gallery-item">
+        <img src="covers/cover_bad_romance_bhp.jpg" alt="Bad Romance">
+        <div class="gallery-item-title">Bad Romance</div>
+      </a>
+
+      <a href="https://www.amazon.com/Zero-Hour-2113-D-Kershaw/dp/0645073946" target="_blank" class="gallery-item">
+        <img src="covers/cover_zero_hour_bhp.jpg" alt="Zero Hour 2113">
+        <div class="gallery-item-title">Zero Hour 2113</div>
+      </a>
+
+      <a href="https://www.amazon.com/Jibbernocky-Books-Homes-Special-Charity/dp/1925809587" target="_blank" class="gallery-item">
+        <img src="covers/cover_jibbernocky_bhp.jpg" alt="Jibbernocky">
+        <div class="gallery-item-title">Jibbernocky</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B09KFCPP9Q" target="_blank" class="gallery-item">
+        <img src="covers/cover_eerie_christmas_bhp.jpg" alt="Eerie Christmas">
+        <div class="gallery-item-title">Eerie Christmas</div>
+      </a>
+
+      <a href="https://www.amazon.com/ANCIENTS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B08GLTFWLF" target="_blank" class="gallery-item">
+        <img src="covers/cover_ancients_bhp.jpg" alt="Ancients">
+        <div class="gallery-item-title">Ancients</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B07SGWSQVY" target="_blank" class="gallery-item">
+        <img src="covers/cover_monsters_bhp.jpg" alt="Monsters">
+        <div class="gallery-item-title">Monsters</div>
+      </a>
+
+      <a href="https://www.amazon.com/OCEANS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B0861JY24S" target="_blank" class="gallery-item">
+        <img src="covers/cover_oceans_bhp.jpg" alt="Oceans">
+        <div class="gallery-item-title">Oceans</div>
+      </a>
+
+      <a href="https://www.amazon.com/HATE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T41P54" target="_blank" class="gallery-item">
+        <img src="covers/cover_hate_bhp.jpg" alt="Hate">
+        <div class="gallery-item-title">Hate</div>
+      </a>
+
+      <a href="https://www.amazon.com/LOVE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T464H7" target="_blank" class="gallery-item">
+        <img src="covers/cover_love_bhp.jpg" alt="Love">
+        <div class="gallery-item-title">Love</div>
+      </a>
+
+      <a href="https://www.amazon.com/APOCALYPSE-Apocalyptic-Microfiction-Anthology-Drabbles-ebook/dp/B07Z38D57B" target="_blank" class="gallery-item">
+        <img src="covers/cover_apocalypse_bhp.jpg" alt="Apocalypse">
+        <div class="gallery-item-title">Apocalypse</div>
+      </a>
+
+      <a href="https://www.amazon.com/UNRAVEL-Crime-Microfiction-Anthology-Drabbles-ebook/dp/B07YD28DLB" target="_blank" class="gallery-item">
+        <img src="covers/cover_unravel_bhp.jpg" alt="Unravel">
+        <div class="gallery-item-title">Unravel</div>
+      </a>
+
+      <a href="https://www.amazon.com/BEYOND-Paranormal-Microfiction-Anthology-Drabbles-ebook/dp/B07V9XCN4L" target="_blank" class="gallery-item">
+        <img src="covers/cover_beyond_bhp.jpg" alt="Beyond">
+        <div class="gallery-item-title">Beyond</div>
+      </a>
+
+      <a href="https://www.amazon.com/666-Dark-Drabbles-Book-11-ebook/dp/B08HYN6LHW" target="_blank" class="gallery-item">
+        <img src="covers/cover_666_bhp.jpg" alt="666">
+        <div class="gallery-item-title">666</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B07RGXYMFR" target="_blank" class="gallery-item">
+        <img src="covers/cover_angels_bhp.jpg" alt="Angels">
+        <div class="gallery-item-title">Angels</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B07Q5VRCWL" target="_blank" class="gallery-item">
+        <img src="covers/cover_worlds_bhp.jpg" alt="Worlds">
+        <div class="gallery-item-title">Worlds</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B0DXBY42ZG" target="_blank" class="gallery-item">
+        <img src="covers/cover_drabbles_first_contact.jpg" alt="Drabbles: First Contact">
+        <div class="gallery-item-title">Drabbles: First Contact</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B0FNB9VJSH" target="_blank" class="gallery-item">
+        <img src="covers/cover_drabbles_second_wave.jpg" alt="Drabbles: Second Wave">
+        <div class="gallery-item-title">Drabbles: Second Wave</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B0CMJV5WGC" target="_blank" class="gallery-item">
+        <img src="covers/cover_pocket_scifi.jpg" alt="Pocket SciFi">
+        <div class="gallery-item-title">Pocket SciFi</div>
+      </a>
+
+      <a href="https://www.amazon.com/Tree-Full-Crows-Anthology-ebook/dp/B0CZHJSJP3" target="_blank" class="gallery-item">
+        <img src="covers/cover_tree_full_of_crows.jpg" alt="A Tree Full of Crows">
+        <div class="gallery-item-title">A Tree Full of Crows</div>
+      </a>
+
+      <a href="https://www.amazon.com/Run-Rabbit-Black-Hare-Press-ebook/dp/B0C1679Q59" target="_blank" class="gallery-item">
+        <img src="covers/cover_run_rabbit_run_bhp.jpg" alt="Run Rabbit Run">
+        <div class="gallery-item-title">Run Rabbit Run</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B0DPSFDHVY" target="_blank" class="gallery-item">
+        <img src="covers/cover_cabin_bhp.jpg" alt="Cabin">
+        <div class="gallery-item-title">Cabin</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B0D9F9JG5N" target="_blank" class="gallery-item">
+        <img src="covers/cover_hex_bhp.jpg" alt="Hex">
+        <div class="gallery-item-title">Hex</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B0D4JFFSNV" target="_blank" class="gallery-item">
+        <img src="covers/cover_reap_bhp.jpg" alt="Reap">
+        <div class="gallery-item-title">Reap</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B0DPSGWFJ4" target="_blank" class="gallery-item">
+        <img src="covers/cover_thorns_bhp.jpg" alt="Thorns">
+        <div class="gallery-item-title">Thorns</div>
+      </a>
+
+      <a href="https://www.amazon.com/42-Stories-Anthology-Presents-Book-ebook/dp/B0DJMGJXGZ" target="_blank" class="gallery-item">
+        <img src="covers/cover_42_stories_anthology.jpg" alt="42 Stories Anthology">
+        <div class="gallery-item-title">42 Stories Anthology</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B08WGK1L69" target="_blank" class="gallery-item">
+        <img src="covers/cover_dark_moments_3_bhp.jpg" alt="Dark Moments: Year Three">
+        <div class="gallery-item-title">Dark Moments: Year Three</div>
+      </a>
+
+      <a href="https://www.amazon.com/YEAR-FOUR-Dark-Moments-Patreon-ebook/dp/B09PV71C4B" target="_blank" class="gallery-item">
+        <img src="covers/cover_dark_moments_4_bhp.jpg" alt="Dark Moments: Year Four">
+        <div class="gallery-item-title">Dark Moments: Year Four</div>
+      </a>
+
+      <a href="https://www.amazon.com/YEAR-TWO-Dark-Moments-Book-ebook/dp/B08KF6LK9L" target="_blank" class="gallery-item">
+        <img src="covers/cover_dark_moments_2_bhp.jpg" alt="Dark Moments: Year Two">
+        <div class="gallery-item-title">Dark Moments: Year Two</div>
+      </a>
+
+      <a href="https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ" target="_blank" class="gallery-item">
+        <img src="covers/cover_dark_moments_1_bhp.jpg" alt="Dark Moments: Year One">
+        <div class="gallery-item-title">Dark Moments: Year One</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B08RDS76JT" target="_blank" class="gallery-item">
+        <img src="covers/cover_rowan_oak.jpg" alt="Rowan &amp; Oak">
+        <div class="gallery-item-title">Rowan &amp; Oak</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B08TB45QSG/" target="_blank" class="gallery-item">
+        <img src="covers/cover_poetica_2_icwg.jpg" alt="Poetica 2">
+        <div class="gallery-item-title">Poetica 2</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/1925985075" target="_blank" class="gallery-item">
+        <img src="covers/cover_treasure_chest_zpp.jpg" alt="Treasure Chest">
+        <div class="gallery-item-title">Treasure Chest</div>
+      </a>
+
+      <a href="http://www.amazon.com/gp/product/B07WZBWT9K" target="_blank" class="gallery-item">
+        <img src="covers/cover_deep_space_bhp.jpg" alt="Deep Space">
+        <div class="gallery-item-title">Deep Space</div>
+      </a>
+
+      <a href="http://www.amazon.com/gp/product/B07VTPJSTZ" target="_blank" class="gallery-item">
+        <img src="covers/cover_curses_cauldrons.jpg" alt="Curses &amp; Cauldrons">
+        <div class="gallery-item-title">Curses &amp; Cauldrons</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/1914320069" target="_blank" class="gallery-item">
+        <img src="covers/cover_death_house.jpg" alt="Death House">
+        <div class="gallery-item-title">Death House: Mortem Cycle</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B093C82WBN" target="_blank" class="gallery-item">
+        <img src="covers/cover_mythical_creatures_asia.jpg" alt="Mythical Creatures of Asia">
+        <div class="gallery-item-title">Mythical Creatures of Asia</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B09JZ8JGQB" target="_blank" class="gallery-item">
+        <img src="covers/cover_journeys.jpg" alt="Journeys">
+        <div class="gallery-item-title">Journeys</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B09M7HXNZ7" target="_blank" class="gallery-item">
+        <img src="covers/cover_personal_bests_3.jpg" alt="Personal Bests Journal #3">
+        <div class="gallery-item-title">Personal Bests Journal #3</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B08F6CGF9X" target="_blank" class="gallery-item">
+        <img src="covers/cover_personal_bests_1.jpg" alt="Personal Bests Journal #1">
+        <div class="gallery-item-title">Personal Bests Journal #1</div>
+      </a>
+
+      <a href="https://www.amazon.com/Poetica-15-Circle-Writers-Anthology-ebook/dp/B0CQK8JBLD" target="_blank" class="gallery-item">
+        <img src="covers/cover_poetica_15_icwg.jpg" alt="Poetica #15">
+        <div class="gallery-item-title">Poetica #15</div>
+      </a>
+
+      <a href="https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B0B8XNSK4M" target="_blank" class="gallery-item">
+        <img src="covers/cover_poetica_7_icwg.jpg" alt="Poetica #7">
+        <div class="gallery-item-title">Poetica #7</div>
+      </a>
+
+      <a href="https://www.amazon.com/Poetica-Circle-Writers-Second-Anthology-ebook/dp/B09528ZPS5" target="_blank" class="gallery-item">
+        <img src="covers/cover_poetica_3_icwg.jpg" alt="Poetica 3">
+        <div class="gallery-item-title">Poetica 3</div>
+      </a>
+
+      <a href="https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B07X15DD82" target="_blank" class="gallery-item">
+        <img src="covers/cover_poetica_icwg.jpg" alt="Poetica">
+        <div class="gallery-item-title">Poetica</div>
+      </a>
+
+      <a href="https://www.amazon.com/Gleam-Circle-Writers-Fiction-Anthology-ebook/dp/B07YGS39TW" target="_blank" class="gallery-item">
+        <img src="covers/cover_gleam_icwg.jpg" alt="Gleam">
+        <div class="gallery-item-title">Gleam</div>
+      </a>
+
+      <a href="https://www.amazon.com/Blaze-Circle-Writers-Fiction-Anthology-ebook/dp/B07T9F5GF1" target="_blank" class="gallery-item">
+        <img src="covers/cover_blaze_icwg.jpg" alt="Blaze">
+        <div class="gallery-item-title">Blaze</div>
+      </a>
+
+      <a href="https://www.amazon.com/Tempest-Writers-Science-Fiction-Anthology-ebook/dp/B07W65833D" target="_blank" class="gallery-item">
+        <img src="covers/cover_tempest_icwg.jpg" alt="Tempest">
+        <div class="gallery-item-title">Tempest</div>
+      </a>
+
+      <a href="https://www.amazon.com/Portal-Circle-Writers-Childrens-Anthology-ebook/dp/B083WNYMSK" target="_blank" class="gallery-item">
+        <img src="covers/cover_portal_icwg.jpg" alt="Portal">
+        <div class="gallery-item-title">Portal</div>
+      </a>
+
+      <a href="https://www.amazon.com/Maelstrom-Circle-Writers-Literary-Anthology-ebook/dp/B0821T64Z3" target="_blank" class="gallery-item">
+        <img src="covers/cover_maelstrom_icwg.jpg" alt="Maelstrom">
+        <div class="gallery-item-title">Maelstrom</div>
+      </a>
+
+      <a href="https://www.amazon.com/Gold-Best-Clarendon-House-Anthologies-ebook/dp/B07MXHTRT5" target="_blank" class="gallery-item">
+        <img src="covers/cover_gold_clarendon.jpg" alt="Gold">
+        <div class="gallery-item-title">Gold</div>
+      </a>
+
+      <a href="https://www.amazon.com/Cadence-Circle-Writers-Poetry-Anthology-ebook/dp/B07GFRL7Y5" target="_blank" class="gallery-item">
+        <img src="covers/cover_cadence_icwg.jpg" alt="Cadence">
+        <div class="gallery-item-title">Cadence</div>
+      </a>
+
+      <a href="https://www.amazon.com/Fireburst-Circle-Writers-Fiction-Anthology-ebook/dp/B07LDF3FVH" target="_blank" class="gallery-item">
+        <img src="covers/cover_fireburst_icwg.jpg" alt="Fireburst">
+        <div class="gallery-item-title">Fireburst</div>
+      </a>
+
+      <a href="https://www.amazon.com/Carrier-Wave-Circle-Writers-Anthology-ebook/dp/B07F6FVGS7" target="_blank" class="gallery-item">
+        <img src="covers/cover_carrier_wave_icwg.jpg" alt="Carrier Wave">
+        <div class="gallery-item-title">Carrier Wave</div>
+      </a>
+
+      <a href="https://www.amazon.com/Window-Circle-Writers-Childrens-Anthology-ebook/dp/B07DVPQMVV" target="_blank" class="gallery-item">
+        <img src="covers/cover_window_icwg.jpg" alt="Window">
+        <div class="gallery-item-title">Window</div>
+      </a>
+
+      <a href="https://www.amazon.com/Vortex-Circle-Writers-Literary-Anthology-ebook/dp/B07DJ5FNH7" target="_blank" class="gallery-item">
+        <img src="covers/cover_vortex_icwg.jpg" alt="Vortex">
+        <div class="gallery-item-title">Vortex</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B08GQJ11Z4" target="_blank" class="gallery-item">
+        <img src="covers/cover_dark_celebration.jpg" alt="Dark Celebration">
+        <div class="gallery-item-title">Dark Celebration</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B0813X8RRH" target="_blank" class="gallery-item">
+        <img src="covers/cover_dark_xmas.jpg" alt="Dark X-Mas">
+        <div class="gallery-item-title">Dark X-Mas</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B09FS89D7M" target="_blank" class="gallery-item">
+        <img src="covers/cover_100_ways_to_die.jpg" alt="100 Ways to Die">
+        <div class="gallery-item-title">100 Ways to Die</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/1737294761" target="_blank" class="gallery-item">
+        <img src="covers/cover_world_of_myth_anthology_4.jpg" alt="World of Myth Anthology IV">
+        <div class="gallery-item-title">World of Myth Anthology IV</div>
+      </a>
+
+      <a href="https://www.amazon.com/Drabbledark-Anthology-Drabbles-Eric-Fomley/dp/1983152811" target="_blank" class="gallery-item">
+        <img src="covers/cover_drabbledark.jpg" alt="Drabbledark">
+        <div class="gallery-item-title">Drabbledark</div>
+      </a>
+
+      <a href="https://www.amazon.com/100-Word-Zombie-Bites-Anthology/dp/1626760454" target="_blank" class="gallery-item">
+        <img src="covers/cover_100_word_zombie_bites.jpg" alt="100 Word Zombie Bites">
+        <div class="gallery-item-title">100 Word Zombie Bites</div>
+      </a>
+
+      <a href="https://www.amazon.com/Drabbun-Anthology-Francis-W-Alexander/dp/1088039464" target="_blank" class="gallery-item">
+        <img src="covers/cover_drabbun.jpg" alt="The Drabbun Anthology">
+        <div class="gallery-item-title">The Drabbun Anthology</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B08HGRW7J3" target="_blank" class="gallery-item">
+        <img src="covers/cover_trembling_with_fear_2.jpg" alt="Trembling with Fear Vol. 2">
+        <div class="gallery-item-title">Trembling with Fear Vol. 2</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/1916230105" target="_blank" class="gallery-item">
+        <img src="covers/cover_tall_tales_1.jpg" alt="Tall Tales &amp; Short Stories Vol. 1">
+        <div class="gallery-item-title">Tall Tales &amp; Short Stories Vol. 1</div>
+      </a>
+
+      <a href="https://www.amazon.com/Infection-Drabbles-1-Legends-Night/dp/B0986DC8N5" target="_blank" class="gallery-item">
+        <img src="covers/cover_infection_bif.jpg" alt="Infection, Drabbles 1">
+        <div class="gallery-item-title">Infection, Drabbles 1</div>
+      </a>
+
+      <a href="https://us.amazon.com/Wetware-Black-Hare-Press/dp/0645013935" target="_blank" class="gallery-item">
+        <img src="covers/cover_wetware_bhp.jpg" alt="Wetware">
+        <div class="gallery-item-title">Wetware</div>
+      </a>
+
+      <a href="https://www.amazon.com/Dragon-Bone-Soup-showcase-international/dp/1673703976" target="_blank" class="gallery-item">
+        <img src="covers/cover_dragon_bone_soup.jpg" alt="Dragon Bone Soup">
+        <div class="gallery-item-title">Dragon Bone Soup</div>
+      </a>
+
+      <a href="https://www.amazon.com/Scary-Snippets-Virtual-N-M-Brown-ebook/dp/B08JM2CZX8" target="_blank" class="gallery-item">
+        <img src="covers/cover_scary_snippets_virtual.jpg" alt="Scary Snippets: Virtual Edition">
+        <div class="gallery-item-title">Scary Snippets: Virtual</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B08GJXVJNM" target="_blank" class="gallery-item">
+        <img src="covers/cover_cosmic_convocation.jpg" alt="Cosmic Convocation">
+        <div class="gallery-item-title">Cosmic Convocation</div>
+      </a>
+
+      <a href="https://www.amazon.com/WORLD-WAR-FOUR-Science-Anthology-ebook/dp/B07NKKH71F" target="_blank" class="gallery-item">
+        <img src="covers/cover_world_war_four_zpp.jpg" alt="World War Four">
+        <div class="gallery-item-title">World War Four</div>
+      </a>
+
+      <a href="https://www.amazon.com/FULL-METAL-HORROR-Bloodstained-Anthology-ebook" target="_blank" class="gallery-item">
+        <img src="covers/cover_full_metal_horror_2_zpp.jpg" alt="Full Metal Horror 2">
+        <div class="gallery-item-title">Full Metal Horror 2</div>
+      </a>
+
+      <a href="https://www.amazon.com/RAYGUN-RETRO-Science-Fiction-Anthology-ebook/dp/B0857CTPMY" target="_blank" class="gallery-item">
+        <img src="covers/cover_raygun_retro_zpp.jpg" alt="Raygun Retro">
+        <div class="gallery-item-title">Raygun Retro</div>
+      </a>
+
+      <a href="https://www.amazon.com/CLOCKWORK-DRAGONS-Fantasypunk-Sam-Phillips-ebook/dp/B07ZFCZLC9" target="_blank" class="gallery-item">
+        <img src="covers/cover_clockwork_dragons_zpp.jpg" alt="Clockwork Dragons">
+        <div class="gallery-item-title">Clockwork Dragons</div>
+      </a>
+
+      <a href="https://www.amazon.com/GRIEVOUS-BODILY-HARM-Hardboiled-Anthology-ebook/dp/B07WRG5SRG" target="_blank" class="gallery-item">
+        <img src="covers/cover_grievous_bodily_harm_zpp.jpg" alt="Grievous Bodily Harm">
+        <div class="gallery-item-title">Grievous Bodily Harm</div>
+      </a>
+
+      <a href="https://www.amazon.com/FLASH-FICTION-ADDICTION-Short-Stories-ebook/dp/B07Q473TM9" target="_blank" class="gallery-item">
+        <img src="covers/cover_flash_fiction_addiction_zpp.jpg" alt="Flash Fiction Addiction">
+        <div class="gallery-item-title">Flash Fiction Addiction</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B07PQ2HYZ9/" target="_blank" class="gallery-item">
+        <img src="covers/cover_grumpy_old_gods_1.jpg" alt="Grumpy Old Gods Vol. 1">
+        <div class="gallery-item-title">Grumpy Old Gods Vol. 1</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B07VJZVM5C" target="_blank" class="gallery-item">
+        <img src="covers/cover_grumpy_old_gods_2.jpg" alt="Grumpy Old Gods Vol. 2">
+        <div class="gallery-item-title">Grumpy Old Gods Vol. 2</div>
+      </a>
+
+      <a href="https://www.amazon.com/Forest-Fear-Anthology-Halloween-Microfiction/dp/B08R16ZL5X" target="_blank" class="gallery-item">
+        <img src="covers/cover_forests_of_fear.jpg" alt="Forests of Fear">
+        <div class="gallery-item-title">Forests of Fear</div>
+      </a>
+
+      <a href="https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055" target="_blank" class="gallery-item">
+        <img src="covers/cover_organic_ink_1.jpg" alt="Organic Ink Vol. 1">
+        <div class="gallery-item-title">Organic Ink Vol. 1</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/1082422290" target="_blank" class="gallery-item">
+        <img src="covers/cover_sea_glass_hearts.jpg" alt="Sea Glass Hearts">
+        <div class="gallery-item-title">Sea Glass Hearts</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/1910542458" target="_blank" class="gallery-item">
+        <img src="covers/cover_cafelit_8.jpg" alt="The Best of CafeLit 8">
+        <div class="gallery-item-title">The Best of CafeLit 8</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B08B7KXZG1" target="_blank" class="gallery-item">
+        <img src="covers/cover_unreal_1.jpg" alt="Unreal Vol. 1">
+        <div class="gallery-item-title">Unreal Vol. 1</div>
+      </a>
+
+      <a href="https://www.amazon.com/gp/product/B08GJXVJNM" target="_blank" class="gallery-item">
+        <img src="covers/cover_waters_of_destruction.jpg" alt="Waters of Destruction">
+        <div class="gallery-item-title">Waters of Destruction</div>
+      </a>
+
+      <a href="https://www.amazon.com/Winds-Despair-Madeline-L-Stout/dp/B08PQRJK7W" target="_blank" class="gallery-item">
+        <img src="covers/cover_winds_of_despair.jpg" alt="Winds of Despair">
+        <div class="gallery-item-title">Winds of Despair</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B08LNLBYM1" target="_blank" class="gallery-item">
+        <img src="covers/cover_nation_pitc.jpg" alt="Nation">
+        <div class="gallery-item-title">Nation</div>
+      </a>
+
+      <a href="https://www.amazon.com/Unity-1-Magical-Realism-Anthology-ebook/dp/B08PTZDGN6" target="_blank" class="gallery-item">
+        <img src="covers/cover_unity_1_pitc.jpg" alt="Unity Vol. 1">
+        <div class="gallery-item-title">Unity Vol. 1</div>
+      </a>
+
+      <a href="https://www.amazon.com/Nightmare-Twist-Mar%C3%ADa-J-Estrada/dp/1954444117" target="_blank" class="gallery-item">
+        <img src="covers/cover_nightmare_with_a_twist.jpg" alt="Nightmare with a Twist">
+        <div class="gallery-item-title">Nightmare with a Twist</div>
+      </a>
+
+      <a href="https://www.amazon.de/gp/product/B0BD7W8P13" target="_blank" class="gallery-item">
+        <img src="covers/cover_lockdown_fantasy_4_bhp.jpg" alt="Lockdown Fantasy #4">
+        <div class="gallery-item-title">Lockdown Fantasy #4</div>
+      </a>
+
+      <a href="https://www.amazon.com/FANTASY-5-Lockdown-Fantasy-Adventures/dp/B0BCS372HF" target="_blank" class="gallery-item">
+        <img src="covers/cover_lockdown_fantasy_5_bhp.jpg" alt="Lockdown Fantasy #5">
+        <div class="gallery-item-title">Lockdown Fantasy #5</div>
+      </a>
+
+      <a href="https://www.amazon.com/dp/B0BSJGXL23" target="_blank" class="gallery-item">
+        <img src="covers/cover_lockdown_scifi_4_bhp.jpg" alt="Lockdown Sci-Fi #4">
+        <div class="gallery-item-title">Lockdown Sci-Fi #4</div>
+      </a>
+
+    </div>
+
+    <div class="gallery-row-label">Out of Print</div>
+    <div class="gallery-grid">
+
+      <a href="#" class="gallery-item out-of-print" onclick="return false;">
+        <img src="covers/cover_lockdown_fantasy_8_bhp.jpg" alt="Lockdown Fantasy #8">
+        <div class="gallery-item-title">Lockdown Fantasy #8</div>
+      </a>
+
+      <a href="#" class="gallery-item out-of-print" onclick="return false;">
+        <img src="covers/cover_lockdown_scifi_7_bhp.jpg" alt="Lockdown Sci-Fi #7">
+        <div class="gallery-item-title">Lockdown Sci-Fi #7</div>
+      </a>
+
+      <a href="#" class="gallery-item out-of-print" onclick="return false;">
+        <img src="covers/cover_lockdown_fantasy_1_bhp.jpg" alt="Lockdown Fantasy #1">
+        <div class="gallery-item-title">Lockdown Fantasy #1</div>
+      </a>
+
+      <a href="#" class="gallery-item out-of-print" onclick="return false;">
+        <img src="covers/cover_lockdown_scifi_1_bhp.jpg" alt="Lockdown Sci-Fi #1">
+        <div class="gallery-item-title">Lockdown Sci-Fi #1</div>
+      </a>
+
+      <a href="#" class="gallery-item out-of-print" onclick="return false;">
+        <img src="covers/cover_lockdown_horror_2_bhp.jpg" alt="Lockdown Horror #2">
+        <div class="gallery-item-title">Lockdown Horror #2</div>
+      </a>
+
+      <a href="https://www.amazon.com/Cocky-Tales-Multi-Genre-Anthology-Erin-Crocker/dp/1722237643" target="_blank" class="gallery-item out-of-print">
+        <img src="covers/cover_cocky_tales.jpg" alt="Cocky Tales">
+        <div class="gallery-item-title">Cocky Tales</div>
+      </a>
+
+      <a href="https://www.amazon.com/13-Lives-Alice-D-J-Elton/dp/B09MJ5TLFC" target="_blank" class="gallery-item out-of-print">
+        <img src="covers/cover_13_lives_of_alice_bhp.jpg" alt="13 Lives of Alice">
+        <div class="gallery-item-title">13 Lives of Alice</div>
+      </a>
+
+    </div>
+
+  </div>
+</section>
 <section id="blog">
   <div class="container">
     <div class="section-label">Author Blog</div>
@@ -832,45 +1435,6 @@
 </footer>
 
 <script>
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = document.documentElement.scrollHeight;
-}
-
-function drawStars() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const count = Math.floor((canvas.width * canvas.height) / 3200);
-  for (let i = 0; i < count; i++) {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height;
-    const r = Math.random() * 1.3 + 0.2;
-    const alpha = Math.random() * 0.65 + 0.25;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(210, 200, 255, ${alpha})`;
-    ctx.fill();
-  }
-  for (let i = 0; i < 24; i++) {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height;
-    const r = Math.random() * 1.1 + 1.0;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255, 248, 230, 0.92)';
-    ctx.fill();
-    const glow = ctx.createRadialGradient(x, y, 0, x, y, r * 6);
-    glow.addColorStop(0, 'rgba(255,248,220,0.22)');
-    glow.addColorStop(1, 'rgba(255,248,220,0)');
-    ctx.beginPath();
-    ctx.arc(x, y, r * 6, 0, Math.PI * 2);
-    ctx.fillStyle = glow;
-    ctx.fill();
-  }
-}
-
 <script>
 const canvas = document.getElementById('stars');
 const ctx = canvas.getContext('2d');
@@ -954,98 +1518,273 @@ window.addEventListener('resize', () => { resize(); drawStars(); });
 // ── PUBLICATIONS DATA ──
 // access: 'free' = free online link, 'buy' = purchase link, 'none' = no link (defunct)
 const pubs = [
-  // FREE READS — FICTION
+  // ── FREE READS — FICTION ──
   { title: '"Ship of the Dead" (Part One, serial)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/148/horror/ship-of-the-dead/index.html' },
-  { title: '"A Golden Memory"', publisher: 'CafeLit Magazine', year: 2018, genre: 'Fiction', access: 'free', url: 'https://www.cafelitmagazine.uk/2018/04/a-golden-memory.html' },
-  { title: '"A Warlock\'s Curse"', publisher: 'Friday Flash Fiction', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/the-warlocks-curse-by-shawn-klimek' },
   { title: '"A Savage Christmas"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Horror', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/a-savage-christmas' },
-  { title: '"An Exchanged Man"', publisher: 'World of Myth Magazine', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'https://www.jayzomondarkmyth.com/darkmythproductions/theworldofmyth/76/retro/scifi/an_exchanged_man/an_exchanged_man.html' },
-  { title: '"Catty Confrontation"', publisher: 'Friday Flash Fiction', year: 2024, genre: 'Humor', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/catty-confrontation-by-shawn-m-klimek' },
-  { title: '"Dark Trek"', publisher: 'World of Myth Magazine', year: 2020, genre: 'Horror', access: 'free', url: 'https://www.jayzomondarkmyth.com/darkmythproductions/theworldofmyth/83/horror/dark_trek/dark_trek.html' },
-  { title: '"Dissatisfied Voters"', publisher: 'Potato Soup Journal (defunct)', year: 2019, genre: 'Humor', access: 'none', url: '' },
-  { title: '"Feeding Time"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Horror', access: 'none', url: '' },
-  { title: '"From Heaven" and "Faerie Display"', publisher: 'Lockdown Fantasy #8, Black Hare Press', year: 2020, genre: 'Horror', access: 'free', url: 'https://books2read.com/lockdown-fantasy-8' },
-  { title: '"Goodbye, My Lush"', publisher: 'CafeLit Magazine', year: 2018, genre: 'Horror', access: 'free', url: 'https://www.cafelitmagazine.uk/2018/05/goodbye-my-lush.html' },
-  { title: '"I Confess I Still Love You"', publisher: 'Pendora Magazine (defunct)', year: 2019, genre: 'Humor', access: 'none', url: '' },
-  { title: '"Joseph and Me"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Sci-Fi', access: 'none', url: '' },
-  { title: '"Magic Number"', publisher: 'CafeLit Magazine', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://www.cafelitmagazine.uk/2019/02/magic-number.html' },
   { title: '"Merry Crashed-Mass"', publisher: 'Black Hare Press Dark Moments', year: 2022, genre: 'Horror', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/merry-crashed-mass' },
-  { title: '"Nevermore"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Horror', access: 'free', url: 'http://www.blackharepress.com/dark-moments/' },
+  { title: '"Kill the Messenger"', publisher: 'Black Hare Press Dark Moments', year: 2020, genre: 'Horror', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/kill-the-messenger' },
+  { title: '"Nevermore"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Horror', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/nevermore' },
+  { title: '"Psi of Relief"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/a-psi-of-relief' },
+  { title: '"Riddle of the Sphinx"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Horror', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/riddle-of-the-sphinx' },
+  { title: '"Satan\'s Butterfly"', publisher: 'Black Hare Press Dark Moments', year: 2020, genre: 'Horror', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/satans-butterfly' },
+  { title: '"The Hot Bunk"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/hot-bunk' },
+  { title: '"We\'ll Always Have Venus"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'https://blackharepress.com/blogs/dark-moments/well-always-have-venus' },
+  { title: '"Faerie Display"', publisher: 'Lockdown Fantasy #8, Black Hare Press', year: 2020, genre: 'Fantasy', access: 'free', url: 'https://www.amazon.com/FANTASY-Lockdown-Black-Hare-Press/dp/B0D6NG783S' },
+  { title: '"From Heaven"', publisher: 'Lockdown Fantasy #8, Black Hare Press', year: 2020, genre: 'Fantasy', access: 'free', url: 'https://www.amazon.com/FANTASY-Lockdown-Black-Hare-Press/dp/B0D6NG783S' },
+  { title: '"Malomenire the Mad" (Poem)', publisher: 'Lockdown Fantasy #4, Black Hare Press', year: 2023, genre: 'Fantasy', access: 'free', url: 'https://www.amazon.de/gp/product/B0BD7W8P13' },
+  { title: '"Sissy Fuss"', publisher: 'Lockdown Horror #2, Black Hare Press', year: 2020, genre: 'Horror', access: 'free', url: 'https://www.amazon.com/HORROR-Lockdown-Black-Hare-Press/dp/1925809730' },
+  { title: '"Charlie Whinesworth's Lucky Trinket" (Poem)', publisher: 'Lockdown Sci-Fi #4, Black Hare Press', year: 2023, genre: 'Sci-Fi', access: 'free', url: 'https://www.amazon.com/dp/B0BSJGXL23' },
+  { title: '"The Quantum Oracle"', publisher: 'Lockdown Sci-Fi #5, Black Hare Press', year: 2023, genre: 'Sci-Fi', access: 'free', url: 'https://www.amazon.com/SCI-FI-Lockdown-Science-Fiction-Adventures/dp/B0CNZFRSLZ' },
+  { title: '"The Last Loophole"', publisher: 'Lockdown Sci-Fi #7, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'free', url: 'https://www.amazon.com/FANTASY-Lockdown-Black-Hare-Press/dp/B0D4LQR7DX' },
+  { title: '"On the Tip"', publisher: 'Lockdown Sci-Fi #7, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'free', url: 'https://www.amazon.com/SCI-FI-Lockdown-Science-Fiction-Adventures/dp/B0D4VTMTNS' },
+  { title: '"A Golden Memory"', publisher: 'CafeLit Magazine', year: 2018, genre: 'Fiction', access: 'free', url: 'https://www.cafelitmagazine.uk/2018/04/a-golden-memory.html' },
+  { title: '"Goodbye, My Lush"', publisher: 'CafeLit Magazine', year: 2018, genre: 'Horror', access: 'free', url: 'https://www.cafelitmagazine.uk/2018/05/goodbye-my-lush.html' },
+  { title: '"Magic Number"', publisher: 'CafeLit Magazine', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://www.cafelitmagazine.uk/2019/02/magic-number.html' },
+  { title: '"Waiters are People, Too"', publisher: 'CafeLit Magazine', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'https://www.cafelitmagazine.uk/2019/02/waiters-are-people-too.html' },
+  { title: '"Wave Goodbye"', publisher: 'CafeLit Magazine', year: 2018, genre: 'Fiction', access: 'free', url: 'https://www.cafelitmagazine.uk/2018/06/wave-goodbye.html' },
+  { title: '"A Warlock\'s Curse"', publisher: 'Friday Flash Fiction', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/the-warlocks-curse-shawn-m-klimek' },
+  { title: '"Catty Confrontation"', publisher: 'Friday Flash Fiction', year: 2024, genre: 'Humor', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/catty-confrontation-by-shawn-m-klimek' },
   { title: '"Noise is Golden"', publisher: 'Friday Flash Fiction', year: 2020, genre: 'Humor', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/noise-is-golden-by-shawn-m-klimek' },
-  { title: '"Nothing Up My Sleeve"', publisher: 'Spillwords Press', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://spillwords.com/nothing-up-my-sleeve/' },
-  { title: '"Nothing Up My Sleeve"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Fantasy', access: 'none', url: '' },
-  { title: '"One More Beatdown"', publisher: 'Spillwords Press', year: 2019, genre: 'Fiction', access: 'free', url: 'http://spillwords.com/one-more-beatdown/' },
-  { title: '"On the Tip" and "The Last Loophole"', publisher: 'Lockdown Sci-Fi #7, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'free', url: 'https://books2read.com/lockdown-sci-fi-7' },
   { title: '"Priceless Jewels"', publisher: 'Friday Flash Fiction', year: 2018, genre: 'Fantasy', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/priceless-jewels-by-shawn-klimek' },
-  { title: '"Psi of Relief"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'http://www.blackharepress.com/a-psi-of-relief/' },
-  { title: '"Riddle of the Sphinx"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Horror', access: 'free', url: 'http://www.blackharepress.com/riddle-of-the-sphinx/' },
-  { title: '"Satan\'s Butterfly"', publisher: 'Black Hare Press Dark Moments', year: 2020, genre: 'Horror', access: 'free', url: 'https://www.blackharepress.com/satans-butterfly/' },
-  { title: '"Sissy Fuss"', publisher: 'Black Hare Press Lockdown Horror #2', year: 2020, genre: 'Horror', access: 'free', url: 'https://www.blackharepress.com/lockdown-horror-2/' },
+  { title: '"Waiters are People, Too"', publisher: 'Friday Flash Fiction', year: 2018, genre: 'Sci-Fi', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/waiters-are-people-too-by-shawn-klimek' },
+  { title: '"Feeding Time"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Horror', access: 'none', url: '' },
+  { title: '"Joseph and Me"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Sci-Fi', access: 'none', url: '' },
+  { title: '"Nothing Up My Sleeve"', publisher: 'Paper Djinn Press (defunct)', year: 2020, genre: 'Fantasy', access: 'none', url: '' },
+  { title: '"I Confess I Still Love You"', publisher: 'Pendora Magazine (defunct)', year: 2019, genre: 'Poetry', access: 'none', url: '' },
+  { title: '"Dissatisfied Voters"', publisher: 'Potato Soup Journal (defunct)', year: 2019, genre: 'Humor', access: 'none', url: '' },
   { title: '"Tearful Triangle"', publisher: 'Potato Soup Journal (defunct)', year: 2019, genre: 'Fiction', access: 'none', url: '' },
-  { title: '"The Hot Bunk"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'https://www.blackharepress.com/hot-bunk/' },
+  { title: '"Nothing Up My Sleeve"', publisher: 'Spillwords Press', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://spillwords.com/nothing-up-my-sleeve/' },
+  { title: '"One More Beatdown"', publisher: 'Spillwords Press', year: 2019, genre: 'Fiction', access: 'free', url: 'https://spillwords.com/one-more-beatdown/' },
+  { title: '"World Falls"', publisher: 'Spillwords Press', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://spillwords.com/world-falls/' },
   { title: '"Unholy Trinity: Call the Exterminator"', publisher: 'The Horror Tree', year: 2019, genre: 'Horror', access: 'free', url: 'https://horrortree.com/unholy-trinity-call-the-exterminator/' },
   { title: '"Unholy Trinity: Circle of Unlife"', publisher: 'The Horror Tree', year: 2019, genre: 'Horror', access: 'free', url: 'https://horrortree.com/unholy-trinity-circle-of-unlife-by-shawn-klimek/' },
   { title: '"Unholy Trinity: The Dunwich Romance"', publisher: 'The Horror Tree', year: 2023, genre: 'Horror', access: 'free', url: 'https://horrortree.com/unholy-trinity-the-dunwich-romance-by-shawn-m-klimek/' },
   { title: '"Unholy Trinity: Zombie Epistolary"', publisher: 'The Horror Tree', year: 2021, genre: 'Horror', access: 'free', url: 'https://horrortree.com/unholy-trinity-zombie-epistolary-by-shawn-m-klimek/' },
-  { title: '"Waiters are People, Too"', publisher: 'CafeLit Magazine', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'https://www.cafelitmagazine.uk/2019/02/waiters-are-people-too.html' },
-  { title: '"Waiters are People, Too"', publisher: 'Friday Flash Fiction', year: 2018, genre: 'Sci-Fi', access: 'free', url: 'https://www.fridayflashfiction.com/100-word-stories/waiters-are-people-too-by-shawn-klimek' },
-  { title: '"Wave Goodbye"', publisher: 'CafeLit Magazine', year: 2018, genre: 'Fiction', access: 'free', url: 'https://www.cafelitmagazine.uk/2018/06/wave-goodbye.html' },
-  { title: '"We\'ll Always Have Venus"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'http://www.blackharepress.com/well-always-have-venus/' },
-  { title: '"Winner of our Discotheque" (with Stephan Klimek)', publisher: 'Spillwords Press', year: 2019, genre: 'Fiction', access: 'free', url: 'http://spillwords.com/the-winner-of-our-discotheque/' },
-  { title: '"World Falls"', publisher: 'Spillwords Press', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://spillwords.com/world-falls/' },
-  // FREE READS — POETRY
-  { title: '"All Hands on Deck"', publisher: 'Spillwords Press', year: 2019, genre: 'Humor', access: 'free', url: 'http://spillwords.com/all-hands-on-deck/' },
-  { title: '"Banepyre and Bitewind"', publisher: 'Lockdown Fantasy #1, Black Hare Press', year: 2020, genre: 'Fantasy', access: 'free', url: 'https://www.blackharepress.com/lockdown-fantasy-1/' },
-  { title: '"Hivemind of the Universal Donor"', publisher: 'Lockdown Sci-Fi #1, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'free', url: 'https://books2read.com/lockdown-sci-fi-1' },
-  { title: '"Huffed the Wolf"', publisher: 'On The Premises Mini-Contest #45', year: 2020, genre: 'Humor', access: 'free', url: 'https://onthepremises.com/minis/mini_45/' },
-  { title: '"The Right Stuff"', publisher: 'NewMyths, Issue 38', year: 2017, genre: 'Sci-Fi', access: 'free', url: 'https://sites.google.com/newmyths.com/newmythscomarchive/poems/the-right-stuff' },
-  { title: '"Vampire Valentine"', publisher: 'NewMyths, Issue 40', year: 2017, genre: 'Horror', access: 'free', url: 'https://sites.google.com/newmyths.com/newmythscomarchive/poems/vampire-valentinessues/2017/issue-40' },
-  { title: '"Vampire Valentine"', publisher: 'World of Myth Magazine', year: 2019, genre: 'Horror', access: 'free', url: 'https://www.jayzomondarkmyth.com/darkmythproductions/theworldofmyth/77/poems/vampire_valentine.html' },
-  { title: '"Where Angels Dance"', publisher: 'Lighten Up Online', year: 2025, genre: 'Fantasy', access: 'free', url: 'https://www.lightenup-online.co.uk/' },
-  { title: '"Where Pixies Relax"', publisher: 'Winning Writers Wergle Flomp Contest', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://winningwriters.com/past-winning-entries/where-pixies-relax' },
-  // AVAILABLE TO PURCHASE
-  { title: '"A Bitter Aftertaste" (& 9 others)', publisher: 'Curses and Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'http://www.amazon.com/gp/product/B07VTPJSTZ' },
-  { title: '"A Murder of Crows"', publisher: 'A Tree Full of Crows, ed. Mandy Chandler', year: 2024, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Tree-Full-Crows-Anthology-ebook/dp/B0CZHJSJP3' },
-  { title: '"Bite of the Flamingo Boa"', publisher: 'Deep Space, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'http://www.amazon.com/gp/product/B07WZBWT9K' },
-  { title: '"Dark Enough to See" (& 2 others)', publisher: 'Rowan and Oak, Iron Faerie Publishing', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/gp/product/B08RDS76JT' },
-  { title: '"Dust to Dust"', publisher: 'Thorns, Black Hare Press', year: 2025, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B0DPSGWFJ4' },
-  { title: '"Eye of the Storm Giant"', publisher: 'Dark Moments: Year Three, Black Hare Press', year: 2022, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B08WGK1L69' },
-  { title: '"First Revenge" (& 4 others)', publisher: 'Angels, Dark Drabble Book 2, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B07RGXYMFR' },
-  { title: '"Funny and Sad"', publisher: 'Death House: Mortem Cycle Vol. 1, Breaking Rules Europe', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/1914320069' },
-  { title: '"Good Morning and Farewell" (& 4 others)', publisher: 'Worlds, Dark Drabble Book 1, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/B07Q5VRCWL' },
-  { title: '"Hunger of the Nian," "Manticore Hide," and "Corpse Flies"', publisher: 'Mythical Creatures of Asia, Insignia Drabbles Vol. 3', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B093C82WBN' },
-  { title: '"It\'s About How You Look" and "What Came Before"', publisher: 'Run Rabbit Run, Dark Drabbles, Black Hare Press', year: 2023, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Run-Rabbit-Black-Hare-Press-ebook/dp/B0C1679Q59' },
-  { title: '"Old Vat-Grown Caretakers Already Know New Tricks"', publisher: '42 Stories Anthology', year: 2024, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/42-Stories-Anthology-Presents-Book-ebook/dp/B0DJMGJXGZ' },
-  { title: '"Surface Tension" (& more)', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
-  { title: '"Who Summoned the Ambassador" (& 9 others)', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
-  { title: '"Alien Memories"', publisher: 'Pocket SciFi: Drabble Contest One, Starry-Eyed Press', year: 2023, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0CMJV5WGC' },
-  { title: '"Survivalist" and "Cabin Made of Bones"', publisher: 'Cabin, Flash Frights Book 3, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0DPSFDHVY' },
-  { title: '"The Captain\'s Dinner"', publisher: 'Treasure Chest, Zombie Pirate Publishing', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/1925985075' },
-  { title: '"The Fateful Voyage of the Fortunate Seven"', publisher: 'Grumpy Old Gods Vol. 2, Stormdance Publications', year: 2019, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B07VJZVM5C' },
-  { title: '"The Meatless Unlife Aftertaste Diet" and "The Mimicry Mutation"', publisher: 'Reap, Flash Frights Book 1, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0D4JFFSNV' },
-  { title: '"The Poppet Tree"', publisher: 'Hex, Flash Frights Book 2, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0D9F9JG5N' },
-  { title: '"Zeus Really Has to Go"', publisher: 'Grumpy Old Gods Vol. 1, Storm Dance Publishing', year: 2019, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/gp/product/B07PQ2HYZ9/' },
-  // CLARENDON HOUSE / ICWG
-  { title: '"A Taste of Friendship"', publisher: 'Vortex: ICWG Literary Anthology 2018, Clarendon House', year: 2018, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Vortex-Circle-Writers-Literary-Anthology-ebook/dp/B07DJ5FNH7' },
-  { title: '"The Wizard and the Dinosaur"', publisher: 'Window: ICWG Children\'s Anthology 2018, Clarendon House', year: 2018, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Window-Circle-Writers-Childrens-Anthology-ebook/dp/B07DVPQMVV' },
-  { title: '"Pregenesis"', publisher: 'Carrier Wave: ICWG Comedy Anthology 2018, Clarendon House', year: 2018, genre: 'Humor', access: 'buy', url: 'https://www.amazon.com/Carrier-Wave-Circle-Writers-Anthology-ebook/dp/B07F6FVGS7' },
-  { title: '"The Lonesome Alchemist"', publisher: 'Fireburst: ICWG Flash Fiction Anthology 2018, Clarendon House', year: 2018, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Fireburst-Circle-Writers-Fiction-Anthology-ebook/dp/B07LDF3FVH' },
-  { title: '"The Marvelous Tale of Max the Mariner"', publisher: 'Cadence: ICWG Poetry Anthology 2018, Clarendon House', year: 2018, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Cadence-Circle-Writers-Poetry-Anthology-ebook/dp/B07GFRL7Y5' },
-  { title: '"Pregenesis"', publisher: 'Gold: Best from Clarendon House Anthologies Vol. 1, 2017/2018', year: 2018, genre: 'Humor', access: 'buy', url: 'https://www.amazon.com/Gold-Best-Clarendon-House-Anthologies-ebook/dp/B07MXHTRT5' },
-  { title: '"World Falls"', publisher: 'Maelstrom: ICWG Literary Anthology 2019, Clarendon House', year: 2019, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Maelstrom-Circle-Writers-Literary-Anthology-ebook/dp/B0821T64Z3' },
-  { title: '"Rebel Breakfast"', publisher: 'Portal: ICWG Children\'s Anthology 2019, Clarendon House', year: 2019, genre: 'Humor', access: 'buy', url: 'https://www.amazon.com/Portal-Circle-Writers-Childrens-Anthology-ebook/dp/B083WNYMSK' },
-  { title: '"Rocket Skin"', publisher: 'Tempest: ICWG Sci-Fi and Fantasy Anthology 2019, Clarendon House', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Tempest-Writers-Science-Fiction-Anthology-ebook/dp/B07W65833D' },
+  { title: '"Dark Trek"', publisher: 'World of Myth Magazine', year: 2020, genre: 'Horror', access: 'free', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/83/horror/dark_trek/dark_trek.html' },
+  { title: '"An Exchanged Man"', publisher: 'World of Myth Magazine', year: 2019, genre: 'Sci-Fi', access: 'free', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/76/scifi/an_exchanged_man/an_exchanged_man.html' },
+  // ── FREE READS — POETRY ──
+  { title: '"The Final Spell of the Archmage Astromote" (Poem)', publisher: 'Lockdown Fantasy #5, Black Hare Press', year: 2022, genre: 'Fantasy', access: 'free', url: 'https://www.amazon.com/FANTASY-5-Lockdown-Fantasy-Adventures/dp/B0BCS372HF' },
+  { title: '"On Her Deathbed, Aunty Rose" (Poem)', publisher: 'Spillwords Press', year: 2024, genre: 'Humor', access: 'free', url: 'https://spillwords.com/on-her-deathbed-aunty-rose/' },
+  { title: '"Winner of our Discotheque" (Poem, w/ Stephan Klimek)', publisher: 'Spillwords Press', year: 2019, genre: 'Poetry', access: 'free', url: 'https://spillwords.com/the-winner-of-our-discotheque/' },
+  { title: '"All Hands on Deck" (Poem)', publisher: 'Spillwords Press', year: 2019, genre: 'Humor', access: 'free', url: 'https://spillwords.com/all-hands-on-deck/' },
+  { title: '"Banepyre and Bitewind" (Poem)', publisher: 'Lockdown Fantasy #1, Black Hare Press', year: 2020, genre: 'Fantasy', access: 'free', url: 'https://www.amazon.com/FANTASY-Lockdown-Black-Hare-Press/dp/1925809978' },
+  { title: '"Hivemind of the Universal Donor" (Poem)', publisher: 'Lockdown Sci-Fi #1, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'free', url: 'https://www.amazon.com/SCI-FI-Lockdown-Science-Fiction-Adventures-ebook/dp/B0875WCZJL' },
+  { title: '"Huffed the Wolf" (Poem)', publisher: 'On The Premises Mini-Contest #45', year: 2020, genre: 'Humor', access: 'free', url: 'https://onthepremises.com/minis/mini_45/' },
+  { title: '"The Right Stuff" (Poem)', publisher: 'NewMyths, Issue 38', year: 2017, genre: 'Sci-Fi', access: 'free', url: 'https://sites.google.com/newmyths.com/newmythscomarchive/poems/the-right-stuff' },
+  { title: '"Vampire Valentine" (Poem)', publisher: 'NewMyths, Issue 40', year: 2017, genre: 'Horror', access: 'free', url: 'https://sites.google.com/newmyths.com/newmythscomarchive/poems/vampire-valentine' },
+  { title: '"Vampire Valentine" (Poem)', publisher: 'World of Myth Magazine', year: 2019, genre: 'Horror', access: 'free', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/77/poems/vampire_valentine.html' },
+  { title: '"Where Angels Dance" (Poem)', publisher: 'Lighten Up Online', year: 2025, genre: 'Fantasy', access: 'free', url: 'https://www.lightenup-online.co.uk/index.php/2025/issue-72-december-2025/shawn-m-klimek-where-angels-dance-2' },
+  { title: '"Where Pixies Relax" (Poem)', publisher: 'Winning Writers Wergle Flomp Contest', year: 2019, genre: 'Fantasy', access: 'free', url: 'https://winningwriters.com/past-winning-entries/where-pixies-relax' },
+  // ── AVAILABLE TO PURCHASE ──
+  { title: '"Old Vat-Grown Caretakers Already Know New Tricks"', publisher: '42 Stories Anthology, ed. B.A. Mullin', year: 2024, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/42-Stories-Anthology-Presents-Book/dp/1990589359' },
+  { title: '"Watership Sideways"', publisher: '13 Lives of Alice (out of print), Black Hare Press', year: 2025, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/13-Lives-Alice-D-J-Elton/dp/B09MJ5TLFC' },
+  { title: '"Ice Queen"', publisher: '666, Dark Drabble Book 11, Black Hare Press', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/666-Dark-Drabbles-Book-11-ebook/dp/B08HYN6LHW' },
+  { title: '"The Lonesome Curse"', publisher: 'Alone, Flash Frights Book 4, Black Hare Press', year: 2025, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Alone-Where-solitude-festers-devours/dp/B0FR3PFWWN' },
+  { title: '"An Unfortunate Birth"', publisher: 'Ancients, Dark Drabble Book 10, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANCIENTS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B08GLTFWLF' },
+  { title: '"Buried Mars"', publisher: 'Ancients, Dark Drabble Book 10, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANCIENTS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B08GLTFWLF' },
+  { title: '"Emperor Father"', publisher: 'Ancients, Dark Drabble Book 10, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANCIENTS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B08GLTFWLF' },
+  { title: '"Out of Mercy"', publisher: 'Ancients, Dark Drabble Book 10, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANCIENTS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B08GLTFWLF' },
+  { title: '"The Gardener King"', publisher: 'Ancients, Dark Drabble Book 10, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANCIENTS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B08GLTFWLF' },
+  { title: '"A Reason to Hang On"', publisher: 'Angels, Dark Drabble Book 2, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANGELS-Divine-Microfiction-Anthology-Drabbles-ebook/dp/B07RGXYMFR' },
+  { title: '"Disputed Possession"', publisher: 'Angels, Dark Drabble Book 2, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANGELS-Divine-Microfiction-Anthology-Drabbles-ebook/dp/B07RGXYMFR' },
+  { title: '"First Revenge"', publisher: 'Angels, Dark Drabble Book 2, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANGELS-Divine-Microfiction-Anthology-Drabbles-ebook/dp/B07RGXYMFR' },
+  { title: '"Just a Little Longer"', publisher: 'Angels, Dark Drabble Book 2, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANGELS-Divine-Microfiction-Anthology-Drabbles-ebook/dp/B07RGXYMFR' },
+  { title: '"The Limbo Lounge"', publisher: 'Angels, Dark Drabble Book 2, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/ANGELS-Divine-Microfiction-Anthology-Drabbles-ebook/dp/B07RGXYMFR' },
+  { title: '"I Call Shotgun"', publisher: 'Apocalypse, Dark Drabble Book 6, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/APOCALYPSE-Apocalyptic-Microfiction-Anthology-Drabbles-ebook/dp/B07Z38D57B' },
+  { title: '"Last Launch"', publisher: 'Apocalypse, Dark Drabble Book 6, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/APOCALYPSE-Apocalyptic-Microfiction-Anthology-Drabbles-ebook/dp/B07Z38D57B' },
+  { title: '"Not Wallace"', publisher: 'Apocalypse, Dark Drabble Book 6, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/APOCALYPSE-Apocalyptic-Microfiction-Anthology-Drabbles-ebook/dp/B07Z38D57B' },
+  { title: '"The Coyote"', publisher: 'Apocalypse, Dark Drabble Book 6, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/APOCALYPSE-Apocalyptic-Microfiction-Anthology-Drabbles-ebook/dp/B07Z38D57B' },
+  { title: '"The Hunger Below"', publisher: 'Apocalypse, Dark Drabble Book 6, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/APOCALYPSE-Apocalyptic-Microfiction-Anthology-Drabbles-ebook/dp/B07Z38D57B' },
+  { title: '"Our Love Cannot be Broken" (Poem)', publisher: 'Bad Romance, Black Hare Press', year: 2020, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Bad-Romance-Writers-Group-Special/dp/1925809463' },
+  { title: '"Death Crossing"', publisher: 'Beyond, Dark Drabble Book 4, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/BEYOND-Paranormal-Microfiction-Anthology-Drabbles-ebook/dp/B07V9XCN4L' },
+  { title: '"The Exorcist Diet"', publisher: 'Beyond, Dark Drabble Book 4, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/BEYOND-Paranormal-Microfiction-Anthology-Drabbles-ebook/dp/B07V9XCN4L' },
+  { title: '"The Haunted Auction"', publisher: 'Beyond, Dark Drabble Book 4, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/BEYOND-Paranormal-Microfiction-Anthology-Drabbles-ebook/dp/B07V9XCN4L' },
+  { title: '"The Medium is the Message"', publisher: 'Beyond, Dark Drabble Book 4, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/BEYOND-Paranormal-Microfiction-Anthology-Drabbles-ebook/dp/B07V9XCN4L' },
+  { title: '"The Unwelcome Test"', publisher: 'Beyond, Dark Drabble Book 4, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/BEYOND-Paranormal-Microfiction-Anthology-Drabbles-ebook/dp/B07V9XCN4L' },
+  { title: '"Survivalist"', publisher: 'Cabin, Flash Frights Book 3, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Cabin-shadows-breathe-hungers-Frights/dp/B0DQ7HJJDY' },
+  { title: '"Cabin Made of Bones" (Poem)', publisher: 'Cabin, Flash Frights Book 3, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Cabin-shadows-breathe-hungers-Frights/dp/B0DQ7HJJDY' },
+  { title: '"Merry Crashed-Mass"', publisher: 'Dark Moments & Patreon: Year Four, Black Hare Press', year: 2022, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-FOUR-Dark-Moments-Patreon-ebook/dp/B09PV71C4B' },
+  { title: '"Eye of the Storm Giant"', publisher: 'Dark Moments & Patreon: Year Three, Black Hare Press', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-THREE-Dark-Moments-Patreon-ebook/dp/B08WGK1L69' },
+  { title: '"Kill the Messenger"', publisher: 'Dark Moments & Patreon: Year Two, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-TWO-Dark-Moments-Book-ebook/dp/B08KF6LK9L' },
+  { title: '"Satan\'s Butterfly"', publisher: 'Dark Moments & Patreon: Year Two, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-TWO-Dark-Moments-Book-ebook/dp/B08KF6LK9L' },
+  { title: '"A Psi of Relief"', publisher: 'Dark Moments: Year One, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ' },
+  { title: '"A Savage Christmas"', publisher: 'Dark Moments: Year One, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ' },
+  { title: '"Nevermore"', publisher: 'Dark Moments: Year One, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ' },
+  { title: '"Riddle of the Sphinx"', publisher: 'Dark Moments: Year One, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ' },
+  { title: '"Rip-off Bandage"', publisher: 'Dark Moments: Year One, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ' },
+  { title: '"The Hot Bunk"', publisher: 'Dark Moments: Year One, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ' },
+  { title: '"We\'ll Always Have Venus"', publisher: 'Dark Moments: Year One, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ' },
+  { title: '"Bite of the Flamingo Boa"', publisher: 'Deep Space, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/DEEP-SPACE-Adventure-Science-Fiction/dp/1925809234' },
+  { title: '"All I Haunt for Christmas"', publisher: 'Eerie Christmas, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Eerie-Christmas-Black-Hare-Press/dp/B09KFCPP9Q' },
+  { title: '"Abandon Hope" (Poem)', publisher: 'Eldritch & Ether (Poetry), Black Hare Press', year: 2022, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Eldritch-Ether-Black-Hare-Press/dp/B09YQBRCV8' },
+  { title: '"Obsidian & Olivine" (Poem)', publisher: 'Eldritch & Ether (Poetry), Black Hare Press', year: 2022, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Eldritch-Ether-Black-Hare-Press/dp/B09YQBRCV8' },
+  { title: '"Slow and Lucky Wins the Race" (Poem)', publisher: 'Eldritch & Ether (Poetry), Black Hare Press', year: 2022, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Eldritch-Ether-Black-Hare-Press/dp/B09YQBRCV8' },
+  { title: '"Vampire Valentine" (Poem)', publisher: 'Eldritch & Ether (Poetry), Black Hare Press', year: 2022, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Eldritch-Ether-Black-Hare-Press/dp/B09YQBRCV8' },
+  { title: '"A Hateful Spell"', publisher: 'Hate, Dark Drabble Book 8, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/HATE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T41P54' },
+  { title: '"Mince and Repeat"', publisher: 'Hate, Dark Drabble Book 8, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/HATE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T41P54' },
+  { title: '"Road Rage"', publisher: 'Hate, Dark Drabble Book 8, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/HATE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T41P54' },
+  { title: '"The Scent of Fierce"', publisher: 'Hate, Dark Drabble Book 8, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/HATE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T41P54' },
+  { title: '"Wait Plan"', publisher: 'Hate, Dark Drabble Book 8, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/HATE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T41P54' },
+  { title: '"The Poppet Tree"', publisher: 'Hex, Flash Frights Book 2, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Hex-voodoo-terror-enchantment-Frights/dp/B0DFVB7H73' },
+  { title: '"Kylie\'s Show & Tell" (Poem)', publisher: 'Jibbernocky, Black Hare Press', year: 2020, genre: 'Humor', access: 'buy', url: 'https://www.amazon.com/Jibbernocky-Books-Homes-Special-Charity/dp/1925809587' },
+  { title: '"Crushed"', publisher: 'Love, Dark Drabble Book 7, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/LOVE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T464H7' },
+  { title: '"I Heart You"', publisher: 'Love, Dark Drabble Book 7, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/LOVE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T464H7' },
+  { title: '"Love is Blinded"', publisher: 'Love, Dark Drabble Book 7, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/LOVE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T464H7' },
+  { title: '"The Face I Love"', publisher: 'Love, Dark Drabble Book 7, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/LOVE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T464H7' },
+  { title: '"Until Death"', publisher: 'Love, Dark Drabble Book 7, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/LOVE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T464H7' },
+  { title: '"An Eye Out for the Toad People"', publisher: 'Monsters, Dark Drabble Book 3, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B07SGWSQVY' },
+  { title: '"Form-A-Fiend"', publisher: 'Monsters, Dark Drabble Book 3, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B07SGWSQVY' },
+  { title: '"Night View"', publisher: 'Monsters, Dark Drabble Book 3, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B07SGWSQVY' },
+  { title: '"Revenge of the Worm Lord"', publisher: 'Monsters, Dark Drabble Book 3, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B07SGWSQVY' },
+  { title: '"The Troll Potion"', publisher: 'Monsters, Dark Drabble Book 3, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B07SGWSQVY' },
+  { title: '"A Deeper Shade of Blues"', publisher: 'Oceans, Dark Drabble Book 9, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/OCEANS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B0861JY24S' },
+  { title: '"A Final Wave Goodbye"', publisher: 'Oceans, Dark Drabble Book 9, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/OCEANS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B0861JY24S' },
+  { title: '"Deep Sea Joyride"', publisher: 'Oceans, Dark Drabble Book 9, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/OCEANS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B0861JY24S' },
+  { title: '"Unabashed Self-Promotion"', publisher: 'Oceans, Dark Drabble Book 9, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/OCEANS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B0861JY24S' },
+  { title: '"Way Downtown, NY"', publisher: 'Oceans, Dark Drabble Book 9, Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/OCEANS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B0861JY24S' },
+  { title: '"When Beata Got the Flu" (Poem)', publisher: 'Passenger 13 (Pandemic), Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/PASSENGER-13-D-Kershaw/dp/1925809668' },
+  { title: '"Change of Luck"', publisher: 'Passenger 13 (Pandemic), Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/PASSENGER-13-D-Kershaw/dp/1925809668' },
+  { title: '"Foster March"', publisher: 'Passenger 13 (Pandemic), Black Hare Press', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/PASSENGER-13-D-Kershaw/dp/1925809668' },
+  { title: '"The Meatless Unlife Aftertaste Diet"', publisher: 'Reap, Flash Frights Book 1, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Reap-Where-undead-harvest-Frights/dp/B0D6KYWSMM' },
+  { title: '"The Mimicry Mutation"', publisher: 'Reap, Flash Frights Book 1, Black Hare Press', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Reap-Where-undead-harvest-Frights/dp/B0D6KYWSMM' },
+  { title: '"It\'s About How You Look"', publisher: 'Run Rabbit Run, Dark Drabbles, Black Hare Press', year: 2023, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Run-Rabbit-Black-Hare-Press-ebook/dp/B0C1679Q59' },
+  { title: '"What Came Before"', publisher: 'Run Rabbit Run, Dark Drabbles, Black Hare Press', year: 2023, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Run-Rabbit-Black-Hare-Press-ebook/dp/B0C1679Q59' },
+  { title: '"Dust to Dust"', publisher: 'Thorns, Black Hare Press', year: 2025, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Thorns-Death-waits-beyond-horizon/dp/0975667289' },
+  { title: '"Open and Shut Case"', publisher: 'Unravel, Dark Drabble Book 5, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/UNRAVEL-Crime-Microfiction-Anthology-Drabbles-ebook/dp/B07YD28DLB' },
+  { title: '"The Masked Surrender"', publisher: 'Unravel, Dark Drabble Book 5, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/UNRAVEL-Crime-Microfiction-Anthology-Drabbles-ebook/dp/B07YD28DLB' },
+  { title: '"The Poison Poisoner"', publisher: 'Unravel, Dark Drabble Book 5, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/UNRAVEL-Crime-Microfiction-Anthology-Drabbles-ebook/dp/B07YD28DLB' },
+  { title: '"The Spotless Weapon"', publisher: 'Unravel, Dark Drabble Book 5, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/UNRAVEL-Crime-Microfiction-Anthology-Drabbles-ebook/dp/B07YD28DLB' },
+  { title: '"The Sting of Justice"', publisher: 'Unravel, Dark Drabble Book 5, Black Hare Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/UNRAVEL-Crime-Microfiction-Anthology-Drabbles-ebook/dp/B07YD28DLB' },
+  { title: '"Watership Sideways"', publisher: 'Watership Sideways (Alternate Alice), Black Hare Press', year: 2025, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Watership-Sideways-Alternate-Alice-Klimek/dp/B0FCXRKGHM' },
+  { title: '"Skin Trade"', publisher: 'Wetware, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'buy', url: 'https://us.amazon.com/Wetware-Black-Hare-Press/dp/0645013935' },
+  { title: '"Welcome to the Storm"', publisher: 'Wetware, Black Hare Press', year: 2020, genre: 'Sci-Fi', access: 'buy', url: 'https://us.amazon.com/Wetware-Black-Hare-Press/dp/0645013935' },
+  { title: '"A Quick, Full Cure"', publisher: 'Worlds, Dark Drabble Book 1, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Worlds-Dark-Drabbles-Black-Press/dp/B0C7BKRD5M' },
+  { title: '"Good Morning and Farewell"', publisher: 'Worlds, Dark Drabble Book 1, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Worlds-Dark-Drabbles-Black-Press/dp/B0C7BKRD5M' },
+  { title: '"M.E.E. First"', publisher: 'Worlds, Dark Drabble Book 1, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Worlds-Dark-Drabbles-Black-Press/dp/B0C7BKRD5M' },
+  { title: '"No Meaning in a Vacuum"', publisher: 'Worlds, Dark Drabble Book 1, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Worlds-Dark-Drabbles-Black-Press/dp/B0C7BKRD5M' },
+  { title: '"Truly Alive"', publisher: 'Worlds, Dark Drabble Book 1, Black Hare Press', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Worlds-Dark-Drabbles-Black-Press/dp/B0C7BKRD5M' },
+  { title: '"Safety Off"', publisher: 'Zero Hour 2113, Black Hare Press', year: 2021, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Zero-Hour-2113-D-Kershaw/dp/0645073946' },
+  { title: '"Kinky Addiction"', publisher: 'Infection, Drabbles 1, Black Ink Fiction', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Infection-Drabbles-1-Legends-Night/dp/B0986DC8N5' },
+  { title: '"Proof of Unlife"', publisher: 'Infection, Drabbles 1, Black Ink Fiction', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Infection-Drabbles-1-Legends-Night/dp/B0986DC8N5' },
+  { title: '"Zombie in Chief"', publisher: 'Infection, Drabbles 1, Black Ink Fiction', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Infection-Drabbles-1-Legends-Night/dp/B0986DC8N5' },
+  { title: '"Zombie Neighborhood"', publisher: 'Infection, Drabbles 1, Black Ink Fiction', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Infection-Drabbles-1-Legends-Night/dp/B0986DC8N5' },
+  { title: '"Zombie Wedding"', publisher: 'Infection, Drabbles 1, Black Ink Fiction', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Infection-Drabbles-1-Legends-Night/dp/B0986DC8N5' },
+  { title: '"A Bitter Aftertaste"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"A Fair and Foul Fate"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"A Witch Omelet"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"Love for Life"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"Patience of a Saint"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"The Cave Witch"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"The Milk of Inhumankind"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"The Sweetest Witch"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"The Unkindness of Ravens"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"The Voice of Experience"', publisher: 'Curses & Cauldrons, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100' },
+  { title: '"The Kissing Stump"', publisher: 'Forests of Fear, Blood Song Books', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Forest-Fear-Anthology-Halloween-Microfiction/dp/B08R16ZL5X' },
+  // ── CLARENDON HOUSE / ICWG ──
   { title: '"On the Tip"', publisher: 'Blaze: ICWG Flash Fiction Anthology 2019, Clarendon House', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Blaze-Circle-Writers-Fiction-Anthology-ebook/dp/B07T9F5GF1' },
+  { title: '"The Marvelous Tale of Max the Mariner" (Poem)', publisher: 'Cadence: ICWG Poetry Anthology 2018, Clarendon House', year: 2018, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Cadence-Circle-Writers-Poetry-Anthology-ebook/dp/B07GFRL7Y5' },
+  { title: '"Pregenesis"', publisher: 'Carrier Wave: ICWG Comedy Anthology 2018, Clarendon House', year: 2018, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Carrier-Wave-Circle-Writers-Anthology-ebook/dp/B07F6FVGS7' },
+  { title: '"The Lonesome Alchemist"', publisher: 'Fireburst: ICWG Flash Fiction Anthology 2018, Clarendon House', year: 2018, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Fireburst-Circle-Writers-Fiction-Anthology-ebook/dp/B07LDF3FVH' },
   { title: '"Final Words Count"', publisher: 'Gleam: ICWG Flash Fiction Anthology 2019, Clarendon House', year: 2019, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Gleam-Circle-Writers-Fiction-Anthology-ebook/dp/B07YGS39TW' },
-  { title: '"Jack and Jim" (w/ Stephan Klimek and Jesse Doyle)', publisher: 'Poetica: ICWG Poetry Anthology 2019, Clarendon House', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B07X15DD82' },
-  { title: '"The Penguin Leaped"', publisher: 'Poetica 2: ICWG Poetry Anthology 2020, Clarendon House', year: 2020, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B08TB45QSG' },
-  { title: '"A Spaceman"', publisher: 'Poetica 3: ICWG Poetry Anthology 2021, Clarendon House', year: 2021, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Second-Anthology-ebook/dp/B09528ZPS5' },
-  { title: '"The Final Log of Captain Courage"', publisher: 'Poetica #7: ICWG Poetry Anthology 2022, Clarendon House', year: 2022, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B0B8XNSK4M' },
-  { title: '"With Only Rocks for Tools"', publisher: 'Poetica #15: ICWG Poetry Anthology 2023, Clarendon House', year: 2023, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-15-Circle-Writers-Anthology-ebook/dp/B0CQK8JBLD' },
-  // REPRINTS
-  { title: '"Pregenesis"', publisher: 'Personal Bests Journal Issue 1, ed. David Gardiner', year: 2020, genre: 'Humor', access: 'buy', url: 'https://www.amazon.com/dp/B08F6CGF9X' },
+  { title: '"Pregenesis"', publisher: 'Gold: Best from Clarendon House Anthologies Vol. 1, 2017/2018', year: 2018, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Gold-Best-Clarendon-House-Anthologies-ebook/dp/B07MXHTRT5' },
+  { title: '"World Falls"', publisher: 'Maelstrom: ICWG Literary Anthology 2019, Clarendon House', year: 2019, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Maelstrom-Circle-Writers-Literary-Anthology-ebook/dp/B0821T64Z3' },
+  { title: '"With Only Rocks for Tools" (Poem)', publisher: 'Poetica #15: ICWG Poetry Anthology 2023, Clarendon House', year: 2023, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-15-Circle-Writers-Anthology-ebook/dp/B0CQK8JBLD' },
+  { title: '"The Final Log of Captain Courage" (Poem)', publisher: 'Poetica #7: ICWG Poetry Anthology 2022, Clarendon House', year: 2022, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B0B8XNSK4M' },
+  { title: '"The Penguin Leaped" (Poem)', publisher: 'Poetica 2: ICWG Poetry Anthology 2020, Clarendon House', year: 2020, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B08TB45QSG' },
+  { title: '"A Spaceman" (Poem)', publisher: 'Poetica 3: ICWG Poetry Anthology 2021, Clarendon House', year: 2021, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Second-Anthology-ebook/dp/B09528ZPS5' },
+  { title: '"Jack and Jim" (Poem, w/ Stephan Klimek & Jesse Doyle)', publisher: 'Poetica: ICWG Poetry Anthology 2019, Clarendon House', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B07X15DD82' },
+  { title: '"Rebel Breakfast" (Poem)', publisher: 'Portal: ICWG Children\'s Anthology 2019, Clarendon House', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Portal-Circle-Writers-Childrens-Anthology-ebook/dp/B083WNYMSK' },
+  { title: '"Rocket Skin"', publisher: 'Tempest: ICWG Sci-Fi and Fantasy Anthology 2019, Clarendon House', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Tempest-Writers-Science-Fiction-Anthology-ebook/dp/B07W65833D' },
+  { title: '"A Taste of Friendship"', publisher: 'Vortex: ICWG Literary Anthology 2018, Clarendon House', year: 2018, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Vortex-Circle-Writers-Literary-Anthology-ebook/dp/B07DJ5FNH7' },
+  { title: '"The Wizard and the Dinosaur" (Epic Poem)', publisher: 'Window: ICWG Children\'s Anthology 2018, Clarendon House', year: 2018, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Window-Circle-Writers-Childrens-Anthology-ebook/dp/B07DVPQMVV' },
+  { title: '"Keelhauled"', publisher: '100 Ways to Die, Crows Feet Journal', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B09FS89D7M' },
+  { title: '"Never Quit"', publisher: '100 Ways to Die, Crows Feet Journal', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B09FS89D7M' },
+  { title: '"Price of Mercy"', publisher: '100 Ways to Die, Crows Feet Journal', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B09FS89D7M' },
+  { title: '"Tragic Depth by Autocorrect"', publisher: '100 Ways to Die, Crows Feet Journal', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B09FS89D7M' },
+  { title: '"Dark Trek"', publisher: 'World of Myth Magazine Anthology IV, Dark Myth Publications', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/1737294761' },
+  { title: '"Babies in the Attic"', publisher: 'Organic Ink, Vol. 1, Dragon Soul Press', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055' },
+  { title: '"Bugged"', publisher: 'Organic Ink, Vol. 1, Dragon Soul Press', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055' },
+  { title: '"Daddy\'s Job is Dangerous"', publisher: 'Organic Ink, Vol. 1, Dragon Soul Press', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055' },
+  { title: '"Heavy is the Head that Wears the Crown"', publisher: 'Organic Ink, Vol. 1, Dragon Soul Press', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055' },
+  { title: '"Polly Wants a Cracker"', publisher: 'Organic Ink, Vol. 1, Dragon Soul Press', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055' },
+  { title: '"Sometimes"', publisher: 'Organic Ink, Vol. 1, Dragon Soul Press', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055' },
+  { title: '"The Seagull"', publisher: 'Organic Ink, Vol. 1, Dragon Soul Press', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055' },
+  { title: '"Who\'ll Love You"', publisher: 'Organic Ink, Vol. 1, Dragon Soul Press', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055' },
+  { title: '"A Murder of Crows"', publisher: 'A Tree Full of Crows, ed. Mandy Chandler', year: 2024, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Tree-Full-Crows-Anthology/dp/0645593427' },
+  { title: '"Genuine Troll-Leather Luggage"', publisher: 'Dragon Bone Soup, ed. D.W. Brownlaw & P.C. Darkcliff', year: 2019, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Dragon-Bone-Soup-showcase-international/dp/1673703976' },
+  { title: '"The Jealous Wish"', publisher: 'Drabbledark, ed. Eric Fomley', year: 2018, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Drabbledark-Anthology-Drabbles-Eric-Fomley/dp/1983152811' },
+  { title: '"A Cocky Dude\'ll Do" (Poem)', publisher: 'Cocky Tales, ed. Erin Crocker (out of print)', year: 2018, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Cocky-Tales-Multi-Genre-Anthology-Erin-Crocker/dp/1722237643' },
+  { title: '"Fear Unmasked"', publisher: 'The Drabbun Anthology, ed. Francis Wesley Alexander & T. Santitora', year: 2022, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Drabbun-Anthology-Francis-W-Alexander/dp/1088039464' },
+  { title: '"Goodbye, My Lush"', publisher: 'The Best of CafeLit 8, ed. Gil James', year: 2018, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/dp/1910542458' },
+  { title: '"Just Watch Me"', publisher: 'Scary Snippets: Virtual Edition, ed. N.M. Brown', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Scary-Snippets-Virtual-N-M-Brown-ebook/dp/B08JM2CZX8' },
+  { title: '"Get off my Lawn"', publisher: 'Tall Tales & Short Stories Vol. 1, Escaped Ink', year: 2019, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/dp/1916230105' },
+  { title: '"Sinking Treasure"', publisher: 'Waters of Destruction, Elemental Drabbles Vol. 2, Fantasia Divinity', year: 2020, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/B08GJXVJNM' },
+  { title: '"Water Torture"', publisher: 'Waters of Destruction, Elemental Drabbles Vol. 2, Fantasia Divinity', year: 2020, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/B08GJXVJNM' },
+  { title: '"Breathtaking Spectacle"', publisher: 'Winds of Despair, Elemental Drabbles Vol. 1, Fantasia Divinity', year: 2020, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/Winds-Despair-Madeline-L-Stout/dp/B08PQRJK7W' },
+  { title: '"Caution to the Wind"', publisher: 'Winds of Despair, Elemental Drabbles Vol. 1, Fantasia Divinity', year: 2020, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Winds-Despair-Madeline-L-Stout/dp/B08PQRJK7W' },
+  { title: '"Howl from Below"', publisher: 'Winds of Despair, Elemental Drabbles Vol. 1, Fantasia Divinity', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Winds-Despair-Madeline-L-Stout/dp/B08PQRJK7W' },
+  { title: '"Scent of Devotion"', publisher: 'Winds of Despair, Elemental Drabbles Vol. 1, Fantasia Divinity', year: 2020, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/Winds-Despair-Madeline-L-Stout/dp/B08PQRJK7W' },
+  { title: '"Call the Exterminator: A Job with No Boss"', publisher: 'Trembling with Fear Vol. 2, Horror Tree', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B08HGRW7J3' },
+  { title: '"Call the Exterminator: Dreams of Revenge"', publisher: 'Trembling with Fear Vol. 2, Horror Tree', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B08HGRW7J3' },
+  { title: '"Call the Exterminator: One Fearless Night"', publisher: 'Trembling with Fear Vol. 2, Horror Tree', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B08HGRW7J3' },
+  { title: '"Circle of Unlife: A Vampire\'s Tail"', publisher: 'Trembling with Fear Vol. 2, Horror Tree', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B08HGRW7J3' },
+  { title: '"Circle of Unlife: Dangerous Boyfriend"', publisher: 'Trembling with Fear Vol. 2, Horror Tree', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B08HGRW7J3' },
+  { title: '"Circle of Unlife: My Immortal Calendar"', publisher: 'Trembling with Fear Vol. 2, Horror Tree', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/dp/B08HGRW7J3' },
+  { title: '"Corpse Flies"', publisher: 'Mythical Creatures of Asia, Insignia Stories', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B093C82WBN' },
+  { title: '"Hunger of the Nian"', publisher: 'Mythical Creatures of Asia, Insignia Stories', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B093C82WBN' },
+  { title: '"Manticore Hide"', publisher: 'Mythical Creatures of Asia, Insignia Stories', year: 2021, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B093C82WBN' },
+  { title: '"An Ill Wind"', publisher: 'Rowan & Oak, Iron Faerie Publishing', year: 2020, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Rowan-Oak-Hawthorn-Ash-Book-ebook/dp/B08RDS76JT' },
+  { title: '"Dark Enough to See"', publisher: 'Rowan & Oak, Iron Faerie Publishing', year: 2020, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Rowan-Oak-Hawthorn-Ash-Book-ebook/dp/B08RDS76JT' },
+  { title: '"No Shelter"', publisher: 'Rowan & Oak, Iron Faerie Publishing', year: 2020, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Rowan-Oak-Hawthorn-Ash-Book-ebook/dp/B08RDS76JT' },
+  { title: '"Retirement 101"', publisher: 'Dark Celebration, Macabre Ladies', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B08GQJ11Z4' },
+  { title: '"Patriarch\'s Birthday"', publisher: 'Dark Celebration, Macabre Ladies', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B08GQJ11Z4' },
+  { title: '"Christmas Vacation"', publisher: 'Dark X-Mas, Macabre Ladies', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0813X8RRH' },
+  { title: '"Holiday Memories"', publisher: 'Dark X-Mas, Macabre Ladies', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0813X8RRH' },
+  { title: '"It Came Upon a Midnight Drear"', publisher: 'Dark X-Mas, Macabre Ladies', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0813X8RRH' },
+  { title: '"Tattletale on a Shelf"', publisher: 'Dark X-Mas, Macabre Ladies', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0813X8RRH' },
+  { title: '"The Keepsake"', publisher: 'Dark X-Mas, Macabre Ladies', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B0813X8RRH' },
+  { title: '"Daylight is the Designated Driver of my Soul" (Poem)', publisher: 'Nation, Penned in the City', year: 2020, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/dp/B08LNLBYM1' },
+  { title: '"Birthday Desserts"', publisher: 'Nightmare with a Twist, Penned in the City', year: 2024, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Nightmare-Twist-Mar%C3%ADa-J-Estrada/dp/1954444117' },
+  { title: '"Play for the Lizardmen" (Poem & Art)', publisher: 'Unity Vol. 1, Penned in the City', year: 2020, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/Unity-1-Magical-Realism-Anthology-ebook/dp/B08PTZDGN6' },
+  { title: '"Funny and Sad"', publisher: 'Death House: Mortem Cycle Vol. 1, Raven & Drake', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/Death-House-Scarlett-Lake/dp/1914320069' },
+  { title: '"Breakfast Craving"', publisher: '100 Word Zombie Bites, Reanimated Writers Press', year: 2019, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/100-Word-Zombie-Bites-Anthology/dp/1626760454' },
+  { title: '"New Owners for Old Earth"', publisher: 'Cosmic Convocation, Starry-Eyed Press', year: 2022, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/B08GJXVJNM' },
+  { title: '"Who Summoned the Ambassador"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"Dynamic Upgrades"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"Fading Blue Light Special"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"Hostess Seeks Host"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"How Natives Rescued the First Human Colony"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"Mind Readers"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"Pirate Lessons"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"The Regift" (w/ Tom Jolly)', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"The Smart Alliance"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"The Stalker"', publisher: 'Drabbles: First Contact, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0DXBY42ZG' },
+  { title: '"AI Oversight Taskforce"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Getting Along"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Make Room for Mooms"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Mixed Connection"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Peace Prayer"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Surface Tension"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"True Sounding"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Ugly Is as Ugly Does"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Visit with a Capital V"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Warped Art Heist"', publisher: 'Drabbles: Second Wave, Starry-Eyed Press', year: 2025, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0FNB9VJSH' },
+  { title: '"Alien Memories"', publisher: 'Pocket SciFi: Drabble Contest One, Starry-Eyed Press', year: 2023, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B0CMJV5WGC' },
+  { title: '"Zeus Really Has to Go"', publisher: 'Grumpy Old Gods Vol. 1, Stormdance Publications', year: 2019, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/gp/product/B07PQ2HYZ9/' },
+  { title: '"The Fateful Voyage of the Fortunate Seven"', publisher: 'Grumpy Old Gods Vol. 2, Stormdance Publications', year: 2019, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/dp/B07VJZVM5C' },
+  { title: '"Fishing for the Words to Say I Love You"', publisher: 'Sea Glass Hearts, Stormy Island Publishing', year: 2019, genre: 'Poetry', access: 'buy', url: 'https://www.amazon.com/dp/1082422290' },
+  { title: '"Change is Everyything"', publisher: 'Clockwork Dragons, Zombie Pirate Publishing', year: 2020, genre: 'Fantasy', access: 'buy', url: 'https://www.amazon.com/CLOCKWORK-DRAGONS-Fantasypunk-Sam-Phillips-ebook/dp/B07ZFCZLC9' },
+  { title: '"The Captain\'s Dinner"', publisher: 'Flash Fiction Addiction, Zombie Pirate Publishing', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/FLASH-FICTION-ADDICTION-Short-Stories-ebook/dp/B07Q473TM9' },
+  { title: '"Wings of Hope"', publisher: 'Full Metal Horror 2, Zombie Pirate Publishing', year: 2020, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/FULL-METAL-HORROR-Bloodstained-Anthology-ebook' },
+  { title: '"Widow Maker\'s Mercy"', publisher: 'Grievous Bodily Harm, Zombie Pirate Publishing', year: 2019, genre: 'Crime', access: 'buy', url: 'https://www.amazon.com/GRIEVOUS-BODILY-HARM-Hardboiled-Anthology-ebook/dp/B07WRG5SRG' },
+  { title: '"Jurassic Date"', publisher: 'Raygun Retro, Zombie Pirate Publishing', year: 2020, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/RAYGUN-RETRO-Science-Fiction-Anthology-ebook/dp/B0857CTPMY' },
+  { title: '"The Captain\'s Dinner"', publisher: 'Treasure Chest, Zombie Pirate Publishing', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/1925985075' },
+  { title: '"The Floabnian Fiasco"', publisher: 'World War Four, Zombie Pirate Publishing', year: 2019, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/WORLD-WAR-FOUR-Science-Anthology-ebook/dp/B07NKKH71F' },
+  { title: '"Dark Trek"', publisher: 'Journeys, Writers\' Journey Blog, ed. Carnegie-Padgett & Jesmer', year: 2021, genre: 'Horror', access: 'buy', url: 'https://www.amazon.com/gp/product/B09JZ8JGQB' },
+  { title: '"The Right Stuff"', publisher: 'Journeys, Writers\' Journey Blog, ed. Carnegie-Padgett & Jesmer', year: 2021, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/gp/product/B09JZ8JGQB' },
+  { title: '"The Alien Emissary"', publisher: 'Unreal, Vol. 1, ed. Aditya Deshmukh', year: 2020, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B08B7KXZG1' },
+  { title: '"Pregenesis"', publisher: 'Personal Bests Journal Issue 1, ed. David Gardiner', year: 2020, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B08F6CGF9X' },
   { title: '"A Taste of Friendship"', publisher: 'Personal Bests Journal Issue 3, ed. David Gardiner', year: 2021, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/dp/B09M7HXNZ7' },
-  { title: '"The Right Stuff" and "Dark Trek"', publisher: 'Journeys: Writers Journal Blog, ed. Carnegie-Padgett and Jesmer', year: 2021, genre: 'Sci-Fi', access: 'buy', url: 'https://www.amazon.com/dp/B09JZ8JGQB' },
 ];
 
 // ── TABLE LOGIC ──
