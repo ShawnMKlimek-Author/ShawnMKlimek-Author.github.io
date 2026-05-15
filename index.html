@@ -19,6 +19,10 @@
     --cream: #e8e4d8;
     --gold: #c8a84b;
     --gold-dim: #8a7030;
+    --banner-full: 220px;
+    --banner-slim: 72px;
+    --tab-height: 48px;
+    --transition: 0.4s cubic-bezier(0.4,0,0.2,1);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,13 +45,41 @@
     z-index: 0;
   }
 
-  /* ── HERO ── */
-  header {
+  /* ── BANNER ── */
+  #banner {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    height: var(--banner-full);
+    overflow: hidden;
+    transition: height var(--transition);
+    background: var(--ink);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  #banner.slim {
+    height: var(--banner-slim);
+  }
+
+  .banner-inner {
     position: relative;
     z-index: 1;
-    text-align: center;
-    padding: 3.5rem 2rem 0;
-    border-bottom: none;
+    height: var(--banner-full);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 2rem 1rem;
+    transition: height var(--transition);
+  }
+
+  #banner.slim .banner-inner {
+    height: var(--banner-slim);
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    padding: 0 2rem;
   }
 
   .hero-eyebrow {
@@ -56,138 +88,111 @@
     letter-spacing: 0.45em;
     color: var(--gold-dim);
     text-transform: uppercase;
-    margin-bottom: 1rem;
-    animation: fadeDown 1s ease both;
+    margin-bottom: 0.8rem;
+    transition: opacity var(--transition), max-height var(--transition);
+    max-height: 2rem;
+    overflow: hidden;
+  }
+
+  #banner.slim .hero-eyebrow {
+    opacity: 0;
+    max-height: 0;
+    margin: 0;
   }
 
   .site-title {
     font-family: 'Cinzel', serif;
-    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    font-size: clamp(2.2rem, 6vw, 4rem);
     font-weight: 600;
     color: var(--cream);
     letter-spacing: 0.06em;
     line-height: 1.05;
     text-shadow: 0 0 80px rgba(200,168,75,0.1), 0 2px 30px rgba(0,0,0,0.9);
-    animation: fadeDown 1s 0.1s ease both;
+    transition: font-size var(--transition);
+  }
+
+  #banner.slim .site-title {
+    font-size: 1.2rem;
+    letter-spacing: 0.12em;
   }
 
   .hero-rule {
     width: 80px;
     height: 1px;
     background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
-    margin: 1.2rem auto;
-    animation: fadeDown 1s 0.2s ease both;
+    margin: 1rem auto;
+    transition: opacity var(--transition), max-height var(--transition);
+    max-height: 2rem;
+    overflow: hidden;
+  }
+
+  #banner.slim .hero-rule {
+    opacity: 0;
+    max-height: 0;
+    margin: 0;
+    width: 1px;
+    height: 24px;
+    background: var(--border);
   }
 
   .site-subtitle {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--silver);
     letter-spacing: 0.2em;
-    margin-bottom: 3rem;
-    animation: fadeDown 1s 0.3s ease both;
-  }
-
-  /* ── SECTION GRID (hero cards) ── */
-  .section-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    z-index: 1;
-    animation: fadeUp 1s 0.4s ease both;
-  }
-
-  .grid-card {
-    display: block;
-    background: var(--ink);
-    text-decoration: none;
-    position: relative;
+    transition: opacity var(--transition), max-height var(--transition);
+    max-height: 2rem;
     overflow: hidden;
-    padding: 1.4rem 1.2rem;
-    transition: background 0.3s;
   }
 
-  .grid-card:hover { background: var(--panel-hover); }
+  #banner.slim .site-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
 
-  .grid-card-bg {
+  .banner-hint {
     position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0.1;
-    transition: opacity 0.4s;
-  }
-
-  .grid-card:hover .grid-card-bg { opacity: 0.18; }
-
-  .grid-card-inner {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.9rem;
-  }
-
-  .grid-card-icon {
-    font-size: 1.4rem;
-    flex-shrink: 0;
-    opacity: 0.85;
-    filter: drop-shadow(0 0 6px rgba(200,168,75,0.4));
-  }
-
-  .grid-card-text { display: flex; flex-direction: column; }
-
-  .grid-card-title {
+    bottom: 6px;
+    right: 12px;
     font-family: 'Cinzel', serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    color: var(--gold);
+    font-size: 0.48rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
     text-transform: uppercase;
-    margin-bottom: 0.2rem;
+    opacity: 0;
+    transition: opacity 0.2s;
   }
 
-  .grid-card-desc {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 0.88rem;
-    color: var(--silver);
-    line-height: 1.3;
-  }
+  #banner:hover .banner-hint { opacity: 1; }
+  #banner.slim:hover .banner-hint { content: 'expand'; }
 
-  @media (max-width: 640px) {
-    .section-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 340px) {
-    .section-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ── NAV ── */
-  nav {
+  /* ── TAB BAR ── */
+  #tab-bar {
+    position: sticky;
+    top: var(--banner-slim);
+    z-index: 199;
     background: rgba(13,13,18,0.97);
     border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
     backdrop-filter: blur(8px);
+    transition: top var(--transition);
   }
 
-  nav ul {
+  #banner:not(.slim) ~ #tab-bar {
+    top: var(--banner-full);
+  }
+
+  .tab-list {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    justify-content: center;
     list-style: none;
     max-width: 900px;
     margin: 0 auto;
   }
 
-  nav ul li a {
+  .tab-btn {
     display: block;
     padding: 0.85rem 1.05rem;
     font-family: 'Cinzel', serif;
@@ -196,10 +201,92 @@
     color: var(--silver);
     text-decoration: none;
     text-transform: uppercase;
+    background: none;
+    border: none;
+    cursor: pointer;
     transition: color 0.2s;
+    white-space: nowrap;
   }
 
-  nav ul li a:hover { color: var(--gold); }
+  .tab-btn:hover { color: var(--gold); }
+  .tab-btn.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+  @media (max-width: 640px) {
+    .tab-list { justify-content: center; }
+    .tab-btn { padding: 0.7rem 0.7rem; font-size: 0.6rem; letter-spacing: 0.1em; }
+  }
+
+  /* ── TAB PANELS ── */
+  .tab-panel {
+    display: none;
+    position: relative;
+    z-index: 1;
+    min-height: 60vh;
+  }
+
+  .tab-panel.active { display: block; }
+
+  /* ── HOME PANEL ── */
+  #panel-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 50vh;
+  }
+
+  #panel-home p {
+    max-width: 500px;
+    color: var(--silver);
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .home-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 480px) {
+    .home-nav-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .home-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 1.5rem 1rem;
+    background: var(--ink);
+    text-decoration: none;
+    transition: background 0.2s;
+    cursor: pointer;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  .home-nav-item:hover { background: var(--panel-hover); }
+
+  .home-nav-icon { font-size: 1.6rem; }
+
+  .home-nav-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
 
   /* ── LAYOUT ── */
   .container {
@@ -214,6 +301,8 @@
     padding: 4rem 0;
     border-bottom: 1px solid var(--border);
   }
+
+  section:last-child { border-bottom: none; }
 
   .section-label {
     font-family: 'Cinzel', serif;
@@ -372,76 +461,8 @@
     .avatar-hint { display: none; }
   }
 
-  /* ── SERIALS ── */
-  .serials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-
-  @media (max-width: 600px) { .serials-grid { grid-template-columns: 1fr; } }
-
-  .serial-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-top: 2px solid var(--gold-dim);
-    padding: 1.8rem;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .serial-card:hover { border-top-color: var(--gold); transform: translateY(-2px); }
-
-  .serial-card h4 {
-    font-family: 'Cinzel', serif;
-    font-size: 0.88rem;
-    letter-spacing: 0.15em;
-    color: var(--gold);
-    margin-bottom: 0.6rem;
-  }
-
-  .serial-card p { font-size: 0.95rem; color: var(--silver); margin-bottom: 1rem; }
-
-  .btn {
-    display: inline-block;
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid var(--gold-dim);
-    padding: 0.5rem 1.2rem;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .btn:hover { background: var(--gold); color: var(--ink); }
-
-  /* ── PUBLICATIONS ── */
-  .pub-list { list-style: none; margin: 0 0 1rem; }
-
-  .pub-list li {
-    padding: 0.4rem 0;
-    border-bottom: 1px solid rgba(42,42,58,0.5);
-    font-size: 0.95rem;
-    color: var(--pale);
-    line-height: 1.5;
-  }
-
-  .pub-list li a { color: var(--pale); }
-  .pub-list li a:hover { color: var(--gold); }
-
-  /* ── BLOG ── */
-  .blog-posts { list-style: none; }
-  .blog-posts li { padding: 1rem 0; border-bottom: 1px solid var(--border); }
-  .blog-posts li a { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--cream); }
-  .blog-posts li a:hover { color: var(--gold); }
-
-  .post-date {
-    font-size: 0.75rem;
-    color: var(--muted);
-    font-family: 'Cinzel', serif;
-    letter-spacing: 0.1em;
-    display: block;
-    margin-bottom: 0.2rem;
-  }
-
   /* ── AUTHOR LINKS ── */
-  .links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; }
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; margin-top: 2rem; }
 
   .link-item {
     display: flex;
@@ -457,6 +478,148 @@
 
   .link-item:hover { border-color: var(--gold-dim); color: var(--gold); }
   .link-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-dim); flex-shrink: 0; }
+
+  /* ── PUBLICATIONS ── */
+  .pub-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .pub-filters, .pub-sort {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+  }
+
+  .sort-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-right: 0.2rem;
+  }
+
+  .filter-btn, .sort-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--silver);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .sort-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
+  .filter-btn.active, .sort-btn.active { background: var(--gold-dim); color: var(--cream); border-color: var(--gold-dim); }
+
+  .pub-count {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  /* ── ACCORDION ── */
+  .pub-accordion { width: 100%; }
+
+  .acc-group { border-bottom: 1px solid rgba(42,42,58,0.5); }
+
+  .acc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 0.5rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    gap: 1rem;
+  }
+
+  .acc-header:hover { background: rgba(28,28,40,0.5); }
+
+  .acc-header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .acc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    line-height: 1.3;
+  }
+
+  .acc-meta {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .acc-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  .acc-access {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .acc-access-free { color: var(--gold); }
+  .acc-access-buy { color: var(--silver); }
+  .acc-access-none { color: var(--muted); }
+
+  .acc-toggle {
+    font-size: 0.65rem;
+    color: var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .acc-group.open .acc-toggle { transform: rotate(90deg); }
+
+  .acc-body {
+    display: none;
+    padding: 0.3rem 0.5rem 0.8rem 1.5rem;
+    border-top: 1px solid rgba(42,42,58,0.3);
+  }
+
+  .acc-group.open .acc-body { display: block; }
+
+  .acc-story {
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+    color: var(--silver);
+    border-bottom: 1px solid rgba(42,42,58,0.25);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .acc-story:last-child { border-bottom: none; }
+  .acc-story-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gold-dim); flex-shrink: 0; }
 
   /* ── ANTHOLOGY GALLERY ── */
   .gallery-row-label {
@@ -516,10 +679,6 @@
     filter: saturate(0.4) brightness(0.8);
   }
 
-  .gallery-item.out-of-print:hover img {
-    filter: saturate(0.6) brightness(0.9);
-  }
-
   .gallery-placeholder {
     width: 100%;
     aspect-ratio: 2/3;
@@ -537,6 +696,20 @@
     padding: 0.5rem;
   }
 
+  /* ── BLOG ── */
+  .blog-posts { list-style: none; }
+  .blog-posts li { padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .blog-posts li a { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--cream); }
+  .blog-posts li a:hover { color: var(--gold); }
+  .post-date {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
   /* ── VIDEOS ── */
   .video-list { list-style: none; }
   .video-list li { padding: 0.6rem 0; border-bottom: 1px solid rgba(42,42,58,0.5); font-size: 0.95rem; }
@@ -551,225 +724,86 @@
     letter-spacing: 0.1em;
     position: relative;
     z-index: 1;
+    border-top: 1px solid var(--border);
   }
 
   .footer-logo { height: 80px; width: auto; opacity: 0.55; margin: 0 auto 1.2rem; display: block; transition: opacity 0.3s; }
   .footer-logo:hover { opacity: 0.85; }
 
-  /* ── PUBLICATIONS TABLE ── */
-  .pub-controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-
-  .pub-filters, .pub-sort {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    align-items: center;
-  }
-
-  .sort-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-right: 0.2rem;
-  }
-
-  .filter-btn, .sort-btn {
-    font-family: 'Cinzel', serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    background: transparent;
-    color: var(--silver);
-    border: 1px solid var(--border);
-    padding: 0.35rem 0.75rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .filter-btn:hover, .sort-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
-  .filter-btn.active, .sort-btn.active { background: var(--gold-dim); color: var(--cream); border-color: var(--gold-dim); }
-
-  .pub-count {
-    font-family: 'Cinzel', serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-
-  .pub-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-  }
-
-  .pub-table thead tr {
-    border-bottom: 1px solid var(--gold-dim);
-  }
-
-  .pub-table th {
-    font-family: 'Cinzel', serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    color: var(--gold);
-    text-transform: uppercase;
-    text-align: left;
-    padding: 0.6rem 0.5rem;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-
-  .pub-table th:hover { color: var(--cream); }
-
-  .pub-table td {
-    padding: 0.45rem 0.5rem;
-    border-bottom: 1px solid rgba(42,42,58,0.4);
-    color: var(--pale);
-    vertical-align: top;
-    line-height: 1.4;
-  }
-
-  .pub-table tr:hover td { background: rgba(28,28,40,0.6); }
-
-  .pub-table td a { color: var(--pale); }
-  .pub-table td a:hover { color: var(--gold); }
-
-  .pub-access-free {
-    font-family: 'Cinzel', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    color: var(--gold);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .pub-access-buy {
-    font-family: 'Cinzel', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    color: var(--silver);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .pub-access-none {
-    font-family: 'Cinzel', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  .pub-genre-tag {
-    font-family: 'Cinzel', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  @media (max-width: 600px) {
-    .pub-table th:nth-child(4),
-    .pub-table td:nth-child(4) { display: none; }
-  }
-
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
+  .tab-panel.active { animation: fadeUp 0.3s ease both; }
 </style>
 </head>
 <body>
 
 <canvas id="stars"></canvas>
 
-<!-- HERO -->
-<header>
-  <div class="hero-eyebrow">Speculative Fiction &nbsp;·&nbsp; Poetry &nbsp;·&nbsp; Dark Humor</div>
-  <div class="site-title">Shawn M. Klimek</div>
-  <div class="hero-rule"></div>
-  <div class="site-subtitle">Author &nbsp;·&nbsp; Poet &nbsp;·&nbsp; Storyteller</div>
-</header>
-
-<!-- SECTION GRID -->
-<div class="section-grid">
-
-  <a href="#books" class="grid-card">
-    <div class="grid-card-bg" style="background-image: url('Hungry_Thing_Ad_2024_Tiphany_V3.jpg'); background-position: center top;"></div>
-    <div class="grid-card-inner">
-      <div class="grid-card-icon">📖</div>
-      <div class="grid-card-text">
-        <div class="grid-card-title">Books</div>
-        <div class="grid-card-desc">Hungry Thing &amp; forthcoming collections</div>
-      </div>
-    </div>
-  </a>
-
-  <a href="#publications" class="grid-card">
-    <div class="grid-card-bg" style="background-image: url('bookshelf.jpg'); background-position: center 30%;"></div>
-    <div class="grid-card-inner">
-      <div class="grid-card-icon">✒️</div>
-      <div class="grid-card-text">
-        <div class="grid-card-title">Publications</div>
-        <div class="grid-card-desc">Dozens of stories &amp; poems in print and online</div>
-      </div>
-    </div>
-  </a>
-
-  <a href="#blog" class="grid-card">
-    <div class="grid-card-bg" style="background-image: url('noneko_hungry_thing.jpg'); background-position: center 20%;"></div>
-    <div class="grid-card-inner">
-      <div class="grid-card-icon">🖊️</div>
-      <div class="grid-card-text">
-        <div class="grid-card-title">Blog</div>
-        <div class="grid-card-desc">Publishing news &amp; dispatches from the creative life</div>
-      </div>
-    </div>
-  </a>
-
-  <a href="#videos" class="grid-card">
-    <div class="grid-card-bg" style="background-image: url('The_poet_by_Norbert_Somosi.jpg'); background-position: center 30%;"></div>
-    <div class="grid-card-inner">
-      <div class="grid-card-icon">🎬</div>
-      <div class="grid-card-text">
-        <div class="grid-card-title">Videos</div>
-        <div class="grid-card-desc">Readings, reviews &amp; previews on YouTube</div>
-      </div>
-    </div>
-  </a>
-
+<!-- BANNER -->
+<div id="banner" class="slim" role="banner" aria-label="Site header">
+  <div class="banner-inner">
+    <div class="hero-eyebrow">Speculative Fiction &nbsp;·&nbsp; Poetry &nbsp;·&nbsp; Dark Humor</div>
+    <div class="site-title">Shawn M. Klimek</div>
+    <div class="hero-rule"></div>
+    <div class="site-subtitle">Author &nbsp;·&nbsp; Poet &nbsp;·&nbsp; Storyteller</div>
+  </div>
+  <span class="banner-hint" id="banner-hint">expand</span>
 </div>
 
-<!-- NAV -->
-<nav>
-  <ul>
-    <li><a href="#about">About</a></li>
-    <li><a href="#books">Books</a></li>
-    <li><a href="#publications">Publications</a></li>
-    <li><a href="#gallery">Covers</a></li>
-    <li><a href="#blog">Blog</a></li>
-    <li><a href="#videos">Videos</a></li>
-    <li><a href="#author-pages">Author Pages</a></li>
+<!-- TAB BAR -->
+<nav id="tab-bar" role="navigation" aria-label="Site sections">
+  <ul class="tab-list">
+    <li><button class="tab-btn" data-tab="home">Home</button></li>
+    <li><button class="tab-btn" data-tab="about">About</button></li>
+    <li><button class="tab-btn" data-tab="books">Books</button></li>
+    <li><button class="tab-btn" data-tab="publications">Publications</button></li>
+    <li><button class="tab-btn" data-tab="covers">Covers</button></li>
+    <li><button class="tab-btn" data-tab="blog">Blog</button></li>
+    <li><button class="tab-btn" data-tab="media">Media</button></li>
   </ul>
 </nav>
 
+<!-- TAB PANELS -->
+
+<!-- HOME -->
+<div class="tab-panel" id="panel-home" role="tabpanel">
+  <p>Speculative fiction, poetry, and dark humor from the edges of imagination.</p>
+  <div class="home-nav-grid">
+    <button class="home-nav-item" data-tab="about">
+      <span class="home-nav-icon">👤</span>
+      <span class="home-nav-label">About</span>
+    </button>
+    <button class="home-nav-item" data-tab="books">
+      <span class="home-nav-icon">📖</span>
+      <span class="home-nav-label">Books</span>
+    </button>
+    <button class="home-nav-item" data-tab="publications">
+      <span class="home-nav-icon">✒️</span>
+      <span class="home-nav-label">Publications</span>
+    </button>
+    <button class="home-nav-item" data-tab="covers">
+      <span class="home-nav-icon">🖼️</span>
+      <span class="home-nav-label">Covers</span>
+    </button>
+    <button class="home-nav-item" data-tab="blog">
+      <span class="home-nav-icon">🖊️</span>
+      <span class="home-nav-label">Blog</span>
+    </button>
+    <button class="home-nav-item" data-tab="media">
+      <span class="home-nav-icon">🎬</span>
+      <span class="home-nav-label">Media</span>
+    </button>
+  </div>
+</div>
+
 <!-- ABOUT -->
-<section id="about">
+<div class="tab-panel" id="panel-about" role="tabpanel">
+  <section id="about">
+    <div class="container">
+      
   <div class="container">
     <div class="section-label">About the Author</div>
     <div class="about-grid">
@@ -788,10 +822,28 @@
       </div>
     </div>
   </div>
-</section>
+
+      <h3 style="margin-top:3rem;">Author Pages &amp; Profiles</h3>
+      <div class="links-grid">
+      <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank" class="link-item"><span class="link-dot"></span>Amazon Author Page</a>
+      <a href="https://www.goodreads.com/author/show/18163090.Shawn_Klimek" target="_blank" class="link-item"><span class="link-dot"></span>Goodreads</a>
+      <a href="https://www.bookbub.com/profile/shawn-m-klimek" target="_blank" class="link-item"><span class="link-dot"></span>BookBub</a>
+      <a href="https://www.facebook.com/shawnmklimekauthor/" target="_blank" class="link-item"><span class="link-dot"></span>Facebook Author Page</a>
+      <a href="https://www.blackharepress.com/shawn-m-klimek" target="_blank" class="link-item"><span class="link-dot"></span>Black Hare Press</a>
+      <a href="http://spillwords.com/author/shawnmklimek/" target="_blank" class="link-item"><span class="link-dot"></span>Spillwords Press</a>
+      <a href="https://www.fridayflashfiction.com/j-l.html" target="_blank" class="link-item"><span class="link-dot"></span>Friday Flash Fiction</a>
+      <a href="https://sites.google.com/newmyths.com/newmyths-com-home/contributors/k" target="_blank" class="link-item"><span class="link-dot"></span>NewMyths</a>
+      <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank" class="link-item"><span class="link-dot"></span>Lulu (Hungry Thing)</a>
+    </div>
+    </div>
+  </section>
+</div>
 
 <!-- BOOKS -->
-<section id="books">
+<div class="tab-panel" id="panel-books" role="tabpanel">
+  <section id="books">
+    <div class="container">
+      
   <div class="container">
     <div class="section-label">Published Books</div>
     <div class="book-showcase">
@@ -811,55 +863,44 @@
       </div>
     </div>
   </div>
-</section>
+
+    </div>
+  </section>
+</div>
 
 <!-- PUBLICATIONS -->
-<section id="publications">
-  <div class="container">
-    <div class="section-label">Bibliography</div>
-    <h2>Publications</h2>
-
-    <!-- FILTER CONTROLS -->
-    <div class="pub-controls">
-      <div class="pub-filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="Fiction">Fiction</button>
-        <button class="filter-btn" data-filter="Poetry">Poetry</button>
-        <button class="filter-btn" data-filter="Horror">Horror</button>
-        <button class="filter-btn" data-filter="Sci-Fi">Sci-Fi</button>
-        <button class="filter-btn" data-filter="Fantasy">Fantasy</button>
-        <button class="filter-btn" data-filter="Humor">Humor</button>
-        <button class="filter-btn" data-filter="Crime">Crime</button>
+<div class="tab-panel" id="panel-publications" role="tabpanel">
+  <section id="publications">
+    <div class="container">
+      <div class="section-label">Bibliography</div>
+      <h2>Publications</h2>
+      <div class="pub-controls">
+        <div class="pub-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="Fiction">Fiction</button>
+          <button class="filter-btn" data-filter="Poetry">Poetry</button>
+          <button class="filter-btn" data-filter="Horror">Horror</button>
+          <button class="filter-btn" data-filter="Sci-Fi">Sci-Fi</button>
+          <button class="filter-btn" data-filter="Fantasy">Fantasy</button>
+          <button class="filter-btn" data-filter="Humor">Humor</button>
+          <button class="filter-btn" data-filter="Crime">Crime</button>
+        </div>
+        <div class="pub-sort">
+          <span class="sort-label">Sort by:</span>
+          <button class="sort-btn active" data-sort="year">Year</button>
+          <button class="sort-btn" data-sort="title">Title</button>
+          <button class="sort-btn" data-sort="publisher">Publisher</button>
+        </div>
       </div>
-      <div class="pub-sort">
-        <span class="sort-label">Sort by:</span>
-        <button class="sort-btn active" data-sort="year">Year</button>
-        <button class="sort-btn" data-sort="title">Title</button>
-        <button class="sort-btn" data-sort="publisher">Publisher</button>
-      </div>
+      <div class="pub-count"><span id="pub-count-num">0</span> publications &nbsp;·&nbsp; <span id="pub-story-num">0</span> individual works shown</div>
+      <div class="pub-accordion" id="pub-accordion"></div>
     </div>
+  </section>
+</div>
 
-    <div class="pub-count"><span id="pub-count-num">0</span> entries shown</div>
-
-    <table class="pub-table" id="pub-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Publisher / Anthology</th>
-          <th>Year</th>
-          <th>Genre</th>
-          <th>Access</th>
-        </tr>
-      </thead>
-      <tbody id="pub-tbody">
-      </tbody>
-    </table>
-
-  </div>
-</section>
-
-<!-- ANTHOLOGY GALLERY -->
-<section id="gallery">
+<!-- COVERS -->
+<div class="tab-panel" id="panel-covers" role="tabpanel">
+  <section id="gallery">
   <div class="container">
     <div class="section-label">Anthology Covers</div>
     <h2>In These Pages</h2>
@@ -1382,7 +1423,13 @@
 
   </div>
 </section>
-<section id="blog">
+</div>
+
+<!-- BLOG -->
+<div class="tab-panel" id="panel-blog" role="tabpanel">
+  <section id="blog">
+    <div class="container">
+      
   <div class="container">
     <div class="section-label">Author Blog</div>
     <h2>From the Desk</h2>
@@ -1392,10 +1439,16 @@
     </ul>
     <p style="margin-top:1.5rem;"><a href="https://jotinthedark.blogspot.com/" target="_blank">View all posts →</a></p>
   </div>
-</section>
 
-<!-- VIDEOS -->
-<section id="videos">
+    </div>
+  </section>
+</div>
+
+<!-- MEDIA -->
+<div class="tab-panel" id="panel-media" role="tabpanel">
+  <section id="videos">
+    <div class="container">
+      
   <div class="container">
     <div class="section-label">Media</div>
     <h2>Video</h2>
@@ -1406,26 +1459,10 @@
       <li><a href="https://www.youtube.com/watch?v=OkZof0_RqTc" target="_blank"><em>Hungry Thing</em> — Book review by Daniel Roche</a></li>
     </ul>
   </div>
-</section>
 
-<!-- AUTHOR PAGES -->
-<section id="author-pages">
-  <div class="container">
-    <div class="section-label">Find the Author</div>
-    <h2>Author Pages &amp; Profiles</h2>
-    <div class="links-grid">
-      <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank" class="link-item"><span class="link-dot"></span>Amazon Author Page</a>
-      <a href="https://www.goodreads.com/author/show/18163090.Shawn_Klimek" target="_blank" class="link-item"><span class="link-dot"></span>Goodreads</a>
-      <a href="https://www.bookbub.com/profile/shawn-m-klimek" target="_blank" class="link-item"><span class="link-dot"></span>BookBub</a>
-      <a href="https://www.facebook.com/shawnmklimekauthor/" target="_blank" class="link-item"><span class="link-dot"></span>Facebook Author Page</a>
-      <a href="https://www.blackharepress.com/shawn-m-klimek" target="_blank" class="link-item"><span class="link-dot"></span>Black Hare Press</a>
-      <a href="http://spillwords.com/author/shawnmklimek/" target="_blank" class="link-item"><span class="link-dot"></span>Spillwords Press</a>
-      <a href="https://www.fridayflashfiction.com/j-l.html" target="_blank" class="link-item"><span class="link-dot"></span>Friday Flash Fiction</a>
-      <a href="https://sites.google.com/newmyths.com/newmyths-com-home/contributors/k" target="_blank" class="link-item"><span class="link-dot"></span>NewMyths</a>
-      <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank" class="link-item"><span class="link-dot"></span>Lulu (Hungry Thing)</a>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1435,14 +1472,13 @@
 </footer>
 
 <script>
+// ── STARFIELD ──
 const canvas = document.getElementById('stars');
 const ctx = canvas.getContext('2d');
-
 function resize() {
   canvas.width = window.innerWidth;
   canvas.height = document.documentElement.scrollHeight;
 }
-
 function drawStars() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   const count = Math.floor((canvas.width * canvas.height) / 3200);
@@ -1473,13 +1509,12 @@ function drawStars() {
     ctx.fill();
   }
 }
-
-resize();
-drawStars();
+resize(); drawStars();
 window.addEventListener('resize', () => { resize(); drawStars(); });
 </script>
 
 <script>
+
 // ── BLOG RSS FEED ──
 (function() {
   const FEED_URL = 'https://jotinthedark.blogspot.com/feeds/posts/default?alt=json&max-results=5&callback=renderBlogFeed';
@@ -1511,11 +1546,77 @@ window.addEventListener('resize', () => { resize(); drawStars(); });
   };
   document.head.appendChild(script);
 })();
+
+</script>
+
+<script>
+// ── TABS ──
+const banner = document.getElementById('banner');
+const bannerHint = document.getElementById('banner-hint');
+const tabBar = document.getElementById('tab-bar');
+
+function setTab(tabId, pushState) {
+  // Update panels
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('panel-' + tabId);
+  if (panel) panel.classList.add('active');
+
+  // Update tab buttons
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabId);
+  });
+
+  // Banner: expand on home, slim on everything else
+  if (tabId === 'home') {
+    banner.classList.remove('slim');
+    bannerHint.textContent = '';
+  } else {
+    banner.classList.add('slim');
+    bannerHint.textContent = 'expand';
+  }
+
+  // Update URL hash
+  if (pushState) {
+    try { history.pushState(null, '', '#' + tabId); } catch(e) { location.hash = tabId; }
+  }
+
+  // Redraw starfield after layout change
+  setTimeout(() => { resize(); drawStars(); }, 450);
+}
+
+// Tab button clicks
+document.querySelectorAll('.tab-btn, .home-nav-item').forEach(btn => {
+  btn.addEventListener('click', () => setTab(btn.dataset.tab, true));
+});
+
+// Banner click toggles home
+banner.addEventListener('click', () => {
+  const isHome = document.getElementById('panel-home').classList.contains('active');
+  if (isHome) {
+    // already home - do nothing
+  } else {
+    setTab('home', true);
+  }
+});
+
+// Handle browser back/forward
+window.addEventListener('popstate', () => {
+  const hash = location.hash.replace('#', '') || 'home';
+  setTab(hash, false);
+});
+
+// Initial load from hash
+const initTab = location.hash.replace('#', '') || 'home';
+setTab(initTab, false);
+
+// If blog tab opened, trigger feed
+document.querySelector('[data-tab="blog"]').addEventListener('click', () => {
+  // blog script self-initialises, nothing extra needed
+});
 </script>
 
 <script>
 // ── PUBLICATIONS DATA ──
-// access: 'free' = free online link, 'buy' = purchase link, 'none' = no link (defunct)
 const pubs = [
   // ── FREE READS — FICTION ──
   { title: '"Ship of the Dead" (Part One, serial)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/148/horror/ship-of-the-dead/index.html' },
@@ -1786,39 +1887,96 @@ const pubs = [
   { title: '"A Taste of Friendship"', publisher: 'Personal Bests Journal Issue 3, ed. David Gardiner', year: 2021, genre: 'Fiction', access: 'buy', url: 'https://www.amazon.com/dp/B09M7HXNZ7' },
 ];
 
-// ── TABLE LOGIC ──
+// ── ACCORDION RENDER ──
 let currentFilter = 'all';
 let currentSort = 'year';
 let sortAsc = true;
 
-function renderTable() {
-  let data = [...pubs];
-  if (currentFilter !== 'all') data = data.filter(p => p.genre === currentFilter);
-  data.sort((a, b) => {
+function groupByPublisher(data) {
+  const map = new Map();
+  data.forEach(p => {
+    const key = p.publisher + '||' + p.year;
+    if (!map.has(key)) {
+      map.set(key, {
+        publisher: p.publisher,
+        year: p.year,
+        genre: p.genre,
+        access: p.access,
+        url: p.url,
+        stories: []
+      });
+    }
+    map.get(key).stories.push(p.title);
+  });
+  return Array.from(map.values());
+}
+
+function sortGroups(groups) {
+  return groups.sort((a, b) => {
     let av, bv;
-    if (currentSort === 'year') { av = a.year || 0; bv = b.year || 0; }
-    else if (currentSort === 'title') { av = a.title.replace(/[""]/g, ''); bv = b.title.replace(/[""]/g, ''); }
-    else { av = a.publisher; bv = b.publisher; }
+    if (currentSort === 'year') { av = a.year || 0; bv = b.year || 0; return sortAsc ? bv - av : av - bv; }
+    if (currentSort === 'title') { av = a.publisher; bv = b.publisher; }
+    if (currentSort === 'publisher') { av = a.publisher; bv = b.publisher; }
     if (av < bv) return sortAsc ? -1 : 1;
     if (av > bv) return sortAsc ? 1 : -1;
     return 0;
   });
-  const tbody = document.getElementById('pub-tbody');
-  tbody.innerHTML = data.map(p => {
-    let accessHtml;
-    if (p.access === 'free') accessHtml = `<a href="${p.url}" target="_blank" class="pub-access-free">Free →</a>`;
-    else if (p.access === 'buy') accessHtml = `<a href="${p.url}" target="_blank" class="pub-access-buy">Buy →</a>`;
-    else accessHtml = `<span class="pub-access-none">Offline</span>`;
-    const titleHtml = p.access !== 'none' ? `<a href="${p.url}" target="_blank">${p.title}</a>` : p.title;
-    return `<tr>
-      <td>${titleHtml}</td>
-      <td>${p.publisher}</td>
-      <td>${p.year || '—'}</td>
-      <td><span class="pub-genre-tag">${p.genre}</span></td>
-      <td>${accessHtml}</td>
-    </tr>`;
+}
+
+function renderAccordion() {
+  let data = [...pubs];
+  if (currentFilter !== 'all') data = data.filter(p => p.genre === currentFilter);
+
+  const groups = sortGroups(groupByPublisher(data));
+
+  const accordion = document.getElementById('pub-accordion');
+  if (!accordion) return;
+
+  document.getElementById('pub-count-num').textContent = groups.length;
+  document.getElementById('pub-story-num').textContent = data.length;
+
+  accordion.innerHTML = groups.map((g, idx) => {
+    const accessClass = g.access === 'free' ? 'acc-access-free' : g.access === 'buy' ? 'acc-access-buy' : 'acc-access-none';
+    const accessLabel = g.access === 'free' ? 'Free' : g.access === 'buy' ? 'Buy' : 'Offline';
+    const linkOpen = g.url ? `<a href="${g.url}" target="_blank" style="color:inherit;text-decoration:none;">` : '';
+    const linkClose = g.url ? '</a>' : '';
+    const multiStory = g.stories.length > 1;
+    const storiesHtml = g.stories.map(s => `
+      <div class="acc-story">
+        <span class="acc-story-dot"></span>
+        <span>${s}</span>
+      </div>`).join('');
+
+    return `<div class="acc-group" data-idx="${idx}">
+      <div class="acc-header" ${multiStory ? 'onclick="toggleAcc(this)"' : ''}>
+        <div class="acc-header-left">
+          <span class="acc-title">${linkOpen}${g.publisher}${linkClose}</span>
+          <span class="acc-meta">${g.year || '—'} &nbsp;·&nbsp; ${g.genre}</span>
+        </div>
+        <div class="acc-header-right">
+          ${g.url ? `<a href="${g.url}" target="_blank" class="acc-access ${accessClass}" onclick="event.stopPropagation()">${accessLabel} →</a>` : `<span class="acc-access acc-access-none">${accessLabel}</span>`}
+          ${multiStory ? `<span class="acc-toggle">▶</span>` : ''}
+        </div>
+      </div>
+      ${multiStory ? `<div class="acc-body">${storiesHtml}</div>` : `<div class="acc-body" style="padding:0.2rem 0.5rem 0.5rem 1.5rem;"><div class="acc-story"><span class="acc-story-dot"></span><span>${g.stories[0]}</span></div></div>`}
+    </div>`;
   }).join('');
-  document.getElementById('pub-count-num').textContent = data.length;
+
+  // Auto-open single-story groups? No - keep clean. User clicks to see.
+  // For single-story groups, show the story without needing a click
+  document.querySelectorAll('.acc-group').forEach(group => {
+    const body = group.querySelector('.acc-body');
+    const header = group.querySelector('.acc-header');
+    if (!header.hasAttribute('onclick')) {
+      // single story - show body always
+      body.style.display = 'block';
+    }
+  });
+}
+
+function toggleAcc(header) {
+  const group = header.closest('.acc-group');
+  group.classList.toggle('open');
 }
 
 document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1826,7 +1984,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentFilter = btn.dataset.filter;
-    renderTable();
+    renderAccordion();
   });
 });
 
@@ -1836,24 +1994,11 @@ document.querySelectorAll('.sort-btn').forEach(btn => {
     else { currentSort = btn.dataset.sort; sortAsc = true; }
     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    renderTable();
+    renderAccordion();
   });
 });
 
-document.querySelectorAll('.pub-table th').forEach((th, i) => {
-  const sorts = ['title', 'publisher', 'year', 'genre', null];
-  if (sorts[i]) {
-    th.addEventListener('click', () => {
-      if (currentSort === sorts[i]) { sortAsc = !sortAsc; }
-      else { currentSort = sorts[i]; sortAsc = true; }
-      document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector(`.sort-btn[data-sort="${sorts[i]}"]`)?.classList.add('active');
-      renderTable();
-    });
-  }
-});
-
-renderTable();
+renderAccordion();
 </script>
 
 </body>
