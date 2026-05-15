@@ -226,68 +226,6 @@
 
   .tab-panel.active { display: block; }
 
-  /* ── HOME PANEL ── */
-  #panel-home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-    text-align: center;
-    min-height: 50vh;
-  }
-
-  #panel-home p {
-    max-width: 500px;
-    color: var(--silver);
-    font-style: italic;
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-  }
-
-  .home-nav-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    max-width: 600px;
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 480px) {
-    .home-nav-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .home-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    padding: 1.5rem 1rem;
-    background: var(--ink);
-    text-decoration: none;
-    transition: background 0.2s;
-    cursor: pointer;
-    border: none;
-    color: inherit;
-    font-family: inherit;
-  }
-
-  .home-nav-item:hover { background: var(--panel-hover); }
-
-  .home-nav-icon { font-size: 1.6rem; }
-
-  .home-nav-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    color: var(--gold);
-    text-transform: uppercase;
-  }
-
   /* ── LAYOUT ── */
   .container {
     max-width: 860px;
@@ -756,7 +694,6 @@
 <!-- TAB BAR -->
 <nav id="tab-bar" role="navigation" aria-label="Site sections">
   <ul class="tab-list">
-    <li><button class="tab-btn" data-tab="home">Home</button></li>
     <li><button class="tab-btn" data-tab="about">About</button></li>
     <li><button class="tab-btn" data-tab="books">Books</button></li>
     <li><button class="tab-btn" data-tab="publications">Publications</button></li>
@@ -767,37 +704,6 @@
 </nav>
 
 <!-- TAB PANELS -->
-
-<!-- HOME -->
-<div class="tab-panel" id="panel-home" role="tabpanel">
-  <p>Speculative fiction, poetry, and dark humor from the edges of imagination.</p>
-  <div class="home-nav-grid">
-    <button class="home-nav-item" data-tab="about">
-      <span class="home-nav-icon">👤</span>
-      <span class="home-nav-label">About</span>
-    </button>
-    <button class="home-nav-item" data-tab="books">
-      <span class="home-nav-icon">📖</span>
-      <span class="home-nav-label">Books</span>
-    </button>
-    <button class="home-nav-item" data-tab="publications">
-      <span class="home-nav-icon">✒️</span>
-      <span class="home-nav-label">Publications</span>
-    </button>
-    <button class="home-nav-item" data-tab="covers">
-      <span class="home-nav-icon">🖼️</span>
-      <span class="home-nav-label">Covers</span>
-    </button>
-    <button class="home-nav-item" data-tab="blog">
-      <span class="home-nav-icon">🖊️</span>
-      <span class="home-nav-label">Blog</span>
-    </button>
-    <button class="home-nav-item" data-tab="media">
-      <span class="home-nav-icon">🎬</span>
-      <span class="home-nav-label">Media</span>
-    </button>
-  </div>
-</div>
 
 <!-- ABOUT -->
 <div class="tab-panel" id="panel-about" role="tabpanel">
@@ -1556,6 +1462,10 @@ const bannerHint = document.getElementById('banner-hint');
 const tabBar = document.getElementById('tab-bar');
 
 function setTab(tabId, pushState) {
+  // Validate tabId — fall back to about if unrecognised
+  const knownTabs = ['about','books','publications','covers','blog','media'];
+  if (!knownTabs.includes(tabId)) tabId = 'about';
+
   // Update panels
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   const panel = document.getElementById('panel-' + tabId);
@@ -1566,14 +1476,9 @@ function setTab(tabId, pushState) {
     b.classList.toggle('active', b.dataset.tab === tabId);
   });
 
-  // Banner: expand on home, slim on everything else
-  if (tabId === 'home') {
-    banner.classList.remove('slim');
-    bannerHint.textContent = '';
-  } else {
-    banner.classList.add('slim');
-    bannerHint.textContent = 'expand';
-  }
+  // Banner always starts slim on non-home tabs; keep whatever state it's in
+  banner.classList.add('slim');
+  bannerHint.textContent = 'expand';
 
   // Update URL hash
   if (pushState) {
@@ -1585,34 +1490,32 @@ function setTab(tabId, pushState) {
 }
 
 // Tab button clicks
-document.querySelectorAll('.tab-btn, .home-nav-item').forEach(btn => {
+document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => setTab(btn.dataset.tab, true));
 });
 
-// Banner click toggles home
+// Banner click toggles expand/collapse in place (no tab change)
 banner.addEventListener('click', () => {
-  const isHome = document.getElementById('panel-home').classList.contains('active');
-  if (isHome) {
-    // already home - do nothing
+  const isSlim = banner.classList.contains('slim');
+  if (isSlim) {
+    banner.classList.remove('slim');
+    bannerHint.textContent = '';
   } else {
-    setTab('home', true);
+    banner.classList.add('slim');
+    bannerHint.textContent = 'expand';
   }
+  setTimeout(() => { resize(); drawStars(); }, 450);
 });
 
 // Handle browser back/forward
 window.addEventListener('popstate', () => {
-  const hash = location.hash.replace('#', '') || 'home';
+  const hash = location.hash.replace('#', '') || 'about';
   setTab(hash, false);
 });
 
 // Initial load from hash
-const initTab = location.hash.replace('#', '') || 'home';
+const initTab = location.hash.replace('#', '') || 'about';
 setTab(initTab, false);
-
-// If blog tab opened, trigger feed
-document.querySelector('[data-tab="blog"]').addEventListener('click', () => {
-  // blog script self-initialises, nothing extra needed
-});
 </script>
 
 <script>
