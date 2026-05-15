@@ -1865,14 +1865,13 @@ function renderAccordion() {
     </div>`;
   }).join('');
 
-  // Auto-open single-story groups? No - keep clean. User clicks to see.
-  // For single-story groups, show the story without needing a click
+  // Single-story groups always show their story inline.
+  // When a filter is active, also auto-open multi-story groups so matching titles are visible.
   document.querySelectorAll('.acc-group').forEach(group => {
-    const body = group.querySelector('.acc-body');
     const header = group.querySelector('.acc-header');
-    if (!header.hasAttribute('onclick')) {
-      // single story - show body always
-      body.style.display = 'block';
+    const isSingle = !header.hasAttribute('onclick');
+    if (isSingle || currentFilter !== 'all') {
+      group.classList.add('open');
     }
   });
 }
