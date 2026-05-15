@@ -674,6 +674,67 @@
   }
 
   .tab-panel.active { animation: fadeUp 0.3s ease both; }
+
+  /* ── MEDIA SPLIT ── */
+  .media-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+
+  .media-links h2 { margin-bottom: 1.5rem; }
+
+  .media-image {
+    overflow: hidden;
+  }
+
+  .media-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+
+  .media-breathe {
+    animation: mediaBreathe 9s ease-in-out infinite;
+    transform-origin: center center;
+  }
+
+  @keyframes mediaBreathe {
+    0%   { transform: scale(1.000); }
+    40%  { transform: scale(1.012); }
+    100% { transform: scale(1.000); }
+  }
+
+  .media-image-credit {
+    font-family: 'Cinzel', serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    line-height: 1.9;
+  }
+
+  .media-image-credit em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.78rem;
+    text-transform: none;
+    letter-spacing: 0.05em;
+    color: var(--silver);
+  }
+
+  @media (max-width: 680px) {
+    .media-split {
+      grid-template-columns: 1fr;
+    }
+    .media-image { order: -1; }
+  }
 </style>
 </head>
 <body>
@@ -1354,18 +1415,25 @@
 <div class="tab-panel" id="panel-media" role="tabpanel">
   <section id="videos">
     <div class="container">
-      
-  <div class="container">
-    <div class="section-label">Media</div>
-    <h2>Video</h2>
-    <ul class="video-list">
-      <li><a href="https://www.youtube.com/watch?v=XTn13kGXfrY" target="_blank">"Heavy is the Head that Wears the Crown" — read by Wendy Vogel, The Poetics by Sweetycat Press</a></li>
-      <li><a href="https://www.youtube.com/watch?v=niR76PKVvqQ" target="_blank">"Remembering Gladys" — from <em>Hungry Thing</em></a></li>
-      <li><a href="https://www.youtube.com/watch?v=BmBcC0-AFAM" target="_blank"><em>Hungry Thing</em> — Book preview by Dr. Jesu Maria Estrada</a></li>
-      <li><a href="https://www.youtube.com/watch?v=OkZof0_RqTc" target="_blank"><em>Hungry Thing</em> — Book review by Daniel Roche</a></li>
-    </ul>
-  </div>
+      <div class="media-split">
 
+        <div class="media-links">
+          <div class="section-label">Media</div>
+          <h2>Video</h2>
+          <ul class="video-list">
+            <li><a href="https://www.youtube.com/watch?v=XTn13kGXfrY" target="_blank">"Heavy is the Head that Wears the Crown" — read by Wendy Vogel, The Poetics by Sweetycat Press</a></li>
+            <li><a href="https://www.youtube.com/watch?v=niR76PKVvqQ" target="_blank">"Remembering Gladys" — from <em>Hungry Thing</em></a></li>
+            <li><a href="https://www.youtube.com/watch?v=BmBcC0-AFAM" target="_blank"><em>Hungry Thing</em> — Book preview by Dr. Jesu Maria Estrada</a></li>
+            <li><a href="https://www.youtube.com/watch?v=OkZof0_RqTc" target="_blank"><em>Hungry Thing</em> — Book review by Daniel Roche</a></li>
+          </ul>
+        </div>
+
+        <div class="media-image">
+          <img src="The_End_of_Winter_by_Norbert_Somosi_color.jpg" alt="The End of Winter — color illustration by Norbert Somosi" class="media-breathe">
+          <p class="media-image-credit">"The End of Winter" — from <em>Hungry Thing</em><br>Original illustration &amp; December 2024 five-year anniversary colorization by Norbert Somosi</p>
+        </div>
+
+      </div>
     </div>
   </section>
 </div>
