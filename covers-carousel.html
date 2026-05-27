@@ -95,14 +95,14 @@
   footer a:hover { color: var(--gold); }
 
   /* FILTER / SORT BAR */
-  .filterbar { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0.65rem clamp(0.8rem, 4vw, 2rem); display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.4rem; }
+  .filterbar { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0.65rem clamp(0.8rem, 4vw, 2rem); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 1.4rem; }
   .filterbar-group { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
   .filterbar-label { font-family: 'Cinzel', serif; font-size: 0.54rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-dim); white-space: nowrap; }
   .fb-btn { font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; border: 1px solid var(--muted); background: transparent; color: var(--silver); cursor: pointer; transition: border-color 0.18s, color 0.18s, background 0.18s; white-space: nowrap; }
   .fb-btn:hover { border-color: var(--silver); color: var(--cream); }
   .fb-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,0.08); }
   .filterbar-sep { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
-  .filterbar-count { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em; color: var(--muted); margin-left: auto; white-space: nowrap; }
+  .filterbar-count { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em; color: var(--muted); width: 100%; text-align: center; }
   .no-results { text-align: center; padding: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 1.05rem; }
 
   /* SEARCH */
