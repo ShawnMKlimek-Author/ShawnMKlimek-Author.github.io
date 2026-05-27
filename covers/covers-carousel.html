@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Books & Publications — Shawn M. Klimek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d12;
+    --gold: #c8a84b;
+    --gold-dim: #8a7030;
+    --gold-glow: rgba(200,168,75,0.18);
+    --cream: #e8e4d8;
+    --pale: #c8c8e0;
+    --silver: #9898b8;
+    --panel: #1c1c28;
+    --panel2: #14141e;
+    --border: #2a2a3a;
+    --muted: #4a4a6a;
+    --thumb-w: 72px;
+    --thumb-h: 96px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--ink); color: var(--cream); font-family: 'Crimson Text', Georgia, serif; min-height: 100vh; overflow-x: hidden; }
+  #stars-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.55; }
+  .page { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; }
+
+  /* HEADER */
+  header { padding: 2rem 2rem 1.2rem; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(to bottom, rgba(13,13,18,0.98), rgba(13,13,18,0.7)); }
+  header .eyebrow { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 0.4rem; }
+  header h1 { font-family: 'Cinzel', serif; font-size: clamp(1.3rem, 4vw, 2.2rem); font-weight: 700; color: var(--gold); letter-spacing: 0.06em; }
+  header .sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--silver); margin-top: 0.25rem; }
+  .hint { text-align: center; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--muted); padding: 0.6rem 1rem 0.4rem; text-transform: uppercase; }
+
+  /* STRIP */
+  .strip-outer { position: relative; background: var(--panel2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; user-select: none; cursor: grab; overflow: hidden; }
+  .strip-outer.dragging { cursor: grabbing; }
+  .strip-outer::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); background: linear-gradient(to bottom, transparent, var(--gold), transparent); opacity: 0.4; pointer-events: none; z-index: 10; }
+  .strip-outer::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--panel2) 0%, transparent 10%, transparent 90%, var(--panel2) 100%); pointer-events: none; z-index: 5; }
+  .strip-track { display: flex; align-items: center; gap: 10px; padding: 0 calc(50vw - var(--thumb-w)/2); width: max-content; will-change: transform; }
+
+  /* THUMBNAILS */
+  .thumb { flex-shrink: 0; width: var(--thumb-w); height: var(--thumb-h); position: relative; border-radius: 2px; overflow: hidden; border: 1.5px solid var(--border); transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s, filter 0.35s; filter: brightness(0.6) saturate(0.5); transform-origin: center bottom; cursor: pointer; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+  .thumb.active { border-color: var(--gold); box-shadow: 0 0 20px var(--gold-glow), 0 0 6px rgba(200,168,75,0.45); filter: brightness(1) saturate(1); transform: scaleY(1.07) translateY(-3px); z-index: 2; }
+  .thumb.near1 { filter: brightness(0.85) saturate(0.8); transform: scaleY(1.03) translateY(-1px); }
+  .thumb.near2 { filter: brightness(0.72) saturate(0.65); }
+  .thumb .oop-badge { position: absolute; bottom: 3px; right: 3px; background: rgba(13,13,18,0.8); color: var(--silver); font-family: 'Cinzel', serif; font-size: 0.36rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 4px; border-radius: 2px; border: 1px solid var(--muted); }
+  .thumb .placeholder-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--panel); padding: 4px; font-family: 'Cinzel', serif; font-size: 0.42rem; color: var(--muted); text-align: center; letter-spacing: 0.06em; line-height: 1.3; word-break: break-word; }
+
+  /* ARROWS */
+  .arrow-btn { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(13,13,18,0.8); border: 1px solid var(--border); color: var(--gold); width: 30px; height: 52px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; border-radius: 2px; transition: background 0.2s, border-color 0.2s; }
+  .arrow-btn:hover { background: rgba(200,168,75,0.1); border-color: var(--gold); }
+  .arrow-btn.left { left: 6px; }
+  .arrow-btn.right { right: 6px; }
+
+  /* DETAIL */
+  .detail { flex: 1; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto 1fr; gap: 0; padding: 1.8rem clamp(1rem, 5vw, 3.5rem); max-width: 1100px; margin: 0 auto; width: 100%; min-height: 380px; }
+  .detail-empty { grid-column: 1/3; display: flex; align-items: center; justify-content: center; opacity: 0.35; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--silver); }
+
+  /* COVER */
+  .detail-cover { grid-row: 1/3; grid-column: 1; align-self: start; margin-right: 2.6rem; }
+  .detail-cover img { display: block; width: clamp(180px, 22vw, 300px); height: auto; border-radius: 3px; border: 1.5px solid var(--gold-dim); box-shadow: 0 0 60px rgba(200,168,75,0.14), 0 12px 48px rgba(0,0,0,0.8); transition: opacity 0.35s ease, transform 0.35s ease; }
+  .detail-cover.fade img { opacity: 0; transform: scale(0.97); }
+
+  /* META */
+  .detail-meta { grid-row: 1; grid-column: 2; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .book-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 600; color: var(--gold); line-height: 1.2; margin-bottom: 0.6rem; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 0.3rem 1.4rem; margin-bottom: 0.7rem; }
+  .meta-item { display: flex; flex-direction: column; gap: 0.05rem; }
+  .meta-label { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-dim); }
+  .meta-val { font-size: 0.98rem; color: var(--pale); }
+  .genre-tag { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--silver); border: 1px solid var(--muted); border-radius: 2px; padding: 2px 6px; margin-right: 4px; margin-bottom: 4px; }
+  .btn-buy { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.7rem; padding: 0.4rem 1.1rem; background: transparent; border: 1.5px solid var(--gold); color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; border-radius: 2px; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .btn-buy:hover { background: var(--gold); color: var(--ink); }
+  .btn-buy.dim { border-color: var(--muted); color: var(--silver); opacity: 0.7; }
+  .btn-buy.dim:hover { background: transparent; color: var(--silver); }
+
+  /* CONTRIBUTIONS */
+  .detail-contribs { grid-row: 2; grid-column: 2; padding-top: 1rem; }
+  .contribs-label { font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.7rem; }
+  .contribs-list { list-style: none; display: flex; flex-direction: column; gap: 0.28rem; max-height: 260px; overflow-y: auto; padding-right: 0.4rem; }
+  .contribs-list::-webkit-scrollbar { width: 3px; }
+  .contribs-list::-webkit-scrollbar-track { background: var(--panel); }
+  .contribs-list::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 2px; }
+  .contribs-list li { display: flex; align-items: baseline; gap: 0.6rem; font-size: 0.97rem; color: var(--cream); line-height: 1.4; }
+  .contribs-list li::before { content: '◆'; color: var(--gold-dim); font-size: 0.46rem; flex-shrink: 0; position: relative; top: -0.1em; }
+  .contrib-type { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 1.2rem; border-top: 1px solid var(--border); font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
+  footer a { color: var(--gold-dim); text-decoration: none; }
+  footer a:hover { color: var(--gold); }
+
+  /* FILTER / SORT BAR */
+  .filterbar { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0.65rem clamp(0.8rem, 4vw, 2rem); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem 1.4rem; }
+  .filterbar-group { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+  .filterbar-label { font-family: 'Cinzel', serif; font-size: 0.54rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-dim); white-space: nowrap; }
+  .fb-btn { font-family: 'Cinzel', serif; font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; border: 1px solid var(--muted); background: transparent; color: var(--silver); cursor: pointer; transition: border-color 0.18s, color 0.18s, background 0.18s; white-space: nowrap; }
+  .fb-btn:hover { border-color: var(--silver); color: var(--cream); }
+  .fb-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,0.08); }
+  .filterbar-sep { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+  .filterbar-count { font-family: 'Cinzel', serif; font-size: 0.52rem; letter-spacing: 0.14em; color: var(--muted); width: 100%; text-align: center; }
+  .no-results { text-align: center; padding: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--muted); font-size: 1.05rem; }
+
+  /* SEARCH */
+  .search-wrap { display: flex; align-items: center; gap: 0.5rem; }
+  .search-input { background: transparent; border: 1px solid var(--muted); border-radius: 2px; color: var(--cream); font-family: 'Crimson Text', serif; font-size: 0.9rem; padding: 3px 8px; width: 160px; outline: none; transition: border-color 0.18s; }
+  .search-input::placeholder { color: var(--muted); font-style: italic; }
+  .search-input:focus { border-color: var(--gold-dim); }
+  .search-clear { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.85rem; padding: 0 2px; line-height: 1; display: none; }
+  .search-clear.visible { display: block; }
+
+  /* RESPONSIVE */
+  @media (max-width: 680px) {
+    .filterbar { gap: 0.4rem 0.8rem; padding: 0.5rem 0.8rem; }
+    .filterbar-count { margin-left: 0; width: 100%; }
+    .search-input { width: 120px; }
+    .detail { grid-template-columns: 1fr; grid-template-rows: auto auto auto; padding: 1rem; }
+    .detail-cover { grid-row: 1; grid-column: 1; margin-right: 0; margin-bottom: 1.2rem; display: flex; justify-content: center; }
+    .detail-cover img { width: clamp(180px, 55vw, 260px); }
+    .detail-meta { grid-row: 2; grid-column: 1; }
+    .detail-contribs { grid-row: 3; grid-column: 1; }
+    :root { --thumb-w: 58px; --thumb-h: 77px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars-canvas"></canvas>
+<div class="page">
+  <header>
+    <div class="eyebrow">Jot in the Dark</div>
+    <h1>Shawn M. Klimek</h1>
+    <div class="sub">Author &amp; Poet — Speculative Fiction</div>
+  </header>
+  <div class="hint">Drag strip · Click any cover · ← → arrow keys</div>
+
+  <div class="filterbar" id="filterBar">
+    <div class="filterbar-group">
+      <span class="filterbar-label">Genre</span>
+      <button class="fb-btn active" data-filter="all">All</button>
+      <button class="fb-btn" data-filter="Horror">Horror</button>
+      <button class="fb-btn" data-filter="Sci-Fi">Sci-Fi</button>
+      <button class="fb-btn" data-filter="Fantasy">Fantasy</button>
+      <button class="fb-btn" data-filter="Poetry">Poetry</button>
+      <button class="fb-btn" data-filter="Humor">Humor</button>
+      <button class="fb-btn" data-filter="Crime">Crime</button>
+      <button class="fb-btn" data-filter="Fiction">Fiction</button>
+    </div>
+    <div class="filterbar-sep"></div>
+    <div class="filterbar-group">
+      <span class="filterbar-label">Sort</span>
+      <button class="fb-btn active" data-sort="year">Year ↓</button>
+      <button class="fb-btn" data-sort="title">Title</button>
+      <button class="fb-btn" data-sort="publisher">Publisher</button>
+    </div>
+    <div class="filterbar-sep"></div>
+    <div class="filterbar-group search-wrap">
+      <span class="filterbar-label">Search</span>
+      <input class="search-input" id="searchInput" type="text" placeholder="title or story…" autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+    </div>
+    <span class="filterbar-count" id="filterCount"></span>
+  </div>
+  <div class="strip-outer" id="stripOuter">
+    <button class="arrow-btn left" id="arrowLeft" aria-label="Previous">&#8249;</button>
+    <button class="arrow-btn right" id="arrowRight" aria-label="Next">&#8250;</button>
+    <div class="strip-track" id="stripTrack"></div>
+  </div>
+  <div class="detail" id="detailArea">
+    <div class="detail-empty">Select a cover to explore</div>
+  </div>
+  <footer>
+    <a href="https://jotinthedark.com">jotinthedark.com</a>
+    &nbsp;·&nbsp; &copy; Shawn M. Klimek
+    &nbsp;·&nbsp; <a href="https://jotinthedark.blogspot.com" target="_blank" rel="noopener">Blog</a>
+  </footer>
+</div>
+
+<script>
+const COVERS_BASE = 'covers/';
+
+const books = [{"id": "lockdown_fantasy_8", "file": "cover_lockdown_fantasy_8_bhp.jpg", "title": "Lockdown Fantasy #8", "publisher": "Black Hare Press", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/FANTASY-Lockdown-Black-Hare-Press/dp/B0D6NG783S", "contributions": [{"type": "story", "title": "Faerie Display"}, {"type": "story", "title": "From Heaven"}]}, {"id": "lockdown_fantasy_4", "file": "cover_lockdown_fantasy_4_bhp.jpg", "title": "Lockdown Fantasy #4", "publisher": "Black Hare Press", "year": "2023", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.de/gp/product/B0BD7W8P13", "contributions": [{"type": "poem", "title": "Malomenire the Mad"}]}, {"id": "lockdown_horror_2", "file": "cover_lockdown_horror_2_bhp.jpg", "title": "Lockdown Horror #2", "publisher": "Black Hare Press", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/HORROR-Lockdown-Black-Hare-Press/dp/1925809730", "contributions": [{"type": "story", "title": "Sissy Fuss"}]}, {"id": "lockdown_scifi_5", "file": "cover_lockdown_scifi_5_bhp.jpg", "title": "Lockdown Sci-Fi #5", "publisher": "Black Hare Press", "year": "2023", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/SCI-FI-Lockdown-Science-Fiction-Adventures/dp/B0CNZFRSLZ", "contributions": [{"type": "story", "title": "The Quantum Oracle"}]}, {"id": "lockdown_scifi_7", "file": "cover_lockdown_scifi_7_bhp.jpg", "title": "Lockdown Sci-Fi #7", "publisher": "Black Hare Press", "year": "2020", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://us.amazon.com/SCI-FI-Lockdown-Science-Fiction-Adventures-ebook/dp/B0D3CZQCKC", "contributions": [{"type": "story", "title": "The Last Loophole"}, {"type": "story", "title": "On the Tip"}]}, {"id": "lockdown_scifi_4", "file": "cover_lockdown_scifi_4_bhp.jpg", "title": "Lockdown Sci-Fi #4", "publisher": "Black Hare Press", "year": "2023", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/B0BSJGXL23", "contributions": [{"type": "poem", "title": "Charlie Whinesworth's Lucky Trinket"}]}, {"id": "lockdown_fantasy_5", "file": "cover_lockdown_fantasy_5_bhp.jpg", "title": "Lockdown Fantasy #5", "publisher": "Black Hare Press", "year": "2022", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/FANTASY-5-Lockdown-Fantasy-Adventures/dp/B0BCS372HF", "contributions": [{"type": "poem", "title": "The Final Spell of the Archmage Astromote"}]}, {"id": "lockdown_fantasy_1", "file": "cover_lockdown_fantasy_1_bhp.jpg", "title": "Lockdown Fantasy #1", "publisher": "Black Hare Press", "year": "2020", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/FANTASY-Lockdown-Black-Hare-Press/dp/1925809978", "contributions": [{"type": "poem", "title": "Banepyre and Bitewind"}]}, {"id": "lockdown_scifi_1", "file": "cover_lockdown_scifi_1_bhp.jpg", "title": "Lockdown Sci-Fi #1", "publisher": "Black Hare Press", "year": "2020", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/SCI-FI-Lockdown-Science-Fiction-Adventures-ebook/dp/B0875WCZJL", "contributions": [{"type": "poem", "title": "Hivemind of the Universal Donor"}]}, {"id": "42_stories_anthology", "file": "cover_42_stories_anthology.jpg", "title": "42 Stories Anthology", "publisher": "ed. B.A. Mullin", "year": "2024", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/42-Stories-Anthology-Presents-Book/dp/1990589359", "contributions": [{"type": "story", "title": "Old Vat-Grown Caretakers..."}]}, {"id": "13_lives_of_alice_out_of_print", "file": "cover_13_lives_of_alice_bhp.jpg", "title": "13 Lives of Alice (out of print)", "publisher": "Black Hare Press", "year": "2025", "genres": ["Fantasy"], "available": false, "purchaseUrl": "https://www.amazon.com/13-Lives-Alice-D-J-Elton/dp/B09MJ5TLFC", "contributions": [{"type": "story", "title": "Watership Sideways"}]}, {"id": "666_dark_drabble_book", "file": "cover_666_bhp.jpg", "title": "666, Dark Drabble Book", "publisher": "Black Hare Press", "year": "2021", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/666-Dark-Drabbles-Book-11-ebook/dp/B08HYN6LHW", "contributions": [{"type": "story", "title": "Ice Queen"}]}, {"id": "alone_flash_frights_book_4", "file": "cover_alone_bhp.jpg", "title": "Alone, Flash Frights Book 4", "publisher": "Black Hare Press", "year": "2025", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Alone-Where-solitude-festers-devours/dp/B0FR3PFWWN", "contributions": [{"type": "story", "title": "The Lonesome Curse"}]}, {"id": "ancients_dark_drabble_book_10", "file": "cover_ancients_bhp.jpg", "title": "Ancients, Dark Drabble Book 10", "publisher": "Black Hare Press", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/ANCIENTS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B08GLTFWLF", "contributions": [{"type": "story", "title": "An Unfortunate Birth"}, {"type": "story", "title": "Buried Mars"}, {"type": "story", "title": "Emperor Father"}, {"type": "story", "title": "Out of Mercy"}, {"type": "story", "title": "The Gardener King"}]}, {"id": "angels_dark_drabble_book_2", "file": "cover_angels_bhp.jpg", "title": "Angels, Dark Drabble Book 2", "publisher": "Black Hare Press", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/ANGELS-Divine-Microfiction-Anthology-Drabbles-ebook/dp/B07RGXYMFR", "contributions": [{"type": "story", "title": "A Reason to Hang On"}, {"type": "story", "title": "Disputed Possession"}, {"type": "story", "title": "First Revenge"}, {"type": "story", "title": "Just a Little Longer"}, {"type": "story", "title": "The Limbo Lounge"}]}, {"id": "apocalypse_dark_drabble_book_6", "file": "cover_apocalypse_bhp.jpg", "title": "Apocalypse, Dark Drabble Book 6", "publisher": "Black Hare Press", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/APOCALYPSE-Apocalyptic-Microfiction-Anthology-Drabbles-ebook/dp/B07Z38D57B", "contributions": [{"type": "story", "title": "I Call Shotgun"}, {"type": "story", "title": "Last Launch"}, {"type": "story", "title": "Not Wallace"}, {"type": "story", "title": "The Coyote"}, {"type": "story", "title": "The Hunger Below"}]}, {"id": "bad_romance", "file": "cover_bad_romance_bhp.jpg", "title": "Bad Romance", "publisher": "Black Hare Press", "year": "2020", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/Bad-Romance-Writers-Group-Special/dp/1925809463", "contributions": [{"type": "poem", "title": "Our Love Cannot be Broken"}]}, {"id": "beyond_dark_drabble_book_4", "file": "cover_beyond_bhp.jpg", "title": "Beyond Dark Drabble Book 4", "publisher": "Black Hare Press", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/BEYOND-Paranormal-Microfiction-Anthology-Drabbles-ebook/dp/B07V9XCN4L", "contributions": [{"type": "story", "title": "Death Crossing"}, {"type": "story", "title": "The Exorcist Diet"}, {"type": "story", "title": "The Haunted Auction"}, {"type": "story", "title": "The Medium is the Message"}, {"type": "story", "title": "The Unwelcome Test"}]}, {"id": "cabin_flash_frights_book_3", "file": "cover_cabin_bhp.jpg", "title": "Cabin, Flash Frights Book 3", "publisher": "Black Hare Press", "year": "2024", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Cabin-shadows-breathe-hungers-Frights/dp/B0DQ7HJJDY", "contributions": [{"type": "story", "title": "Survivalist"}, {"type": "poem", "title": "Cabin Made of Bones"}]}, {"id": "dark_moments_patreon_year_four", "file": "cover_dark_moments_4_bhp.jpg", "title": "Dark Moments & Patreon: Year Four", "publisher": "Black Hare Press", "year": "2022", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/YEAR-FOUR-Dark-Moments-Patreon-ebook/dp/B09PV71C4B", "contributions": [{"type": "story", "title": "Merry Crashed-Mass"}]}, {"id": "dark_moments_patreon_year_three", "file": "cover_dark_moments_3_bhp.jpg", "title": "Dark Moments & Patreon: Year Three", "publisher": "Black Hare Press", "year": "2021", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/YEAR-THREE-Dark-Moments-Patreon-ebook/dp/B08WGK1L69", "contributions": [{"type": "story", "title": "Eye of the Storm Giant"}]}, {"id": "dark_moments_patreon_year_two", "file": "cover_dark_moments_2_bhp.jpg", "title": "Dark Moments & Patreon: Year Two", "publisher": "Black Hare Press", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/YEAR-TWO-Dark-Moments-Book-ebook/dp/B08KF6LK9L", "contributions": [{"type": "story", "title": "Kill the Messenger"}, {"type": "story", "title": "Satan's Butterfly"}]}, {"id": "dark_moments_year_one", "file": "cover_dark_moments_1_bhp.jpg", "title": "Dark Moments: Year One", "publisher": "Black Hare Press", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/YEAR-ONE-Black-Hare-Press/dp/B0CQDY6NPQ", "contributions": [{"type": "story", "title": "A Psi of Relief"}, {"type": "story", "title": "A Savage Christmas"}, {"type": "story", "title": "Nevermore"}, {"type": "story", "title": "Riddle of the Sphinx"}, {"type": "story", "title": "Rip-off Bandage"}, {"type": "story", "title": "The Hot Bunk"}, {"type": "story", "title": "We'll Always Have Venus"}]}, {"id": "deep_space", "file": "cover_deep_space_bhp.jpg", "title": "Deep Space", "publisher": "Black Hare Press", "year": "2019", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/DEEP-SPACE-Adventure-Science-Fiction/dp/1925809234", "contributions": [{"type": "story", "title": "Bite of the Flamingo Boa"}]}, {"id": "eerie_christmas", "file": "cover_eerie_christmas_bhp.jpg", "title": "Eerie Christmas", "publisher": "Black Hare Press", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Eerie-Christmas-Black-Hare-Press/dp/B09KFCPP9Q", "contributions": [{"type": "story", "title": "All I Haunt for Christmas"}]}, {"id": "eldritch_ether_poetry", "file": "cover_eldritch_ether_bhp.jpg", "title": "Eldritch & Ether (Poetry)", "publisher": "Black Hare Press", "year": "2022", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Eldritch-Ether-Black-Hare-Press/dp/B09YQBRCV8", "contributions": [{"type": "poem", "title": "Abandon Hope (song)"}, {"type": "poem", "title": "Obsidian & Olivine"}, {"type": "poem", "title": "Slow and Lucky Wins the Race"}, {"type": "poem", "title": "Vampire Valentine"}]}, {"id": "hate_dark_drabble_book_8", "file": "cover_hate_bhp.jpg", "title": "Hate, Dark Drabble Book 8", "publisher": "Black Hare Press", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/HATE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T41P54", "contributions": [{"type": "story", "title": "A Hateful Spell"}, {"type": "story", "title": "Mince and Repeat"}, {"type": "story", "title": "Road Rage"}, {"type": "story", "title": "The Scent of Fierce"}, {"type": "story", "title": "Wait Plan"}]}, {"id": "hex_flash_frights_book_2", "file": "cover_hex_bhp.jpg", "title": "Hex, Flash Frights Book 2", "publisher": "Black Hare Press", "year": "2024", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Hex-voodoo-terror-enchantment-Frights/dp/B0DFVB7H73", "contributions": [{"type": "story", "title": "The Poppet Tree"}]}, {"id": "jibbernocky", "file": "cover_jibbernocky_bhp.jpg", "title": "Jibbernocky", "publisher": "Black Hare Press", "year": "2020", "genres": ["Humor"], "available": true, "purchaseUrl": "https://www.amazon.com/Jibbernocky-Books-Homes-Special-Charity/dp/1925809587", "contributions": [{"type": "poem", "title": "Kylie's Show & Tell"}]}, {"id": "love_dark_drabble_book_7", "file": "cover_love_bhp.jpg", "title": "Love, Dark Drabble Book 7", "publisher": "Black Hare Press", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/LOVE-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B084T464H7", "contributions": [{"type": "story", "title": "Crushed"}, {"type": "story", "title": "I Heart You"}, {"type": "story", "title": "Love is Blinded"}, {"type": "story", "title": "The Face I Love"}, {"type": "story", "title": "Until Death"}]}, {"id": "monsters_dark_drabble_book_3", "file": "cover_monsters_bhp.jpg", "title": "Monsters, Dark Drabble Book 3", "publisher": "Black Hare Press", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/gp/product/B07SGWSQVY", "contributions": [{"type": "story", "title": "An Eye Out for the Toad People"}, {"type": "story", "title": "Form-A-Fiend"}, {"type": "story", "title": "Night View"}, {"type": "story", "title": "Revenge of the Worm Lord"}, {"type": "story", "title": "The Troll Potion"}]}, {"id": "oceans_dark_drabble_book_9", "file": "cover_oceans_bhp.jpg", "title": "Oceans, Dark Drabble Book 9", "publisher": "Black Hare Press", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/OCEANS-Dark-Microfiction-Anthology-Drabbles-ebook/dp/B0861JY24S", "contributions": [{"type": "story", "title": "A Deeper Shade of Blues"}, {"type": "story", "title": "A Final Wave Goodbye"}, {"type": "story", "title": "Deep Sea Joyride"}, {"type": "story", "title": "Unabashed Self-Promotion"}, {"type": "story", "title": "Way Downtown, NY"}]}, {"id": "passenger_13_pandemic", "file": "cover_passenger_13_bhp.jpg", "title": "Passenger 13 (Pandemic)", "publisher": "Black Hare Press", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/PASSENGER-13-D-Kershaw/dp/1925809668", "contributions": [{"type": "poem", "title": "When Beata Got the Flu"}, {"type": "story", "title": "Change of Luck"}, {"type": "story", "title": "Foster March"}]}, {"id": "reap_flash_frights_book_1", "file": "cover_reap_bhp.jpg", "title": "Reap, Flash Frights Book 1", "publisher": "Black Hare Press", "year": "2024", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Reap-Where-undead-harvest-Frights/dp/B0D6KYWSMM", "contributions": [{"type": "story", "title": "The Meatless Unlife Aftertaste Diet"}, {"type": "story", "title": "The Mimicry Mutation"}]}, {"id": "run_rabbit_run_dark_drabbles", "file": "cover_run_rabbit_run_bhp.jpg", "title": "Run Rabbit Run, Dark Drabbles", "publisher": "Black Hare Press", "year": "2023", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Run-Rabbit-Black-Hare-Press-ebook/dp/B0C1679Q59", "contributions": [{"type": "story", "title": "It's About How You Look"}, {"type": "story", "title": "What Came Before"}]}, {"id": "thorns", "file": "cover_thorns_bhp.jpg", "title": "Thorns", "publisher": "Black Hare Press", "year": "2025", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Thorns-Death-waits-beyond-horizon/dp/0975667289", "contributions": [{"type": "story", "title": "Dust to Dust"}]}, {"id": "unravel_dark_drabble_book_5", "file": "cover_unravel_bhp.jpg", "title": "Unravel, Dark Drabble Book 5", "publisher": "Black Hare Press", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/UNRAVEL-Crime-Microfiction-Anthology-Drabbles-ebook/dp/B07YD28DLB", "contributions": [{"type": "story", "title": "Open and Shut Case"}, {"type": "story", "title": "The Masked Surrender"}, {"type": "story", "title": "The Poison Poisoner"}, {"type": "story", "title": "The Spotless Weapon"}, {"type": "story", "title": "The Sting of Justice"}]}, {"id": "watership_sideways_alternate_alice", "file": "cover_watership_sideways_bhp.jpg", "title": "Watership Sideways (Alternate Alice)", "publisher": "Black Hare Press", "year": "2025", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Watership-Sideways-Alternate-Alice-Klimek/dp/B0FCXRKGHM", "contributions": [{"type": "story", "title": "Watership Sideways"}]}, {"id": "wetware", "file": "cover_wetware_bhp.jpg", "title": "Wetware", "publisher": "Black Hare Press", "year": "2020", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://us.amazon.com/Wetware-Black-Hare-Press/dp/0645013935", "contributions": [{"type": "story", "title": "Skin Trade"}, {"type": "story", "title": "Welcome to the Storm"}]}, {"id": "worlds_dark_drabble_book_1", "file": "cover_worlds_bhp.jpg", "title": "Worlds, Dark Drabble Book 1", "publisher": "Black Hare Press", "year": "2019", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Worlds-Dark-Drabbles-Black-Press/dp/B0C7BKRD5M", "contributions": [{"type": "story", "title": "A Quick, Full Cure"}, {"type": "story", "title": "Good Morning and Farewell"}, {"type": "story", "title": "M.E.E. First"}, {"type": "story", "title": "No Meaning in a Vacuum"}, {"type": "story", "title": "Truly Alive"}]}, {"id": "zero_hour_2113", "file": "cover_zero_hour_bhp.jpg", "title": "Zero Hour 2113", "publisher": "Black Hare Press", "year": "2021", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Zero-Hour-2113-D-Kershaw/dp/0645073946", "contributions": [{"type": "story", "title": "Safety Off"}]}, {"id": "infection_drabbles_1", "file": "cover_infection_bif.jpg", "title": "Infection, Drabbles 1", "publisher": "Black Ink Fiction", "year": "2021", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Infection-Drabbles-1-Legends-Night/dp/B0986DC8N5", "contributions": [{"type": "story", "title": "Kinky Addiction"}, {"type": "story", "title": "Proof of Unlife"}, {"type": "story", "title": "Zombie in Chief"}, {"type": "story", "title": "Zombie Neighborhood"}, {"type": "story", "title": "Zombie Wedding"}]}, {"id": "curses_cauldrons_blood_song", "file": "cover_curses_cauldrons.jpg", "title": "Curses & Cauldrons, Blood Song", "publisher": "Blood Song Books", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Curses-Cauldrons-Anthology-Witchcraft-Microfiction/dp/1089507100", "contributions": [{"type": "story", "title": "A Bitter Aftertaste"}, {"type": "story", "title": "A Fair and Foul Fate"}, {"type": "story", "title": "A Witch Omelet"}, {"type": "story", "title": "Love for Life"}, {"type": "story", "title": "Patience of a Saint"}, {"type": "story", "title": "The Cave Witch"}, {"type": "story", "title": "The Milk of Inhumankind"}, {"type": "story", "title": "The Sweetest Witch"}, {"type": "story", "title": "The Unkindness of Ravens"}, {"type": "story", "title": "The Voice of Experience"}]}, {"id": "forest_of_fear", "file": "cover_forests_of_fear.jpg", "title": "Forest of Fear", "publisher": "Blood Song Books", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Forest-Fear-Anthology-Halloween-Microfiction/dp/B08R16ZL5X", "contributions": [{"type": "story", "title": "The Kissing Stump"}]}, {"id": "blaze_the_icwg_flash_fiction_anthology_2019", "file": "cover_blaze_icwg.jpg", "title": "Blaze: The ICW'G Flash Fiction Anthology 2019", "publisher": "Clarendon House Publishing", "year": "2019", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Blaze-Circle-Writers-Fiction-Anthology-ebook/dp/B07T9F5GF1", "contributions": [{"type": "story", "title": "On the Tip"}]}, {"id": "cadence_icwg_poetry_anthology_2018", "file": "cover_cadence_icwg.jpg", "title": "Cadence: ICWG Poetry Anthology 2018", "publisher": "Clarendon House Publishing", "year": "2018", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/Cadence-Circle-Writers-Poetry-Anthology-ebook/dp/B07GFRL7Y5", "contributions": [{"type": "poem", "title": "The Marvelous Tale of Max the Mariner"}]}, {"id": "carrier_wave_icwg_comedy_anthology_2018", "file": "cover_carrier_wave_icwg.jpg", "title": "Carrier Wave: ICWG Comedy Anthology 2018", "publisher": "Clarendon House Publishing", "year": "2018", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Carrier-Wave-Circle-Writers-Anthology-ebook/dp/B07F6FVGS7", "contributions": [{"type": "story", "title": "Pregenesis"}]}, {"id": "fireburst_icwg_second_flash_fiction_anthology_2018", "file": "cover_fireburst_icwg.jpg", "title": "Fireburst: ICWG Second Flash Fiction Anthology 2018", "publisher": "Clarendon House Publishing", "year": "2018", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Fireburst-Circle-Writers-Fiction-Anthology-ebook/dp/B07LDF3FVH", "contributions": [{"type": "story", "title": "The Lonesome Alchemist"}]}, {"id": "gleam_the_icwg_second_flash_fiction_anthology_2019", "file": "cover_gleam_icwg.jpg", "title": "Gleam: The ICW'G Second Flash Fiction Anthology 2019", "publisher": "Clarendon House Publishing", "year": "2019", "genres": ["Fiction"], "available": true, "purchaseUrl": "https://www.amazon.com/Gleam-Circle-Writers-Fiction-Anthology-ebook/dp/B07YGS39TW", "contributions": [{"type": "story", "title": "Final Words Count"}]}, {"id": "gold_the_best_from_clarendon_house_anthologies_volume_one_20172018", "file": "cover_gold_clarendon.jpg", "title": "Gold: The Best from Clarendon House Anthologies Volume One 2017/2018", "publisher": "Clarendon House Publishing", "year": "2018", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Gold-Best-Clarendon-House-Anthologies-ebook/dp/B07MXHTRT5", "contributions": [{"type": "story", "title": "Pregenesis"}]}, {"id": "maelstrom_icwg_literary_anthology_2019", "file": "cover_maelstrom_icwg.jpg", "title": "Maelstrom: ICWG Literary Anthology 2019", "publisher": "Clarendon House Publishing", "year": "2019", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Maelstrom-Circle-Writers-Literary-Anthology-ebook/dp/B0821T64Z3", "contributions": [{"type": "story", "title": "World Falls"}]}, {"id": "poetica_15_an_icwg_poetry_anthology_2023", "file": "cover_poetica_15_icwg.jpg", "title": "Poetica #15: An ICW'G Poetry Anthology (2023)", "publisher": "Clarendon House Publishing", "year": "2023", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/Poetica-15-Circle-Writers-Anthology-ebook/dp/B0CQK8JBLD", "contributions": [{"type": "poem", "title": "With Only Rocks for Tools"}]}, {"id": "poetica_7_an_icwg_poetry_anthology_2022", "file": "cover_poetica_7_icwg.jpg", "title": "Poetica #7: An ICW'G Poetry Anthology (2022)", "publisher": "Clarendon House Publishing", "year": "2022", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B0B8XNSK4M", "contributions": [{"type": "poem", "title": "The Final Log of Captain Courage"}]}, {"id": "poetica_2_the_icwg_poetry_anthology_2020", "file": "cover_poetica_2_icwg.jpg", "title": "Poetica 2: The ICW'G Poetry Anthology 2020", "publisher": "Clarendon House Publishing", "year": "2020", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B08TB45QSG", "contributions": [{"type": "poem", "title": "The Penguin Leaped"}]}, {"id": "poetica_3_the_icwg_second_poetry_anthology_2021", "file": "cover_poetica_3_icwg.jpg", "title": "Poetica 3: The ICW'G Second Poetry Anthology 2021", "publisher": "Clarendon House Publishing", "year": "2021", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Poetica-Circle-Writers-Second-Anthology-ebook/dp/B09528ZPS5", "contributions": [{"type": "poem", "title": "A Spaceman"}]}, {"id": "poetica_the_icwg_poetry_anthology_2019", "file": "cover_poetica_icwg.jpg", "title": "Poetica: The ICW'G Poetry Anthology 2019", "publisher": "Clarendon House Publishing", "year": "2019", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/Poetica-Circle-Writers-Poetry-Anthology-ebook/dp/B07X15DD82", "contributions": [{"type": "poem", "title": "Jack and Jim (w Stephan Klimek & Jesse Doyle)"}]}, {"id": "portal_the_icwg_childrens_anthology_2019", "file": "cover_portal_icwg.jpg", "title": "Portal: The ICW'G Children's Anthology 2019", "publisher": "Clarendon House Publishing", "year": "2019", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/Portal-Circle-Writers-Childrens-Anthology-ebook/dp/B083WNYMSK", "contributions": [{"type": "poem", "title": "Rebel Breakfast"}]}, {"id": "tempest_the_icwg_science_fiction_fantasy_anthology_2019", "file": "cover_tempest_icwg.jpg", "title": "Tempest: The ICW'G Science Fiction & Fantasy Anthology 2019", "publisher": "Clarendon House Publishing", "year": "2019", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Tempest-Writers-Science-Fiction-Anthology-ebook/dp/B07W65833D", "contributions": [{"type": "story", "title": "Rocket Skin"}]}, {"id": "vortex_icwg_literary_anthology_2018", "file": "cover_vortex_icwg.jpg", "title": "Vortex: ICWG Literary Anthology 2018", "publisher": "Clarendon House Publishing", "year": "2018", "genres": ["Fiction"], "available": true, "purchaseUrl": "https://www.amazon.com/Vortex-Circle-Writers-Literary-Anthology-ebook/dp/B07DJ5FNH7", "contributions": [{"type": "story", "title": "A Taste of Friendship"}]}, {"id": "window_icwg_childrens_anthology_2018", "file": "cover_window_icwg.jpg", "title": "Window: ICWG Children's Anthology 2018", "publisher": "Clarendon House Publishing", "year": "2018", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Window-Circle-Writers-Childrens-Anthology-ebook/dp/B07DVPQMVV", "contributions": [{"type": "poem", "title": "The Wizard and the Dinosaur (Epic Poem)"}]}, {"id": "100_ways_to_die", "file": "cover_100_ways_to_die.jpg", "title": "100 Ways to Die", "publisher": "Crows Feet Journal", "year": "2021", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/B09FS89D7M", "contributions": [{"type": "story", "title": "Keelhauled"}, {"type": "story", "title": "Never Quit"}, {"type": "story", "title": "Price of Mercy"}, {"type": "story", "title": "Tragic Depth by Autocorrect"}]}, {"id": "world_of_myth_magazine_anthology_iv", "file": "cover_world_of_myth_anthology_4.jpg", "title": "World of Myth Magazine Anthology IV", "publisher": "Dark Myth Publications", "year": "2021", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/1737294761", "contributions": [{"type": "story", "title": "Dark Trek"}]}, {"id": "organic_ink_vol_1", "file": "cover_organic_ink_1.jpg", "title": "Organic Ink, Vol 1", "publisher": "Dragon Soul Press", "year": "2019", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/Organic-Ink-Dragon-Press-Anthology/dp/1076671055", "contributions": [{"type": "story", "title": "Babies in the Attic"}, {"type": "story", "title": "Bugged"}, {"type": "story", "title": "Daddy's Job is Dangerous"}, {"type": "story", "title": "Heavy is the Head that Wears the Crown"}, {"type": "story", "title": "Polly Wants a Cracker"}, {"type": "story", "title": "Sometimes"}, {"type": "story", "title": "The Seagull"}, {"type": "story", "title": "Who'll Love You"}]}, {"id": "a_tree_full_of_crows", "file": "cover_tree_full_of_crows.jpg", "title": "A Tree Full of Crows", "publisher": "Ed.  Mandy Chandler", "year": "2024", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Tree-Full-Crows-Anthology/dp/0645593427", "contributions": [{"type": "story", "title": "A Murder of Crows"}]}, {"id": "dragon_bone_soup", "file": "cover_dragon_bone_soup.jpg", "title": "Dragon Bone Soup", "publisher": "ed. D.W.Brownlaw & P.C. Darkcliff", "year": "2019", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Dragon-Bone-Soup-showcase-international/dp/1673703976", "contributions": [{"type": "story", "title": "Genuine Troll-Leather Luggage"}]}, {"id": "drabbledark_ed_eric_fromley", "file": "cover_drabbledark.jpg", "title": "Drabbledark, ed. Eric Fromley", "publisher": "ed. Eric Fromley", "year": "2018", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Drabbledark-Anthology-Drabbles-Eric-Fomley/dp/1983152811", "contributions": [{"type": "story", "title": "The Jealous Wish"}]}, {"id": "cockytales_a_multigenre_anthology", "file": "cover_cocky_tales.jpg", "title": "Cocky-Tales -A Multi-Genre Anthology", "publisher": "ed. Erin Crocker (out of print)", "year": "2018", "genres": ["Fiction"], "available": false, "purchaseUrl": "https://www.amazon.com/Cocky-Tales-Multi-Genre-Anthology-Erin-Crocker/dp/1722237643", "contributions": [{"type": "poem", "title": "A Cocky Dude'll Do"}]}, {"id": "the_drabbun_anthology", "file": "cover_drabbun.jpg", "title": "The Drabbun Anthology", "publisher": "ed. Francis Wesley Alexander & T Santitora", "year": "2022", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Drabbun-Anthology-Francis-W-Alexander/dp/1088039464", "contributions": [{"type": "story", "title": "Fear Unmasked"}]}, {"id": "the_best_of_cafelit_8", "file": "cover_cafelit_8.jpg", "title": "The Best of CafeLit 8", "publisher": "ed. Gil James", "year": "2018", "genres": ["Fiction"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/1910542458", "contributions": [{"type": "story", "title": "Goodbye, My Lush"}]}, {"id": "scary_snippets_virtual_edition", "file": "cover_scary_snippets_virtual.jpg", "title": "Scary Snippets: Virtual Edition", "publisher": "ed. N.M. Brown", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Scary-Snippets-Virtual-N-M-Brown-ebook/dp/B08JM2CZX8", "contributions": [{"type": "story", "title": "Just Watch Me"}]}, {"id": "tall_tales_short_stories_vol_1", "file": "cover_tall_tales_1.jpg", "title": "Tall Tales & Short Stories Vol. 1", "publisher": "Escaped Ink", "year": "2019", "genres": ["Fiction"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/1916230105", "contributions": [{"type": "story", "title": "Get off my Lawn"}]}, {"id": "waters_of_destruction_elemental_drabbles_vol_2", "file": "cover_waters_of_destruction.jpg", "title": "Waters of Destruction - Elemental Drabbles, Vol 2", "publisher": "Fantasia Divinity", "year": "2020", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/gp/product/B08GJXVJNM", "contributions": [{"type": "story", "title": "Sinking Treasure"}, {"type": "story", "title": "Water Torture"}]}, {"id": "winds_of_despair_elemental_drabbles_vol_1", "file": "cover_winds_of_despair.jpg", "title": "Winds of Despair - Elemental Drabbles, Vol 1", "publisher": "Fantasia Divinity", "year": "2020", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Winds-Despair-Madeline-L-Stout/dp/B08PQRJK7W", "contributions": [{"type": "story", "title": "Breathtaking Spectacle"}, {"type": "story", "title": "Caution to the Wind"}, {"type": "story", "title": "Howl from Below"}, {"type": "story", "title": "Scent of Devotion"}]}, {"id": "trembling_with_fear_more_tales_from_the_tree_vol_2", "file": "cover_trembling_with_fear_2.jpg", "title": "Trembling with Fear - More Tales from the Tree Vol. 2", "publisher": "Horror Tree", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/B08HGRW7J3", "contributions": [{"type": "story", "title": "Call the Exterminator: A Job with No Boss"}, {"type": "story", "title": "Call the Exterminator: Dreams of Revenge"}, {"type": "story", "title": "Call the Exterminator: One Fearless Night"}, {"type": "story", "title": "Circle of Unlife: A Vampire's Tail"}, {"type": "story", "title": "Circle of Unlife: Dangerous Boyfriend"}, {"type": "story", "title": "Circle of Unlife: My Immortal Calendar"}]}, {"id": "mythical_creatures_of_asia", "file": "cover_mythical_creatures_asia.jpg", "title": "Mythical Creatures of Asia", "publisher": "Insignia Stories", "year": "2021", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/B093C82WBN", "contributions": [{"type": "story", "title": "Corpse Flies"}, {"type": "story", "title": "Hunger of the Nian"}, {"type": "story", "title": "Manticore Hide"}]}, {"id": "rowan_oak", "file": "cover_rowan_oak.jpg", "title": "Rowan & Oak", "publisher": "Iron Faerie Publishing", "year": "2020", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Rowan-Oak-Hawthorn-Ash-Book-ebook/dp/B08RDS76JT", "contributions": [{"type": "story", "title": "An Ill Wind"}, {"type": "story", "title": "Dark Enough to See"}, {"type": "story", "title": "No Shelter"}]}, {"id": "dark_celebration", "file": "cover_dark_celebration.jpg", "title": "Dark Celebration", "publisher": "Macabre Ladies", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/gp/product/B08GQJ11Z4", "contributions": [{"type": "story", "title": "Retirement 101"}, {"type": "story", "title": "Patriarch's Birthday"}]}, {"id": "dark_xmas_macabre_ladies", "file": "cover_dark_xmas.jpg", "title": "Dark X-Mas Macabre Ladies", "publisher": "Macabre Ladies", "year": "2019", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/gp/product/B0813X8RRH", "contributions": [{"type": "story", "title": "Christmas Vacation"}, {"type": "story", "title": "Holiday Memories"}, {"type": "story", "title": "It Came Upon a Midnight Drear"}, {"type": "story", "title": "Tattletale on a Shelf"}, {"type": "story", "title": "The Keepsake"}]}, {"id": "nation", "file": "cover_nation_pitc.jpg", "title": "Nation", "publisher": "Penned in the City", "year": "2020", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/B08LNLBYM1", "contributions": [{"type": "poem", "title": "Daylight is the Designated Driver of my Soul"}, {"type": "illustration", "title": "Fantasy Writer"}, {"type": "illustration", "title": "Manakin & Statue Romance"}]}, {"id": "nightmare_with_a_twist", "file": "cover_nightmare_with_a_twist.jpg", "title": "Nightmare with a Twist", "publisher": "Penned in the City", "year": "2024", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Nightmare-Twist-Mar%C3%ADa-J-Estrada/dp/1954444117", "contributions": [{"type": "story", "title": "Birthday Desserts"}]}, {"id": "unity_vol_1_a_magical_realism_anthology", "file": "cover_unity_1_pitc.jpg", "title": "Unity Vol 1: A Magical Realism Anthology", "publisher": "Penned in the City", "year": "2020", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Unity-1-Magical-Realism-Anthology-ebook/dp/B08PTZDGN6", "contributions": [{"type": "illustration", "title": "Play for the Lizardmen"}, {"type": "poem", "title": "Play for the Lizardmen"}]}, {"id": "death_house_mortem_cycle_vol1", "file": "cover_death_house.jpg", "title": "Death House: Mortem Cycle Vol.1", "publisher": "Raven & Drake", "year": "2021", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/Death-House-Scarlett-Lake/dp/1914320069", "contributions": [{"type": "story", "title": "Funny and Sad"}]}, {"id": "100_word_zombie_bites", "file": "cover_100_word_zombie_bites.jpg", "title": "100 Word Zombie Bites", "publisher": "Reanimated Writers Press", "year": "2019", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/100-Word-Zombie-Bites-Anthology/dp/1626760454", "contributions": [{"type": "story", "title": "Breakfast Craving"}]}, {"id": "cosmic_convocation", "file": "cover_cosmic_convocation.jpg", "title": "Cosmic Convocation", "publisher": "Starry-Eyed Press", "year": "2022", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Cosmic-Convocation-Space-Opera-Anthology/dp/B09WQBJ9JY", "contributions": [{"type": "story", "title": "New Owners for Old Earth"}]}, {"id": "drabbles_first_contact", "file": "cover_drabbles_first_contact.jpg", "title": "Drabbles: First Contact", "publisher": "Starry-Eyed Press", "year": "2025", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Drabbles-First-Contact-S-Charly-ebook/dp/B0DXBY42ZG", "contributions": [{"type": "story", "title": "Who Summoned the Ambassador"}, {"type": "story", "title": "Dynamic Upgrades"}, {"type": "story", "title": "Fading Blue Light Special"}, {"type": "story", "title": "Hostess Seeks Host"}, {"type": "story", "title": "How Natives Rescued the First Human Colony"}, {"type": "story", "title": "Mind Readers"}, {"type": "story", "title": "Pirate Lessons"}, {"type": "story", "title": "The Regift (w/Tom Jolly)"}, {"type": "story", "title": "The Smart Alliance"}, {"type": "story", "title": "The Stalker"}]}, {"id": "drabbles_second_wave", "file": "cover_drabbles_second_wave.jpg", "title": "Drabbles: Second Wave", "publisher": "Starry-Eyed Press", "year": "2025", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Drabbles-Second-Wave-S-Charly/dp/B0FND9Q9J9", "contributions": [{"type": "story", "title": "AI Oversight Taskforce"}, {"type": "story", "title": "Getting Along"}, {"type": "story", "title": "Make Room for Mooms"}, {"type": "story", "title": "Mixed Connection"}, {"type": "story", "title": "Peace Prayer"}, {"type": "story", "title": "Surface Tension"}, {"type": "story", "title": "True Sounding"}, {"type": "story", "title": "Ugly Is as Ugly Does"}, {"type": "story", "title": "Visit with a Capital V"}, {"type": "story", "title": "Warped Art Heist"}]}, {"id": "pocket_scifi_drabbles_contest_one", "file": "cover_pocket_scifi.jpg", "title": "Pocket SciFi: Drabbles Contest One", "publisher": "Starry-Eyed Press", "year": "2023", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/Pocket-SciFi-Drabble-Contest-One/dp/B0CMJJ4NH6", "contributions": [{"type": "story", "title": "Alien Memories"}]}, {"id": "grumpy_old_gods_vol_1", "file": "cover_grumpy_old_gods_1.jpg", "title": "Grumpy Old Gods Vol. 1", "publisher": "Stormdance Publications", "year": "2019", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Grumpy-Old-Gods-Vanessa-Wells-ebook/dp/B07PQ2HYZ9", "contributions": [{"type": "story", "title": "Zeus Really Has to Go"}]}, {"id": "grumpy_old_gods_vol_2", "file": "cover_grumpy_old_gods_2.jpg", "title": "Grumpy Old Gods Vol. 2", "publisher": "Stormdance Publications", "year": "2019", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Grumpy-Old-Gods-Vanessa-Wells/dp/1086962370", "contributions": [{"type": "story", "title": "The Fateful Voyage of the Fortunate Seven"}]}, {"id": "sea_glass_hearts", "file": "cover_sea_glass_hearts.jpg", "title": "Sea Glass Hearts", "publisher": "Stormy Island Publishing", "year": "2019", "genres": ["Poetry"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/1082422290", "contributions": [{"type": "story", "title": "Fishing for the Words to Say I Love You"}]}, {"id": "clockwork_dragons", "file": "cover_clockwork_dragons_zpp.jpg", "title": "Clockwork Dragons", "publisher": "Zombie Pirate Publishing", "year": "2020", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/CLOCKWORK-DRAGONS-Fantasypunk-Sam-Phillips-ebook/dp/B07ZFCZLC9", "contributions": [{"type": "story", "title": "Change is Everyything"}]}, {"id": "flash_fiction_addiction", "file": "cover_flash_fiction_addiction_zpp.jpg", "title": "Flash Fiction Addiction", "publisher": "Zombie Pirate Publishing", "year": "2019", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/FLASH-FICTION-ADDICTION-Short-Stories-ebook/dp/B07Q473TM9", "contributions": [{"type": "story", "title": "The Captain's Dinner"}]}, {"id": "full_metal_horror_2", "file": "cover_full_metal_horror_2_zpp.jpg", "title": "Full Metal Horror 2", "publisher": "Zombie Pirate Publishing", "year": "2020", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/FULL-METAL-HORROR-Bloodstained-Anthology-ebook", "contributions": [{"type": "story", "title": "Wings of Hope"}]}, {"id": "grievous_bodily_harm", "file": "cover_grievous_bodily_harm_zpp.jpg", "title": "Grievous Bodily Harm", "publisher": "Zombie Pirate Publishing", "year": "2019", "genres": ["Crime"], "available": true, "purchaseUrl": "https://www.amazon.com/GRIEVOUS-BODILY-HARM-Hardboiled-Anthology-ebook/dp/B07WRG5SRG", "contributions": [{"type": "story", "title": "Widow Maker's Mercy"}]}, {"id": "raygun_retro", "file": "cover_raygun_retro_zpp.jpg", "title": "Raygun Retro", "publisher": "Zombie Pirate Publishing", "year": "2020", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/RAYGUN-RETRO-Science-Fiction-Anthology-ebook/dp/B0857CTPMY", "contributions": [{"type": "story", "title": "Jurassic Date"}]}, {"id": "treasure_chest", "file": "cover_treasure_chest_zpp.jpg", "title": "Treasure Chest", "publisher": "Zombie Pirate Publishing", "year": "2019", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/TREASURE-CHEST-Selected-Short-Stories/dp/1925985075", "contributions": [{"type": "story", "title": "The Captain's Dinner"}]}, {"id": "world_war_four", "file": "cover_world_war_four_zpp.jpg", "title": "World War Four", "publisher": "Zombie Pirate Publishing", "year": "2019", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/WORLD-WAR-FOUR-Science-Anthology-ebook/dp/B07NKKH71F", "contributions": [{"type": "story", "title": "The Floabnian Fiasco"}]}, {"id": "journeys_writers_journey_blog", "file": "cover_journeys.jpg", "title": "Journeys - Writer's Journey Blog", "publisher": "ed. Elaine Marie Carnegie-Padgett and Kerri Jesmer", "year": "2021", "genres": ["Horror"], "available": true, "purchaseUrl": "https://www.amazon.com/gp/product/B09JZ8JGQB", "contributions": [{"type": "story", "title": "Dark Trek"}]}, {"id": "unreal_vol_1", "file": "cover_unreal_1.jpg", "title": "Unreal, Vol 1", "publisher": "ed. Aditya Deshmukh", "year": "2020", "genres": ["Sci-Fi"], "available": true, "purchaseUrl": "https://www.amazon.com/dp/B08B7KXZG1", "contributions": [{"type": "story", "title": "The Alien Emissary"}]}, {"id": "hungry_thing", "file": "cover_hungry_thing.jpg", "title": "Hungry Thing", "publisher": "Jot in the Dark Publishing", "year": "2018", "genres": ["Fantasy"], "available": true, "purchaseUrl": "https://www.amazon.com/Hungry-Thing-Shawn-M-Klimek/dp/1794701001", "contributions": [{"type": "story", "title": "Hungry Thing (story in 5 poems)"}]}];
+
+// ── STARFIELD ──
+(function(){
+  const c = document.getElementById('stars-canvas');
+  const ctx = c.getContext('2d');
+  let stars = [];
+  function resize(){ c.width = innerWidth; c.height = innerHeight; }
+  function make(n){ stars=[]; for(let i=0;i<n;i++) stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.1+0.2,a:Math.random()*0.75+0.2,sp:Math.random()*0.003+0.001,ph:Math.random()*Math.PI*2}); }
+  function draw(t){ ctx.clearRect(0,0,c.width,c.height); for(const s of stars){ const a=s.a*(0.65+0.35*Math.sin(t*s.sp+s.ph)); ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=`rgba(200,200,230,${a})`; ctx.fill(); } requestAnimationFrame(draw); }
+  resize(); make(280); window.addEventListener('resize',()=>{resize();make(280);}); requestAnimationFrame(draw);
+})();
+
+// ── FILTER/SORT ENGINE ──
+let visibleBooks = [];
+let activeFilter = 'all';
+let activeSort   = 'year';
+let searchQuery  = '';
+const countEl     = document.getElementById('filterCount');
+const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
+
+function applyFilterSort() {
+  const q = searchQuery.trim().toLowerCase();
+  visibleBooks = books.filter(b => {
+    if (activeFilter !== 'all' && !b.genres.includes(activeFilter)) return false;
+    if (q) {
+      const inTitle    = b.title.toLowerCase().includes(q);
+      const inContribs = b.contributions.some(c => c.title.toLowerCase().includes(q));
+      const inPub      = b.publisher.toLowerCase().includes(q);
+      if (!inTitle && !inContribs && !inPub) return false;
+    }
+    return true;
+  });
+  visibleBooks = [...visibleBooks].sort((a,b) => {
+    if (activeSort==='year')      return (parseInt(b.year)||0)-(parseInt(a.year)||0);
+    if (activeSort==='title')     return a.title.localeCompare(b.title);
+    if (activeSort==='publisher') return a.publisher.localeCompare(b.publisher);
+    return 0;
+  });
+  const shown = visibleBooks.length, total = books.length;
+  countEl.textContent = shown===total ? `${total} books` : `${shown} of ${total} books`;
+  rebuildStrip();
+}
+
+function rebuildStrip() {
+  track.innerHTML='';
+  built=false; offset=0;
+  track.style.transition='none';
+  track.style.transform='translateX(0)';
+  coverWrap=null; coverImg=null; metaDiv=null; contribDiv=null;
+
+  if (visibleBooks.length===0) {
+    detailArea.innerHTML='<div class="detail-empty">No books match this filter.</div>';
+    return;
+  }
+  visibleBooks.forEach((book,i) => {
+    const el=document.createElement('div'); el.className='thumb'; el.dataset.i=i;
+    const img=document.createElement('img');
+    img.src=COVERS_BASE+book.file; img.alt=book.title; img.loading='lazy';
+    img.onerror=()=>{ img.remove(); const lbl=document.createElement('div'); lbl.className='placeholder-label'; lbl.textContent=book.title; el.appendChild(lbl); };
+    el.appendChild(img);
+    if (!book.available){ const badge=document.createElement('div'); badge.className='oop-badge'; badge.textContent='O.O.P.'; el.appendChild(badge); }
+    el.addEventListener('click',()=>{ if(!dragged) goTo(i); });
+    track.appendChild(el);
+  });
+  goTo(0,false);
+}
+
+
+// ── CAROUSEL ──
+const STEP = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--thumb-w'))||96 + 10;
+const GAP = 10;
+let THUMB_W = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--thumb-w'))||96;
+
+const track = document.getElementById('stripTrack');
+const outer = document.getElementById('stripOuter');
+const detailArea = document.getElementById('detailArea');
+
+let offset = 0, activeIdx = 0, built = false;
+let dragStart = null, dragStartOff = null, dragged = false, vel = 0, lastX = 0, lastT = 0, raf = null;
+
+function getStep(){ return (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--thumb-w'))||96) + GAP; }
+
+
+function applyOffset(o, anim) {
+  track.style.transition = anim ? 'transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94)' : 'none';
+  track.style.transform = `translateX(${o}px)`;
+  offset = o;
+}
+
+function goTo(idx, anim=true) {
+  if (!visibleBooks || visibleBooks.length===0) return;
+  idx = Math.max(0, Math.min(visibleBooks.length-1, idx));
+  const st = getStep();
+  applyOffset(-idx * st, anim);
+  setActive(idx);
+}
+
+function setActive(idx) {
+  if (idx === activeIdx && built) return;
+  activeIdx = idx;
+  track.querySelectorAll('.thumb').forEach((t,i) => {
+    t.classList.remove('active','near1','near2');
+    const d = Math.abs(i-idx);
+    if (d===0) t.classList.add('active');
+    else if (d===1) t.classList.add('near1');
+    else if (d===2) t.classList.add('near2');
+  });
+  renderDetail(visibleBooks[idx]);
+  built = true;
+}
+
+// Drag
+outer.addEventListener('mousedown', e => startDrag(e.clientX));
+outer.addEventListener('touchstart', e => startDrag(e.touches[0].clientX), {passive:true});
+function startDrag(x) {
+  cancelRaf(); dragStart=x; dragStartOff=offset; dragged=false; vel=0; lastX=x; lastT=Date.now();
+  track.style.transition='none'; outer.classList.add('dragging');
+}
+window.addEventListener('mousemove', e => onDrag(e.clientX));
+window.addEventListener('touchmove', e => onDrag(e.touches[0].clientX), {passive:true});
+function onDrag(x) {
+  if (dragStart===null) return;
+  const dx = x - dragStart;
+  if (Math.abs(dx)>4) dragged=true;
+  if (!dragged) return;
+  const now=Date.now(), dt=now-lastT||1;
+  vel = (x-lastX)/dt*16; lastX=x; lastT=now;
+  const st=getStep(), min=-(visibleBooks.length-1)*st;
+  let o = Math.max(min-60, Math.min(60, dragStartOff+dx));
+  track.style.transform=`translateX(${o}px)`; offset=o;
+  const li = Math.max(0,Math.min(visibleBooks.length-1, Math.round(-o/st)));
+  if (li!==activeIdx) setActive(li);
+}
+window.addEventListener('mouseup', endDrag);
+window.addEventListener('touchend', endDrag);
+function endDrag() {
+  if (dragStart===null) return;
+  dragStart=null; outer.classList.remove('dragging');
+  if (!dragged) return;
+  momentum();
+}
+function momentum() {
+  if (Math.abs(vel)<0.4){ snap(); return; }
+  offset+=vel; vel*=0.88;
+  const st=getStep(), min=-(visibleBooks.length-1)*st;
+  offset=Math.max(min,Math.min(0,offset));
+  track.style.transform=`translateX(${offset}px)`;
+  const li=Math.max(0,Math.min(visibleBooks.length-1,Math.round(-offset/st)));
+  if (li!==activeIdx) setActive(li);
+  raf=requestAnimationFrame(momentum);
+}
+function cancelRaf(){ if(raf){cancelAnimationFrame(raf);raf=null;} }
+function snap(){ cancelRaf(); goTo(Math.max(0,Math.min(visibleBooks.length-1,Math.round(-offset/getStep()))),true); }
+
+document.getElementById('arrowLeft').addEventListener('click',()=>goTo(activeIdx-1));
+document.getElementById('arrowRight').addEventListener('click',()=>goTo(activeIdx+1));
+window.addEventListener('keydown',e=>{
+  if (e.target===searchInput) return;
+  if(e.key==='ArrowLeft'){e.preventDefault();goTo(activeIdx-1);}
+  if(e.key==='ArrowRight'){e.preventDefault();goTo(activeIdx+1);}
+});
+
+// ── FILTER BUTTONS ──
+document.querySelectorAll('[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    applyFilterSort();
+  });
+});
+
+// ── SORT BUTTONS ──
+document.querySelectorAll('[data-sort]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-sort]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeSort = btn.dataset.sort;
+    applyFilterSort();
+  });
+});
+
+// ── SEARCH ──
+searchInput.addEventListener('input', () => {
+  searchQuery = searchInput.value;
+  searchClear.classList.toggle('visible', searchQuery.length > 0);
+  applyFilterSort();
+});
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchQuery = '';
+  searchClear.classList.remove('visible');
+  applyFilterSort();
+});
+
+// ── DETAIL RENDERER ──
+let coverWrap=null, coverImg=null, metaDiv=null, contribDiv=null;
+
+function renderDetail(book) {
+  if (!coverWrap) {
+    detailArea.innerHTML='';
+    coverWrap=document.createElement('div'); coverWrap.className='detail-cover';
+    coverImg=document.createElement('img'); coverImg.id='dimg';
+    coverImg.onerror=()=>{ coverImg.style.minHeight='180px'; coverImg.style.background='var(--panel)'; };
+    coverWrap.appendChild(coverImg); detailArea.appendChild(coverWrap);
+    metaDiv=document.createElement('div'); metaDiv.className='detail-meta'; detailArea.appendChild(metaDiv);
+    contribDiv=document.createElement('div'); contribDiv.className='detail-contribs'; detailArea.appendChild(contribDiv);
+  }
+  coverWrap.classList.add('fade');
+  setTimeout(()=>{ coverImg.src=COVERS_BASE+book.file; coverImg.alt=book.title; coverWrap.classList.remove('fade'); }, 180);
+
+  const genres = book.genres.map(g=>`<span class="genre-tag">${g}</span>`).join('');
+  let btn;
+  if (book.available && book.purchaseUrl) btn=`<a class="btn-buy" href="${book.purchaseUrl}" target="_blank" rel="noopener">Purchase ↗</a>`;
+  else if (book.available) btn=`<span class="btn-buy dim">Link Pending</span>`;
+  else btn=`<span class="btn-buy dim">Out of Print</span>`;
+  metaDiv.innerHTML=`<div class="book-title">${book.title}</div>
+    <div class="meta-row">
+      <div class="meta-item"><span class="meta-label">Publisher</span><span class="meta-val">${book.publisher}</span></div>
+      <div class="meta-item"><span class="meta-label">Year</span><span class="meta-val">${book.year}</span></div>
+    </div>
+    <div>${genres}</div>${btn}`;
+
+  const q = searchQuery.trim().toLowerCase();
+  const items = book.contributions.map(c => {
+    let title = c.title;
+    if (q && title.toLowerCase().includes(q)) {
+      const i = title.toLowerCase().indexOf(q);
+      title = title.slice(0,i) + `<mark style="background:rgba(200,168,75,0.3);color:var(--cream);border-radius:2px;padding:0 2px">${title.slice(i,i+q.length)}</mark>` + title.slice(i+q.length);
+    }
+    return `<li><span class="contrib-type">${c.type}</span>${title}</li>`;
+  }).join('');
+  contribDiv.innerHTML=`<div class="contribs-label">Shawn M. Klimek — Contributions</div><ul class="contribs-list">${items}</ul>`;
+}
+
+// ── INIT ──
+applyFilterSort();
+
+</script>
+</body>
+</html>
