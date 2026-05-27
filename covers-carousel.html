@@ -136,8 +136,8 @@
     <div class="sub">Author &amp; Poet — Speculative Fiction</div>
   </header>
   <div class="hint">Drag strip · Click any cover · ← → arrow keys</div>
-  <div style="text-align:center; padding: 0.4rem 1rem 0;">
-    <a id="back-to-gallery" href="index.html#covers" style="display:none; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dim); text-decoration:none; align-items:center; gap:0.4rem;">&#8592; Back to Covers Gallery</a>
+  <div id="back-bar" style="display:none; text-align:center; padding: 0.5rem 1rem; background: var(--panel); border-bottom: 1px solid var(--border);">
+    <a href="index.html#covers" style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold); text-decoration:none; border:1.5px solid var(--gold-dim); padding:0.4rem 1.2rem; border-radius:2px; transition:background 0.2s;" onmouseover="this.style.background='rgba(200,168,75,0.12)'" onmouseout="this.style.background='transparent'">&#8592; Back to Covers Gallery</a>
   </div>
 
   <div class="filterbar" id="filterBar">
@@ -436,8 +436,8 @@ applyFilterSort();
     goTo(idx, false);
   }
   // Show back link if referred from gallery
-  const backLink = document.getElementById('back-to-gallery');
-  if (backLink) backLink.style.display = 'inline-flex';
+  const backLink = document.getElementById('back-bar');
+  if (backLink) backLink.style.display = 'block';
 })();
 
 </script>
