@@ -136,6 +136,9 @@
     <div class="sub">Author &amp; Poet — Speculative Fiction</div>
   </header>
   <div class="hint">Drag strip · Click any cover · ← → arrow keys</div>
+  <div style="text-align:center; padding: 0.4rem 1rem 0;">
+    <a id="back-to-gallery" href="index.html#covers" style="display:none; font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dim); text-decoration:none; align-items:center; gap:0.4rem;">&#8592; Back to Covers Gallery</a>
+  </div>
 
   <div class="filterbar" id="filterBar">
     <div class="filterbar-group">
@@ -421,6 +424,21 @@ function renderDetail(book) {
 
 // ── INIT ──
 applyFilterSort();
+
+// Read ?book= URL parameter and scroll to that entry
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const bookId = params.get('book');
+  if (!bookId) return;
+  // Wait for applyFilterSort to populate visibleBooks
+  const idx = visibleBooks.findIndex(b => b.id === bookId);
+  if (idx !== -1) {
+    goTo(idx, false);
+  }
+  // Show back link if referred from gallery
+  const backLink = document.getElementById('back-to-gallery');
+  if (backLink) backLink.style.display = 'inline-flex';
+})();
 
 </script>
 </body>
