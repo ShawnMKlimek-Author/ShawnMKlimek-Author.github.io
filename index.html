@@ -370,6 +370,60 @@
 
   @media (max-width: 640px) { .book-showcase { grid-template-columns: 1fr; } }
 
+  /* ── HUNGRY THING PAGE ── */
+  .ht-quote {
+    font-style: italic;
+    color: var(--silver);
+    font-size: 0.98rem;
+    border-left: 2px solid var(--gold-dim);
+    padding-left: 1.1rem;
+    margin: 1.2rem 0;
+  }
+
+  .ht-editions-label { margin-top: 3.5rem; }
+
+  .editions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .edition {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 1.1rem 1.4rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .edition:hover { border-color: var(--gold-dim); background: var(--panel-hover); }
+
+  .edition-format {
+    font-family: 'Cinzel', serif;
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .edition-spec {
+    font-size: 0.9rem;
+    color: var(--silver);
+    line-height: 1.5;
+  }
+
+  .edition .buy-btn { white-space: nowrap; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .edition { flex-direction: column; align-items: flex-start; gap: 0.9rem; }
+    .edition .buy-btn { align-self: stretch; text-align: center; }
+  }
+
   /* ── ABOUT ── */
   .about-grid {
     display: grid;
@@ -708,6 +762,17 @@
 
   .media-links h2 { margin-bottom: 1.5rem; }
 
+  .media-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* Near-square drift frame — matches this illustration's own proportions
+     so the camera-drift pan doesn't crop the composition at the sides */
+  .media-frame--sq { aspect-ratio: 480 / 537; }
+  .media-frame--sq img { animation-delay: -11s; }
+
   .media-image {
     overflow: hidden;
   }
@@ -767,7 +832,7 @@
     .media-split {
       grid-template-columns: 1fr;
     }
-    .media-image { order: -1; }
+    .media-gallery { order: -1; }
   }
 </style>
 </head>
@@ -790,6 +855,7 @@
 <nav id="tab-bar" role="navigation" aria-label="Site sections">
   <ul class="tab-list">
     <li><button class="tab-btn" data-tab="about">About</button></li>
+    <li><button class="tab-btn" data-tab="hungrything">Hungry Thing</button></li>
     <li><button class="tab-btn" data-tab="anthologies">Anthologies</button></li>
     <li><button class="tab-btn" data-tab="covers">Covers</button></li>
     <li><button class="tab-btn" data-tab="publications">Stories &amp; Poems</button></li>
@@ -825,7 +891,7 @@
 
       <!-- Bottom: book cover left · info right -->
       <div class="about-books-bottom">
-        <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank">
+        <a href="#hungrything" onclick="setTab('hungrything', true); return false;">
           <img src="Hungry_Thing_Ad_2024_Tiphany_V3.jpg" alt="Hungry Thing by Shawn M. Klimek" class="book-cover">
         </a>
         <div class="book-info">
@@ -835,10 +901,75 @@
           <p>A dark fantasy story told in five poems — <em>Hungry Thing</em> follows the fate of a young girl named Gladys in a tale that is by turns lyrical, eerie, and unforgettable. Praised by reviewers as "something Lovecraft might do if Lovecraft wrote poetry," this debut collection is a collaboration between word and image unlike any other.</p>
           <p style="font-style:italic; color:var(--silver); font-size:0.95rem;">"It's extremely rare to read a book of any kind in which the sentences, the phrases, sing — but <em>Hungry Thing</em> does just that."</p>
           <div class="book-buy-links">
-            <a href="http://www.lulu.com/spotlight/Hungry_Thing" target="_blank" class="buy-btn">Buy on Lulu</a>
-            <a href="https://www.amazon.com/Shawn-Klimek/e/B07MYMBJKS" target="_blank" class="buy-btn secondary">Amazon</a>
-            <a href="https://www.barnesandnoble.com/s/shawn+klimek" target="_blank" class="buy-btn secondary">Barnes &amp; Noble</a>
+            <a href="#hungrything" onclick="setTab('hungrything', true); return false;" class="buy-btn">Editions &amp; Where to Buy →</a>
           </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- HUNGRY THING -->
+<div class="tab-panel" id="panel-hungrything" role="tabpanel">
+  <section id="hungrything">
+    <div class="container">
+      <div class="section-label">Illustrated Dark-Fantasy Verse</div>
+
+      <div class="book-showcase">
+        <a href="https://books2read.com/HungryThing" target="_blank" rel="noopener">
+          <img src="Hungry_Thing_Ad_2024_Tiphany_V3.jpg" alt="Hungry Thing by Shawn M. Klimek, illustrated by Norbert Somosi" class="book-cover">
+        </a>
+        <div class="book-info">
+          <h2 style="margin-bottom:0.4rem;">Hungry Thing</h2>
+          <p class="book-byline">Written by Shawn M. Klimek &nbsp;·&nbsp; Illustrated by Norbert Somosi</p>
+          <p>A dark fantasy story told in five poems — <em>Hungry Thing</em> follows the fate of a young girl named Gladys in a tale that is by turns lyrical, eerie, and unforgettable. Praised by reviewers as "something Lovecraft might do if Lovecraft wrote poetry," this collection is a collaboration between word and image unlike any other.</p>
+          <p style="color:var(--silver); font-size:0.95rem;">Five poems &nbsp;·&nbsp; Twenty original illustrations &nbsp;·&nbsp; Second edition (2026)</p>
+          <p class="ht-quote">"It's extremely rare to read a book of any kind in which the sentences, the phrases, sing — but <em>Hungry Thing</em> does just that."</p>
+        </div>
+      </div>
+
+      <div class="section-label ht-editions-label">Editions &amp; Where to Buy</div>
+
+      <div class="editions">
+        <div class="edition">
+          <div class="edition-meta">
+            <div class="edition-format">Hardcover · US Letter</div>
+            <div class="edition-spec">Large format · Premium 80 lb paper · Matte cover · Includes a bonus image</div>
+          </div>
+          <a href="https://www.lulu.com/shop/shawn-m-klimek-and-norbert-somosi/hungry-thing-us-letter-hard-cover/hardcover/product-65km4mj.html" target="_blank" rel="noopener" class="buy-btn">Buy on Lulu</a>
+        </div>
+
+        <div class="edition">
+          <div class="edition-meta">
+            <div class="edition-format">Hardcover · 6 × 9</div>
+            <div class="edition-spec">Premium 60 lb paper · Glossy cover</div>
+          </div>
+          <a href="https://www.lulu.com/shop/shawn-m-klimek-and-norbert-somosi/hungry-thing/hardcover/product-q6qvedr.html" target="_blank" rel="noopener" class="buy-btn">Buy on Lulu</a>
+        </div>
+
+        <div class="edition">
+          <div class="edition-meta">
+            <div class="edition-format">Paperback</div>
+            <div class="edition-spec">Second edition · Available from Amazon</div>
+          </div>
+          <a href="https://www.amazon.com/Hungry-Thing-Shawn-M-Klimek/dp/B0HBZY4LYT" target="_blank" rel="noopener" class="buy-btn">Buy on Amazon</a>
+        </div>
+
+        <div class="edition">
+          <div class="edition-meta">
+            <div class="edition-format">Kindle</div>
+            <div class="edition-spec">Amazon Kindle edition</div>
+          </div>
+          <a href="https://www.amazon.com/Hungry-Thing-Shawn-Klimek-ebook/dp/B0H6SY3KZ9" target="_blank" rel="noopener" class="buy-btn secondary">Buy for Kindle</a>
+        </div>
+
+        <div class="edition">
+          <div class="edition-meta">
+            <div class="edition-format">Ebook · All Other Stores</div>
+            <div class="edition-spec">Apple Books, Kobo, Google Play, Barnes &amp; Noble and more — one universal link</div>
+          </div>
+          <a href="https://books2read.com/HungryThing" target="_blank" rel="noopener" class="buy-btn secondary">All Ebook Stores</a>
         </div>
       </div>
 
@@ -1456,18 +1587,27 @@
           <div class="section-label">Media</div>
           <h2>Video</h2>
           <ul class="video-list">
-            <li><a href="https://www.youtube.com/watch?v=XTn13kGXfrY" target="_blank">"Heavy is the Head that Wears the Crown" — read by Wendy Vogel, The Poetics by Sweetycat Press</a></li>
-            <li><a href="https://www.youtube.com/watch?v=niR76PKVvqQ" target="_blank">"Remembering Gladys" — from <em>Hungry Thing</em></a></li>
-            <li><a href="https://www.youtube.com/watch?v=BmBcC0-AFAM" target="_blank"><em>Hungry Thing</em> — Book preview by Dr. Jesu Maria Estrada</a></li>
-            <li><a href="https://www.youtube.com/watch?v=OkZof0_RqTc" target="_blank"><em>Hungry Thing</em> — Book review by Daniel Roche</a></li>
+            <li><a href="https://www.youtube.com/watch?v=XTn13kGXfrY" target="_blank" rel="noopener">"Heavy is the Head that Wears the Crown" — read by Wendy Vogel, The Poetics by Sweetycat Press</a></li>
+            <li><a href="https://www.youtube.com/watch?v=niR76PKVvqQ" target="_blank" rel="noopener">"Remembering Gladys" — from <em>Hungry Thing</em></a></li>
+            <li><a href="https://www.youtube.com/watch?v=BmBcC0-AFAM" target="_blank" rel="noopener"><em>Hungry Thing</em> — Book preview by Dr. Jesu Maria Estrada</a></li>
+            <li><a href="https://www.youtube.com/watch?v=OkZof0_RqTc" target="_blank" rel="noopener"><em>Hungry Thing</em> — Book review by Daniel Roche</a></li>
           </ul>
         </div>
 
-        <div class="media-image">
-          <div class="media-frame">
-            <img src="The_End_of_Winter_by_Norbert_Somosi_color.jpg" alt="The End of Winter — color illustration by Norbert Somosi">
+        <div class="media-gallery">
+          <div class="media-image">
+            <div class="media-frame">
+              <img src="The_End_of_Winter_by_Norbert_Somosi_color.jpg" alt="The End of Winter — color illustration by Norbert Somosi">
+            </div>
+            <p class="media-image-credit">"The End of Winter" — from <em>Hungry Thing</em><br>Original illustration &amp; December 2024 five-year anniversary colorization by Norbert Somosi</p>
           </div>
-          <p class="media-image-credit">"The End of Winter" — from <em>Hungry Thing</em><br>Original illustration &amp; December 2024 five-year anniversary colorization by Norbert Somosi</p>
+
+          <div class="media-image">
+            <div class="media-frame media-frame--sq">
+              <img src="The_Hungry_Thing_Color.jpg" alt="The Hungry Thing — color illustration by Norbert Somosi">
+            </div>
+            <p class="media-image-credit">"The Hungry Thing" illustrated in color by Norbert Somosi</p>
+          </div>
         </div>
 
       </div>
@@ -1568,7 +1708,7 @@ const tabBar = document.getElementById('tab-bar');
 
 function setTab(tabId, pushState) {
   // Validate tabId — fall back to about if unrecognised
-  const knownTabs = ['about','anthologies','publications','covers','blog','media'];
+  const knownTabs = ['about','hungrything','anthologies','publications','covers','blog','media'];
   if (!knownTabs.includes(tabId)) tabId = 'about';
 
   // Update panels
