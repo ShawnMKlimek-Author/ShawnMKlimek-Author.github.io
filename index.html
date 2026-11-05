@@ -1050,6 +1050,11 @@
     <div class="gallery-row-label">Available to Purchase</div>
     <div class="gallery-grid" id="gallery-available">
 
+      <a href="covers-carousel.html?book=haiku_after_dark" class="gallery-item">
+        <img src="covers/cover_haiku_after_dark.jpg" alt="Haiku After Dark">
+        <div class="gallery-item-title">Haiku After Dark</div>
+      </a>
+
       <a href="covers-carousel.html?book=emerald" class="gallery-item">
         <img src="covers/cover_Emerald_BHP.jpg" alt="Emerald">
         <div class="gallery-item-title">Emerald</div>
@@ -1779,12 +1784,21 @@ setTab(initTab, false);
 <script>
 // ── PUBLICATIONS DATA ──
 const pubs = [
+  { title: '"Autumn\'s Chilly Winds" (Poem)', publisher: 'Haiku After Dark, Fresh Words', year: 2026, genre: 'Drama', access: 'free', form: 'poem', url: 'https://sites.google.com/view/freshwordsmagazine/special-anthologies' },
+  { title: '"Hatless but Red-Skulled" (Poem)', publisher: 'Haiku After Dark, Fresh Words', year: 2026, genre: 'Horror', access: 'free', form: 'poem', url: 'https://sites.google.com/view/freshwordsmagazine/special-anthologies' },
+  { title: '"Skeletons March Past" (Poem)', publisher: 'Haiku After Dark, Fresh Words', year: 2026, genre: 'Horror', access: 'free', form: 'poem', url: 'https://sites.google.com/view/freshwordsmagazine/special-anthologies' },
+  { title: '"Autumn\'s Chilly Winds" (Poem)', publisher: 'Haiku After Dark, Fresh Words', year: 2026, genre: 'Drama', access: 'buy', form: 'poem', url: 'https://www.lulu.com/shop/som/haiku-after-dark-an-international-halloween-haiku-anthology/paperback/product-45gnezq.html' },
+  { title: '"Hatless but Red-Skulled" (Poem)', publisher: 'Haiku After Dark, Fresh Words', year: 2026, genre: 'Horror', access: 'buy', form: 'poem', url: 'https://www.lulu.com/shop/som/haiku-after-dark-an-international-halloween-haiku-anthology/paperback/product-45gnezq.html' },
+  { title: '"Skeletons March Past" (Poem)', publisher: 'Haiku After Dark, Fresh Words', year: 2026, genre: 'Horror', access: 'buy', form: 'poem', url: 'https://www.lulu.com/shop/som/haiku-after-dark-an-international-halloween-haiku-anthology/paperback/product-45gnezq.html' },
   { title: '"Meadowsweet and the Eldritch Codex"', publisher: 'Emerald, Black Hare Press', year: 2026, genre: 'Fantasy', access: 'buy', form: 'prose', url: 'https://books2read.com/BHP-EMERALD' },
   { title: '"Ship of the Dead" (Part One: A Fateful Meeting)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', form: 'prose', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/148/horror/ship-of-the-dead/index.html' },
   { title: '"Ship of the Dead" (Part Two: The Perilous Invitation)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', form: 'prose', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/149/horror/ship-of-the-dead/index.html' },
   { title: '"Ship of the Dead" (Part Three: Night of Catastrophe)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', form: 'prose', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/150/horror/ship-of-the-dead/index.html' },
   { title: '"Ship of the Dead" (Part Four: The Nightmare Seance)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', form: 'prose', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/151/horror/ship-of-the-dead/index.html' },
   { title: '"Matthew 5 Heresy" (Prayers of Dread, 1 of 3)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', form: 'prose', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/151/drabble/007.html' },
+  { title: '"Suffer the Children" (Prayers of Dread, 2 of 3)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', form: 'prose', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/153/index1.html' },
+  { title: '"A Far Worse Fate" (Prayers of Dread, 3 of 3)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Horror', access: 'free', form: 'prose', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/154/index1.html' },
+  { title: '"Time Freeze" (Poem)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Humor', access: 'free', form: 'poem', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/154/index1.html' },
   { title: '"Jenny\'s Junkyard Rocket" (Poem)', publisher: 'World of Myth Magazine', year: 2026, genre: 'Sci-Fi', access: 'free', form: 'poem', url: 'https://jayzomondarkmyth.com/darkmythproductions/theworldofmyth/151/poems/004.html' },
   { title: '"A Savage Christmas"', publisher: 'Black Hare Press Dark Moments', year: 2019, genre: 'Horror', access: 'free', form: 'prose', url: 'https://blackharepress.com/blogs/dark-moments/a-savage-christmas' },
   { title: '"Merry Crashed-Mass"', publisher: 'Black Hare Press Dark Moments', year: 2022, genre: 'Horror', access: 'free', form: 'prose', url: 'https://blackharepress.com/blogs/dark-moments/merry-crashed-mass' },
